@@ -11,8 +11,5 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
-    fun runMain(view: View) {
-        val myintent = Intent(this, MainPageActivity::class.java)
-        startActivityForResult(myintent, 1)
-    }
+
 }

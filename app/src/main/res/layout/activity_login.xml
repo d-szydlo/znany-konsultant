@@ -7,6 +7,20 @@
     android:background="@color/background_color"
     tools:context=".LoginActivity">
 
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/primary_variant_color"
+        android:fontFamily="@font/baloo_tamma"
+        android:onClick="onRegisterClick"
+        android:text="@string/register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        app:layout_constraintVertical_bias="0.0" />
+
     <TextView
         android:id="@+id/appNameView"
         android:layout_width="303dp"
@@ -30,24 +44,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintBaseline_toBaselineOf="@+id/loginView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.372"
-        app:layout_constraintStart_toEndOf="@+id/loginView"
-        android:importantForAutofill="no" />
+        app:layout_constraintStart_toEndOf="@+id/loginView" />
 
     <EditText
         android:id="@+id/passwordField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:importantForAutofill="no"
         android:inputType="textPassword"
         app:layout_constraintBaseline_toBaselineOf="@+id/passwordView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.349"
-        app:layout_constraintStart_toEndOf="@+id/passwordView"
-        android:importantForAutofill="no" />
+        app:layout_constraintStart_toEndOf="@+id/passwordView" />
 
     <Button
         android:id="@+id/loginButton"
@@ -59,9 +73,10 @@
         android:text="@string/log_into"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordView"
-        app:layout_constraintVertical_bias="0.165" />
+        app:layout_constraintVertical_bias="0.091" />
 
     <TextView
         android:id="@+id/loginView"

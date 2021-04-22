@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Znany konultant</string>
+    <string name="app_name">Znany konsultant</string>
 
     <!-- Main Page    -->
     <string name="name_edit">nazwisko</string>
@@ -21,6 +21,7 @@
     <string name="login">Login</string>
     <string name="password">Hasło</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="register">Zarejestruj się</string>
 
     <string-array name="category">
         <item>Wybierz</item>
