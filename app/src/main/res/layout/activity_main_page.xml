@@ -95,8 +95,8 @@
 
         <Spinner
             android:id="@+id/specialitySpinner"
-            android:layout_width="97dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="117dp"
+            android:layout_height="36dp" />
     </TableRow>
 
     <TextView
@@ -114,21 +114,4 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.102" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/scrollView2">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:layout_conversion_absoluteHeight="0dp"
-            tools:layout_conversion_absoluteWidth="411dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
-    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

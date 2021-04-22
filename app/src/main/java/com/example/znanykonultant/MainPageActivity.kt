@@ -13,10 +13,9 @@ class MainPageActivity : AppCompatActivity() {
     }
 
     private fun initActivitySpinner() {
-
         val picSpinner = findViewById<Spinner>(R.id.specialitySpinner)
         val types = resources.getStringArray(R.array.specialities)
-        val adapter = SpinnerAdapter(this,  types)
+        val adapter = SpinnerAdapter(this, types)
         picSpinner.adapter = adapter
     }
 

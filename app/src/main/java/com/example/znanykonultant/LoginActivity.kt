@@ -25,10 +25,14 @@ class LoginActivity : AppCompatActivity(){
     fun onLoginClick(v : View){
         var login = loginField.text
         var password = passwordField.text
+        val myintent = Intent(this, MainPageActivity::class.java)
+        startActivityForResult(myintent, 1)
         //var intent = Intent()
     }
 
     fun onRegisterClick(v : View){
         // var intent = Intent()
     }
+
+
 }
