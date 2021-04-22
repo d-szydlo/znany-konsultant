@@ -27,4 +27,8 @@ class LoginActivity : AppCompatActivity(){
         var password = passwordField.text
         //var intent = Intent()
     }
+
+    fun onRegisterClick(v : View){
+        // var intent = Intent()
+    }
 }
