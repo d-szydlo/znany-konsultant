@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Znany konultant</string>
+
+
+    <!-- Main Page    -->
+    <string name="name_edit">nazwisko</string>
+    <string name="city_edit">miasto</string>
+    <string name="btn_search">Szukaj</string>
+    <string name="main_title">Znajdź swojego konsultanata</string>
+    <string name="speciality_header">Wybierz specjalizację</string>
+    <string name="sample_text">Nie wiem co tu dać, więc daję TextView :)</string>
+
+    <string-array name="specialities">
+        <item>IT</item>
+        <item>tba</item>
+        <item>tba</item>
+        <item>tba</item>
+        <item>tba</item>
+    </string-array>
 </resources>
