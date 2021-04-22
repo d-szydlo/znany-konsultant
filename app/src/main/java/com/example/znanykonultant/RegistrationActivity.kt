@@ -27,4 +27,8 @@ class RegistrationActivity : AppCompatActivity() {
         transaction.replace(R.id.registrationFragment, KonsultantRegisterFragment())
         transaction.commit()
     }
+
+    fun goBack(view: View){
+        finish()
+    }
 }
