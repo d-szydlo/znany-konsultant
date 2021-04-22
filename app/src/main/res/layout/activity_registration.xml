@@ -17,4 +17,37 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <info.hoang8f.android.segmented.SegmentedGroup
+        android:id="@+id/segmented2"
+        android:layout_width="182dp"
+        android:layout_height="31dp"
+        android:layout_margin="10dp"
+        android:layout_marginTop="36dp"
+        android:orientation="horizontal"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:sc_border_width="2dp"
+        app:sc_corner_radius="10dp"
+        tools:ignore="MissingConstraints">
+
+        <RadioButton
+            android:id="@+id/userView"
+            style="@style/RadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  Użytkownik  " />
+
+        <RadioButton
+            android:id="@+id/consultantView"
+            style="@style/RadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  Konsultant  " />
+    </info.hoang8f.android.segmented.SegmentedGroup>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
