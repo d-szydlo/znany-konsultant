@@ -18,7 +18,6 @@
         <item>tba</item>
     </string-array>
 
-    <string name="app_name">Znany konsultant</string>
     <string name="log_into">Zaloguj się</string>
     <string name="login">Login</string>
     <string name="password">Hasło</string>
