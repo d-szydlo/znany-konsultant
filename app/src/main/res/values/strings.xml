@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Znany konultant</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="category">
+        <item>Wybierz</item>
+        <item>Kategoria 1</item>
+        <item>Kategoria 2</item>
+        <item>Kategoria 3</item>
+    </string-array>
+
 </resources>
