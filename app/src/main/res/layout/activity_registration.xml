@@ -6,48 +6,56 @@
     android:layout_height="match_parent"
     tools:context=".RegistrationActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="229dp"
-        android:layout_height="67dp"
-        android:layout_marginTop="52dp"
-        android:gravity="center"
-        android:text="Załóż konto"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Załóż konto"
+            android:textSize="24sp" />
 
-    <info.hoang8f.android.segmented.SegmentedGroup
-        android:id="@+id/segmented2"
-        android:layout_width="182dp"
-        android:layout_height="31dp"
-        android:layout_margin="10dp"
-        android:layout_marginTop="36dp"
-        android:orientation="horizontal"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:sc_border_width="2dp"
-        app:sc_corner_radius="10dp"
-        tools:ignore="MissingConstraints">
-
-        <RadioButton
-            android:id="@+id/userView"
-            style="@style/RadioButton"
-            android:layout_width="wrap_content"
+        <fragment
+            android:id="@+id/registrationFragment"
+            android:name="com.example.znanykonultant.UserRegisterFragment"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="  Użytkownik  " />
+            tools:layout="@layout/fragment_user_register"
+            android:layout_weight="7"/>
 
-        <RadioButton
-            android:id="@+id/consultantView"
-            style="@style/RadioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="  Konsultant  " />
-    </info.hoang8f.android.segmented.SegmentedGroup>
+        <info.hoang8f.android.segmented.SegmentedGroup
+            android:id="@+id/segmented2"
+            android:layout_width="match_parent"
+            android:layout_height="31dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center"
+
+            app:sc_border_width="2dp"
+            app:sc_corner_radius="10dp"
+            tools:ignore="MissingConstraints">
+
+            <RadioButton
+                android:id="@+id/userView"
+                style="@style/RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="showUserFragment"
+                android:text="  Użytkownik  " />
+
+            <RadioButton
+                android:id="@+id/consultantView"
+                style="@style/RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="showConsultantFragment"
+                android:text="  Konsultant  " />
+        </info.hoang8f.android.segmented.SegmentedGroup>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
