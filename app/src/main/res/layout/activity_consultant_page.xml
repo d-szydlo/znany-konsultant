@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Consultant_page">
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="147dp"
+        android:layout_height="131dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.17"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.120000005"
+        app:srcCompat="?attr/actionBarItemBackground" />
+
+    <EditText
+        android:id="@+id/consultant_name"
+        android:layout_width="135dp"
+        android:layout_height="40dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:fontFamily="cursive"
+        android:hint="imię"
+        android:textSize="10sp"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/photo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.100000024" />
+
+    <EditText
+        android:id="@+id/consultant_surname"
+        android:layout_width="135dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="nazwisko"
+        android:textSize="10sp"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/photo"
+        app:layout_constraintTop_toBottomOf="@+id/consultant_name"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/consultant_email"
+        android:layout_width="135dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="email"
+        android:textSize="10sp"
+        android:gravity="center"
+        android:inputType="textEmailAddress"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/photo"
+        app:layout_constraintTop_toBottomOf="@+id/consultant_surname"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/consultant_phone"
+        android:layout_width="135dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="nr telefonu"
+        android:textSize="10sp"
+        android:gravity="center"
+        android:inputType="phone"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/photo"
+        app:layout_constraintTop_toBottomOf="@+id/consultant_email"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/consultant_description"
+        android:layout_width="202dp"
+        android:layout_height="147dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="opis"
+        android:textSize="10sp"
+        android:inputType="textMultiLine"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photo"
+        app:layout_constraintVertical_bias="0.060000002" />
+
+    <EditText
+        android:id="@+id/consultant_url"
+        android:layout_width="135dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="strona internetowa"
+        android:textSize="10sp"
+        android:inputType="textPersonName"
+        android:gravity="center"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.32"
+        app:layout_constraintStart_toEndOf="@+id/consultant_description"
+        app:layout_constraintTop_toBottomOf="@+id/consultant_phone"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/consultant_services"
+        android:layout_width="264dp"
+        android:layout_height="246dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/consultant_description"
+        app:layout_constraintVertical_bias="0.89" />
+
+    <EditText
+        android:id="@+id/consultant_address"
+        android:layout_width="181dp"
+        android:layout_height="72dp"
+        android:ems="10"
+        android:inputType="textPostalAddress"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@+id/consultant_services"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.26"
+        app:layout_constraintStart_toEndOf="@+id/consultant_description"
+        app:layout_constraintTop_toBottomOf="@+id/consultant_url"
+        app:layout_constraintVertical_bias="0.86" />
+</androidx.constraintlayout.widget.ConstraintLayout>
