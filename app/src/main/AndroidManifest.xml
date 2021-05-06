@@ -11,7 +11,8 @@
         android:theme="@style/Theme.ZnanyKonultant">
         <activity android:name=".consultant_service_edit"></activity>
         <activity android:name=".Consultant_page" />
-        <activity android:name=".MainPageActivity" />
+        <activity android:name=".ConsultantMainPageActivity"></activity>
+        <activity android:name=".UserMainPageActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
