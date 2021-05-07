@@ -3,12 +3,11 @@ package com.example.znanykonultant
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
+import com.example.znanykonultant.dbdao.ConsultantDAO
+import com.example.znanykonultant.dbdao.PersonDAO
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -27,22 +26,22 @@ class LoginActivity : AppCompatActivity(){
         passwordField = findViewById(R.id.passwordField)
         loginButton = findViewById(R.id.loginButton)
 
-
-        val database = Firebase.database
-        val myRef = database.getReference("message")
-        myRef.setValue("Hejcia")
-
-        myRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val value = snapshot.value
-                loginField.setText("Value is $value")
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
+//
+//        val database = Firebase.database
+//        val myRef = database.getReference("consultant")
+//        myRef.setValue("Hihi")
+//
+//        myRef.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                val value = snapshot.value
+//                loginField.setText("Value is $value")
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//
+//        })
 
 
 
@@ -52,6 +51,12 @@ class LoginActivity : AppCompatActivity(){
     fun onLoginClick(v : View){
         var login = loginField.text
         var password = passwordField.text
+
+//        val personDao = PersonDAO()
+//        val consultantDAO = ConsultantDAO()
+//        personDao.addPerson()
+//        consultantDAO.addConsultant()
+
         val myintent = Intent(this, MainPageActivity::class.java)
         startActivityForResult(myintent, 1)
 
