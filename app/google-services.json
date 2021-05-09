@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "200648791393",
+    "project_id": "znany-konsultant-us",
+    "storage_bucket": "znany-konsultant-us.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200648791393:android:2138fedb7815492ca46120",
+        "android_client_info": {
+          "package_name": "com.example.znanykonultant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "200648791393-ov1lqvrkonl42e98nbt3b76fc3qiut1b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgod63j4iQsjs-O_bKmCPmdgEf72UInlg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "200648791393-ov1lqvrkonl42e98nbt3b76fc3qiut1b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
