@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import com.example.znanykonultant.dbdao.AppointmentsDAO
 import com.example.znanykonultant.dbdao.ConsultantDAO
 import com.example.znanykonultant.dbdao.PersonDAO
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.sql.Time
+import java.sql.Timestamp
 
 class LoginActivity : AppCompatActivity(){
 
@@ -51,12 +54,9 @@ class LoginActivity : AppCompatActivity(){
     fun onLoginClick(v : View){
         var login = loginField.text
         var password = passwordField.text
-
-//        val personDao = PersonDAO()
-//        val consultantDAO = ConsultantDAO()
-//        personDao.addPerson()
-//        consultantDAO.addConsultant()
-
+        val personDao = PersonDAO()
+        val appointmentsDAO = AppointmentsDAO()
+        appointmentsDAO.addAppointment("olitrolli", "testowy", Timestamp(12344235), "there")
         val myintent = Intent(this, MainPageActivity::class.java)
         startActivityForResult(myintent, 1)
 

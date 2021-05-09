@@ -1,7 +1,20 @@
 package com.example.znanykonultant.db
 
+import com.google.firebase.database.IgnoreExtraProperties
 
+@IgnoreExtraProperties
 class Person(
-  val name: String, val surname: String, val password: String, val email: String,
-  val picture: Int, val type: String) {}
+    var name: String,
+    var surname: String,
+    var password: String,
+    var email: String = "",
+    var picture: Int = 0,
+    var type: String,
+    var appointments: Appointments? = null,
+    var favourites:  Map<Int, Favourite> = mapOf()
+) {
+
+
+
+}
 

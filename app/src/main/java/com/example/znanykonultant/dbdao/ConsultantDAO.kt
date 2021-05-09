@@ -2,22 +2,34 @@ package com.example.znanykonultant.dbdao
 
 import com.example.znanykonultant.db.Consultant
 import com.example.znanykonultant.db.ConsultantService
+import com.example.znanykonultant.db.Person
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class ConsultantDAO {
 
-    fun addConsultant(){
+    fun addConsultant(login : String,
+                      phone : String,
+                      city : String,
+                      street : String = "",
+                      houseNumber : String = "",
+                      description : String = "",
+                      page : String = ""
+
+    ){
         val database = Firebase.database
         val myRef = database.getReference("consultant")
-
-        var users =  HashMap<String, Consultant>()
-        val cs = HashMap<Int, ConsultantService>()
-        cs.put(1, ConsultantService(1,"Hejcia", "Typ"))
-        users.put("ziom123", Consultant("123", "Wro", "12",
-            "12", "HI", "Person", cs)
+        myRef.child(login).setValue(
+            Consultant(
+                phone,
+                city,
+                street,
+                houseNumber,
+                description,
+                page
+            )
         )
-        myRef.setValue(users);
 
     }
+
 }
