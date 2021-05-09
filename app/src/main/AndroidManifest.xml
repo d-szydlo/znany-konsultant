@@ -9,8 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ZnanyKonultant">
-        <activity android:name=".MainPageActivity"></activity>
-        <activity android:name=".RegistrationActivity"></activity>
+        <activity android:name=".consultant_service_edit"></activity>
+        <activity android:name=".Consultant_page" />
+        <activity android:name=".ConsultantMainPageActivity"></activity>
+        <activity android:name=".UserMainPageActivity" />
+        <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

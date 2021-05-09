@@ -54,12 +54,9 @@ class LoginActivity : AppCompatActivity(){
     fun onLoginClick(v : View){
         var login = loginField.text
         var password = passwordField.text
-        val personDao = PersonDAO()
-        val appointmentsDAO = AppointmentsDAO()
-        appointmentsDAO.addAppointment("olitrolli", "testowy", Timestamp(12344235), "there")
-        val myintent = Intent(this, MainPageActivity::class.java)
+        val myintent = Intent(this, UserMainPageActivity::class.java)
         startActivityForResult(myintent, 1)
-
+        //var intent = Intent()
     }
 
     fun onRegisterClick(v : View){
