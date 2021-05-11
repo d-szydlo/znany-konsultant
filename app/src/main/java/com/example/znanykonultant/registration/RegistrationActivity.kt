@@ -24,7 +24,7 @@ class RegistrationActivity : AppCompatActivity() {
 
     fun showConsultantFragment(view: View) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.registrationFragment, KonsultantRegisterFragment())
+        transaction.replace(R.id.registrationFragment, ConsultantRegisterFragment())
         transaction.commit()
     }
 

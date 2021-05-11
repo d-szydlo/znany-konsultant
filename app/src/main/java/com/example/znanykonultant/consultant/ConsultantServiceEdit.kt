@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.znanykonultant.R
 
-class Consultant_page : AppCompatActivity() {
+class ConsultantServiceEdit : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_consultant_page)
+        setContentView(R.layout.activity_consultant_service_edit)
     }
 }
