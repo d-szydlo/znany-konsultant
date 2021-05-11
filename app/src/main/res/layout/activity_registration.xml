@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrationActivity">
+    tools:context=".registration.RegistrationActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
 
         <fragment
             android:id="@+id/registrationFragment"
-            android:name="com.example.znanykonultant.UserRegisterFragment"
+            android:name="com.example.znanykonultant.registration.UserRegisterFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:layout="@layout/fragment_user_register"

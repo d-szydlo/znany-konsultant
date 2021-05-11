@@ -1,9 +1,9 @@
-package com.example.znanykonultant.db
+package com.example.znanykonultant.entity
 
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 import java.sql.Timestamp
-import java.util.*
+
 @IgnoreExtraProperties
 class Appointments(var personLogin : String,
                    var consultantLogin : String,

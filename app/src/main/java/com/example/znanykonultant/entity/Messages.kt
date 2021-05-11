@@ -1,4 +1,4 @@
-package com.example.znanykonultant.db
+package com.example.znanykonultant.entity
 
 import java.sql.Timestamp
 

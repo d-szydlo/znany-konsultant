@@ -1,10 +1,12 @@
-package com.example.znanykonultant
+package com.example.znanykonultant.user
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.znanykonultant.R
+import com.example.znanykonultant.consultant.ConsultantListAdapter
 
 class UserMainPageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

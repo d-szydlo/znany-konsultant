@@ -1,5 +1,5 @@
-package com.example.znanykonultant.dbdao
-import com.example.znanykonultant.db.Person
+package com.example.znanykonultant.dao
+import com.example.znanykonultant.entity.Person
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 

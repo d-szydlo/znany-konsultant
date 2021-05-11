@@ -1,4 +1,4 @@
-package com.example.znanykonultant
+package com.example.znanykonultant.login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,14 +6,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import com.example.znanykonultant.dbdao.AppointmentsDAO
-import com.example.znanykonultant.dbdao.ConsultantDAO
-import com.example.znanykonultant.dbdao.PersonDAO
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import java.sql.Time
-import java.sql.Timestamp
+import com.example.znanykonultant.R
+import com.example.znanykonultant.registration.RegistrationActivity
+import com.example.znanykonultant.user.UserMainPageActivity
 
 class LoginActivity : AppCompatActivity(){
 

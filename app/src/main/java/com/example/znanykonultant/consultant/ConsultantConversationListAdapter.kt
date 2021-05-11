@@ -1,10 +1,11 @@
-package com.example.znanykonultant
+package com.example.znanykonultant.consultant
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.znanykonultant.R
 
 class ConsultantConversationListAdapter(private val conversations: List<String>)
     : RecyclerView.Adapter<ConsultantConversationListAdapter.ViewHolder>() {
@@ -14,13 +15,13 @@ class ConsultantConversationListAdapter(private val conversations: List<String>)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-    : ConsultantConversationListAdapter.ViewHolder {
+    : ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.consultant_row_item, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ConsultantConversationListAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.textView.text = conversations[position]
     }
 

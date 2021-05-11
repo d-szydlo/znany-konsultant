@@ -1,8 +1,8 @@
-package com.example.znanykonultant
+package com.example.znanykonultant.main
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.znanykonultant.R
 
 
 class MainActivity : AppCompatActivity() {

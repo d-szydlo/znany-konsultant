@@ -1,14 +1,7 @@
-package com.example.znanykonultant.dbdao
+package com.example.znanykonultant.dao
 
-import android.content.ContentValues.TAG
-import android.util.Log
-import com.example.znanykonultant.db.Appointments
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import java.io.Console
 import java.sql.Timestamp
 
 class AppointmentsDAO {
