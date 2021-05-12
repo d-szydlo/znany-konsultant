@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ZnanyKonultant">
-        <activity android:name=".consultant.ConsultantServiceEdit"></activity>
+        <activity android:name=".login.ForgotPasswordActivity"></activity>
+        <activity android:name=".consultant.ConsultantServiceEdit" />
         <activity android:name=".consultant.ConsultantPage" />
-        <activity android:name=".consultant.ConsultantMainPageActivity"></activity>
+        <activity android:name=".consultant.ConsultantMainPageActivity" />
         <activity android:name=".user.UserMainPageActivity" />
         <activity android:name=".registration.RegistrationActivity" />
         <activity android:name=".login.LoginActivity">

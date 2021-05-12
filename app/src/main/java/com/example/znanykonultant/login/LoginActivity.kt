@@ -45,5 +45,11 @@ class LoginActivity : AppCompatActivity(){
         startActivityForResult(myintent, 1)
     }
 
+    fun onForgotClick(view: View) {
+        val intent = Intent(this, ForgotPasswordActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
+    }
+
 
 }
