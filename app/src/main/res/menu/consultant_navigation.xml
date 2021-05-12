@@ -7,9 +7,9 @@
         android:icon="@drawable/ic_baseline_account_24"/>
 
     <item
-        android:id="@+id/consultant_nav_messages"
-        android:title="@string/messages"
-        android:icon="@drawable/ic_baseline_message_24"/>
+        android:id="@+id/consultant_nav_chats"
+        android:title="@string/chats"
+        android:icon="@drawable/ic_baseline_chat_24"/>
 
     <item
         android:id="@+id/consultant_nav_appointments"

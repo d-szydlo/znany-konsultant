@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".consultant.messages.ConsultantMessagesFragment">
+    tools:context=".consultant.chats.ConsultantChatsFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chats_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Messages fragment" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>
