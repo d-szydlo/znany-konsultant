@@ -26,6 +26,8 @@
     <string name="chats">Wiadomości</string>
     <string name="appointments">Spotkania</string>
     <string name="profile">Profil</string>
+    <string name="rearch">Szukaj</string>
+    <string name="favourites">Ulubieni</string>
 
     <string-array name="category">
         <item>Wybierz</item>

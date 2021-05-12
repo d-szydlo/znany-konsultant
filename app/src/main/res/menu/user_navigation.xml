@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/user_nav_search"
+        android:title="@string/rearch"
+        android:icon="@drawable/ic_baseline_search_24"/>
+
+    <item
+        android:id="@+id/user_nav_favourites"
+        android:title="@string/favourites"
+        android:icon="@drawable/ic_baseline_star_24"/>
+
+    <item
+        android:id="@+id/user_nav_chats"
+        android:title="@string/chats"
+        android:icon="@drawable/ic_baseline_chat_24"/>
+
+    <item
+        android:id="@+id/user_nav_appointments"
+        android:title="@string/appointments"
+        android:icon="@drawable/ic_baseline_calendar_24"/>
+
+    <item
+        android:id="@+id/user_nav_profile"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_baseline_account_24"/>
+
+</menu>
