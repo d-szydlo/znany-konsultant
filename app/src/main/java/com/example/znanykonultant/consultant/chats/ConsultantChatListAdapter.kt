@@ -1,4 +1,4 @@
-package com.example.znanykonultant.consultant.messages
+package com.example.znanykonultant.consultant.chats
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
 
-class ConsultantConversationListAdapter(private val conversations: List<String>)
-    : RecyclerView.Adapter<ConsultantConversationListAdapter.ViewHolder>() {
+class ConsultantChatListAdapter(private val conversations: List<String>)
+    : RecyclerView.Adapter<ConsultantChatListAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.findViewById(R.id.textView)

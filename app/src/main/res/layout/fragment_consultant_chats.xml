@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".consultant.appointments.ConsultantAppointmentsFragment">
+    tools:context=".consultant.chats.ConsultantChatsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/appointments_recycler"
+        android:id="@+id/chats_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
