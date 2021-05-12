@@ -23,9 +23,11 @@
     <string name="register">Zarejestruj się</string>
     <string name="initial_search_hint">Wyszukaj</string>
     <string name="main_page">Strona główna</string>
-    <string name="messages">Wiadomości</string>
+    <string name="chats">Wiadomości</string>
     <string name="appointments">Spotkania</string>
     <string name="profile">Profil</string>
+    <string name="rearch">Szukaj</string>
+    <string name="favourites">Ulubieni</string>
 
     <string-array name="category">
         <item>Wybierz</item>
