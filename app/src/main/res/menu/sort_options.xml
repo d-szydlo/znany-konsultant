@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/by_rating"
+        android:title="@string/by_rating"/>
+    <item android:id="@+id/by_price_asc"
+        android:title="@string/by_price_asc" />
+    <item android:id="@+id/by_price_desc"
+        android:title="@string/by_price_desc" />
+    <item android:id="@+id/by_availability"
+        android:title="@string/by_availability"/>
+</menu>

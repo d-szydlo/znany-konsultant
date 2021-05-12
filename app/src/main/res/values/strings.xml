@@ -33,4 +33,31 @@
         <item>Kategoria 2</item>
         <item>Kategoria 3</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_label">app label</string>
+    <string name="search_hint">Szukaj...</string>
+    <string name="filter">filtruj</string>
+    <string name="sort_by">sortuj według</string>
+    <string name="by_rating">ocena</string>
+    <string name="by_price_asc">cena rosnąco</string>
+    <string name="by_price_desc">cena malejąco</string>
+    <string name="by_availability">dostępność</string>
+    <string name="filters">filtry</string>
+    <string name="meeting_tim">godziny spotkania</string>
+    <string name="city">miejscowość</string>
+    <string name="morning_hours">poranne (06:00 - 12:00)</string>
+    <string name="afternoon_hours">popołudniowe (12:00 - 17:00)</string>
+    <string name="price_per_hour_min">cena za godzinę od</string>
+    <string name="price_per_hour_max">cena za godzinę do</string>
+    <string name="evening_hours">wieczorne (17:00 - 21:00)</string>
+    <string name="pln">pln</string>
+    <string name="hundred">100,00</string>
+    <string name="zero">0,00</string>
+    <string name="category">kategoria</string>
+    <string name="it">IT</string>
+    <string name="finance_and_accountancy">finanse i rachunkowość</string>
+    <string name="business">biznes</string>
+    <string name="confirm">zatwierdź</string>
+    <string name="marceting">marketing</string>
+    <string name="consultant_photo">zdjęcie konsultanta</string>
 </resources>
