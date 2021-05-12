@@ -1,4 +1,4 @@
-package com.example.znanykonultant.consultant
+package com.example.znanykonultant.user
 
 import android.view.LayoutInflater
 import android.view.View

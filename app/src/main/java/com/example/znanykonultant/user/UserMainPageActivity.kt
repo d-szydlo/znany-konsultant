@@ -6,7 +6,6 @@ import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
-import com.example.znanykonultant.consultant.ConsultantListAdapter
 
 class UserMainPageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/consultant_nav_profile"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_baseline_account_24"/>
+
+    <item
+        android:id="@+id/consultant_nav_messages"
+        android:title="@string/messages"
+        android:icon="@drawable/ic_baseline_message_24"/>
+
+    <item
+        android:id="@+id/consultant_nav_appointments"
+        android:title="@string/appointments"
+        android:icon="@drawable/ic_baseline_calendar_24"/>
+
+</menu>
