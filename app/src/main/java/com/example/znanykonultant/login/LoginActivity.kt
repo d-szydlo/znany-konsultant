@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import com.example.znanykonultant.R
+import com.example.znanykonultant.databinding.ActivityLoginBinding
+import com.example.znanykonultant.databinding.FragmentConsultantRegisterBinding
 import com.example.znanykonultant.registration.RegistrationActivity
 import com.example.znanykonultant.user.UserMainPageActivity
 
@@ -15,7 +17,7 @@ class LoginActivity : AppCompatActivity(){
     private lateinit var loginField : EditText
     private lateinit var passwordField : EditText
     private lateinit var loginButton : Button
-
+    lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
