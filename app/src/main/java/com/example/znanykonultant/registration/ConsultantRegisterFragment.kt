@@ -54,7 +54,7 @@ class ConsultantRegisterFragment : Fragment() {
             && !TextUtils.isEmpty(pass2) && TextUtils.equals(pass1, pass2)) { //TODO separate info when passwords are not the same
             mAuth.createUserWithEmailAndPassword(email!!, pass1!!)
                 .addOnSuccessListener {
-                    verifyEmail();
+                    verifyEmail(); // TODO add consultant data to database
                     updateUserInfoAndUI()
                 }.addOnFailureListener {  e ->
                     Toast.makeText(
