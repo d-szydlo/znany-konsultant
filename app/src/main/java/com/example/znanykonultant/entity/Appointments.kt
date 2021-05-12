@@ -5,10 +5,10 @@ import com.google.firebase.database.IgnoreExtraProperties
 import java.sql.Timestamp
 
 @IgnoreExtraProperties
-class Appointments(var personLogin : String,
-                   var consultantLogin : String,
-                   var timestamp: Timestamp,
-                   var place : String,
+class Appointments(var personLogin : String = "",
+                   var consultantLogin : String = "",
+                   var timestamp: Timestamp = Timestamp(0),
+                   var place : String = "",
                    var rate : Int = -1
 ) {
 
