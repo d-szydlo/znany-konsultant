@@ -54,10 +54,7 @@ class ConsultantRegisterFragment : Fragment() {
             && !TextUtils.isEmpty(pass2) && TextUtils.equals(pass1, pass2)) { //TODO separate info when passwords are not the same
             mAuth.createUserWithEmailAndPassword(email!!, pass1!!)
                 .addOnSuccessListener {
-                    val userId = mAuth.currentUser!!.uid
                     verifyEmail();
-                    val currentUserDb = mDatabaseReference!!.child(userId)
-                    currentUserDb.child("type").setValue("consultant")
                     updateUserInfoAndUI()
                 }.addOnFailureListener {  e ->
                     Toast.makeText(

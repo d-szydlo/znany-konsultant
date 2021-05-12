@@ -3,57 +3,41 @@ package com.example.znanykonultant.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import com.example.znanykonultant.R
+import android.widget.Toast
 import com.example.znanykonultant.databinding.ActivityLoginBinding
-import com.example.znanykonultant.databinding.FragmentConsultantRegisterBinding
 import com.example.znanykonultant.registration.RegistrationActivity
 import com.example.znanykonultant.user.UserMainPageActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity(){
-
-    private lateinit var loginField : EditText
-    private lateinit var passwordField : EditText
-    private lateinit var loginButton : Button
     lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-
-        loginField = findViewById(R.id.loginField)
-        passwordField = findViewById(R.id.passwordField)
-        loginButton = findViewById(R.id.loginButton)
-
-//
-//        val database = Firebase.database
-//        val myRef = database.getReference("consultant")
-//        myRef.setValue("Hihi")
-//
-//        myRef.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                val value = snapshot.value
-//                loginField.setText("Value is $value")
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//
-//        })
-
-
-
-
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
     }
 
     fun onLoginClick(v : View){
-        var login = loginField.text
-        var password = passwordField.text
-        val myintent = Intent(this, UserMainPageActivity::class.java)
-        startActivityForResult(myintent, 1)
-        //var intent = Intent()
+        var mAuth = FirebaseAuth.getInstance()
+        var email = binding.loginField.text.toString()
+        var password = binding.passwordField.text.toString()
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+            mAuth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener {
+                    val myintent = Intent(this, UserMainPageActivity::class.java)
+                    startActivity(myintent)
+                }.addOnFailureListener {  e ->
+                    Toast.makeText(
+                        this, e.message.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+        } else {
+            Toast.makeText(this, "Podaj email i hasło!", Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun onRegisterClick(v : View){
