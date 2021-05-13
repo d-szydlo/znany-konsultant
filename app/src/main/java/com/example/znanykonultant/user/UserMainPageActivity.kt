@@ -23,7 +23,7 @@ class UserMainPageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_main_page)
 
-        setFragment(UserSearchFragment())
+        setFragment(SearchFragment())
         prepareNavigation()
     }
 
