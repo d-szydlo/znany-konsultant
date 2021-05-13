@@ -19,13 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
 import com.example.znanykonultant.entity.ConsultantService
-import com.vansuita.pickimage.bean.PickResult
-import com.vansuita.pickimage.bundle.PickSetup
-import com.vansuita.pickimage.dialog.PickImageDialog
-import com.vansuita.pickimage.listeners.IPickResult
 
 
-class ConsultantProfileFragment : Fragment(), IPickResult {
+class ConsultantProfileFragment : Fragment() {
 
     lateinit var name: EditText
     lateinit var surname: EditText
@@ -77,8 +73,6 @@ class ConsultantProfileFragment : Fragment(), IPickResult {
     private fun newPhoto(view: View){
         val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         startActivityForResult(gallery, 100)
-        // val activity: Activity = context as Activity
-        // PickImageDialog.build(PickSetup()).show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -94,15 +88,5 @@ class ConsultantProfileFragment : Fragment(), IPickResult {
 
     private fun setPersonalInfo(){
         // TODO get user data from db and display them
-    }
-
-    override fun onPickResult(r: PickResult?) {
-        if (r != null) {
-            if (r.error == null) {
-                //getImageView().setImageBitmap(r.bitmap);
-            } else {
-
-            }
-        }
     }
 }
