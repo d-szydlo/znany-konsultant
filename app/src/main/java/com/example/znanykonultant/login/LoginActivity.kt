@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity(){
                         }
                     }
 
-                    Firebase.database.getReference("people").child(userId).get().addOnSuccessListener{
+                    Firebase.database.getReference("users").child(userId).get().addOnSuccessListener{
                         if(it.value != null){
                             val myintent = Intent(this, UserMainPageActivity::class.java)
                             startActivity(myintent)

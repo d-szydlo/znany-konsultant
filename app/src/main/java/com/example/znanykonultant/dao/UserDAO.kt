@@ -1,7 +1,7 @@
 package com.example.znanykonultant.dao
 import android.util.Log
 import com.example.znanykonultant.entity.Favourite
-import com.example.znanykonultant.entity.Person
+import com.example.znanykonultant.entity.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -10,19 +10,19 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 
-class PersonDAO {
+class UserDAO {
 
     val database = Firebase.database
-    val personRef = database.getReference("people")
+    val personRef = database.getReference("users")
 
     val personUid = FirebaseAuth.getInstance().uid  // after auth change this to curr user,
 
-    var data : Person? = null
+    var data : User? = null
 
     init {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                data = dataSnapshot.child(personUid!!).getValue(Person::class.java)
+                data = dataSnapshot.child(personUid!!).getValue(User::class.java)
                 Log.i("firebase", data.toString())
             }
 
@@ -45,7 +45,7 @@ class PersonDAO {
         picture: String = "",
     ){
         personRef.child(uid).setValue(
-            Person(
+            User(
                 uid,
                 name,
                 surname,
@@ -65,7 +65,7 @@ class PersonDAO {
         }
     }
 
-    fun getPersonData(): Person?{
+    fun getPersonData(): User?{
         return data
     }
 

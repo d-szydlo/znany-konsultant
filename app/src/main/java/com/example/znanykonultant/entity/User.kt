@@ -3,7 +3,7 @@ package com.example.znanykonultant.entity
 import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties
-class Person(
+class User(
     var uid: String = "",
     var name: String = "",
     var surname: String = "",

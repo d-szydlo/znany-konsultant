@@ -2,11 +2,6 @@ package com.example.znanykonultant.dao
 
 import android.util.Log
 import com.example.znanykonultant.entity.Appointments
-import com.example.znanykonultant.entity.Consultant
-import com.example.znanykonultant.entity.Person
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.sql.Timestamp

@@ -8,20 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.example.znanykonultant.R
-import com.example.znanykonultant.consultant.ConsultantMainPageActivity
-import com.example.znanykonultant.dao.ConsultantDAO
-import com.example.znanykonultant.dao.PersonDAO
-import com.example.znanykonultant.databinding.FragmentConsultantRegisterBinding
+import com.example.znanykonultant.dao.UserDAO
 import com.example.znanykonultant.databinding.FragmentUserRegisterBinding
-import com.example.znanykonultant.login.LoginActivity
 import com.example.znanykonultant.user.UserMainPageActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 
 class UserRegisterFragment : Fragment() {
-    lateinit var persontDAO : PersonDAO
+    lateinit var userDAO : UserDAO
     lateinit var mAuth: FirebaseAuth
     lateinit var binding: FragmentUserRegisterBinding
     override fun onCreateView(
@@ -47,8 +40,8 @@ class UserRegisterFragment : Fragment() {
             && !TextUtils.isEmpty(pass1)  && !TextUtils.isEmpty(pass2) && TextUtils.equals(pass1, pass2)) { //TODO separate info when passwords are not the same
             mAuth.createUserWithEmailAndPassword(email, pass1)
                 .addOnSuccessListener {
-                    persontDAO  = PersonDAO()
-                    persontDAO.addPerson(
+                    userDAO  = UserDAO()
+                    userDAO.addPerson(
                         mAuth.uid.toString(), name, surname, email, phone
                     )
                     verifyEmail() // TODO add user data to database
