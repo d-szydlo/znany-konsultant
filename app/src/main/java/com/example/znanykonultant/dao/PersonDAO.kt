@@ -2,6 +2,7 @@ package com.example.znanykonultant.dao
 import android.util.Log
 import com.example.znanykonultant.entity.Favourite
 import com.example.znanykonultant.entity.Person
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -12,16 +13,16 @@ import com.google.firebase.ktx.Firebase
 class PersonDAO {
 
     val database = Firebase.database
-    private val personRef = database.getReference("person")
+    val personRef = database.getReference("people")
 
-    private val user = "hihi"     // after auth change this to curr user
+    val personUid = FirebaseAuth.getInstance().uid  // after auth change this to curr user,
 
     var data : Person? = null
 
     init {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                data = dataSnapshot.child(user).getValue(Person::class.java)
+                data = dataSnapshot.child(personUid!!).getValue(Person::class.java)
                 Log.i("firebase", data.toString())
             }
 
@@ -36,15 +37,20 @@ class PersonDAO {
 
     // TODO delete login if curr user will be available
     fun addPerson(
-        login: String,
-        name: String,
-        surname: String,
+        uid : String,
+        name : String,
+        surname : String,
+        email : String,
+        phone : String,
         picture: String = "",
     ){
-        personRef.child(login).setValue(
+        personRef.child(uid).setValue(
             Person(
+                uid,
                 name,
                 surname,
+                email,
+                phone,
                 picture
             )
         )
@@ -54,7 +60,9 @@ class PersonDAO {
     fun modifyPersonalData(personUpdate : MutableMap<String, Any>) {
 //        val personUpdate: MutableMap<String, Any> = HashMap()
 //        personUpdate["name"] = "Oli"
-        personRef.child(user).updateChildren(personUpdate)
+        if (personUid != null) {
+            personRef.child(personUid).updateChildren(personUpdate)
+        }
     }
 
     fun getPersonData(): Person?{
@@ -63,12 +71,16 @@ class PersonDAO {
 
     fun deletePerson() {
         // should work
-        personRef.child(user).removeValue()
+        if (personUid != null) {
+            personRef.child(personUid).removeValue()
+        }
     }
 
     fun addFavourite() {
         val favourite = Favourite("olooli123").toMap()
-        personRef.child(user).child("favourites").updateChildren(favourite)
+        if (personUid != null) {
+            personRef.child(personUid).child("favourites").updateChildren(favourite)
+        }
 
     }
 
