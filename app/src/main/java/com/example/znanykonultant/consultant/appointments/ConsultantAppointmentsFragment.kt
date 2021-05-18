@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
-import com.example.znanykonultant.consultant.chats.ConsultantChatListAdapter
 
 class ConsultantAppointmentsFragment : Fragment() {
     override fun onCreateView(
@@ -23,7 +22,7 @@ class ConsultantAppointmentsFragment : Fragment() {
     private fun loadRecycler(view: View) {
         val appointmentsRecycler = view.findViewById<RecyclerView>(R.id.appointments_recycler)
         appointmentsRecycler.layoutManager = LinearLayoutManager(activity)
-        appointmentsRecycler.adapter = ConsultantChatListAdapter(genTempData())
+        appointmentsRecycler.adapter = ConsultantAppointmentsListAdapter(genTempData())
     }
 
     private fun genTempData(): List<String> {
