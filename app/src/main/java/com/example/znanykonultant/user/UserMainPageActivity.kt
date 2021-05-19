@@ -20,7 +20,7 @@ class UserMainPageActivity : AppCompatActivity() {
         prepareNavigation()
     }
 
-    private fun setFragment(newFragment: Fragment) {
+    fun setFragment(newFragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, newFragment)
         transaction.commit()

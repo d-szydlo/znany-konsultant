@@ -62,4 +62,5 @@
     <string name="confirm">zatwierdź</string>
     <string name="marceting">marketing</string>
     <string name="consultant_photo">zdjęcie konsultanta</string>
+    <string name="todo">TODO</string>
 </resources>

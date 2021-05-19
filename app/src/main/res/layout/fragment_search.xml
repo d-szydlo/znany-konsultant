@@ -11,11 +11,27 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <SearchView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        </SearchView>
+            <EditText
+                android:id="@+id/editTextTextPersonName"
+                android:layout_width="359dp"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@android:drawable/ic_menu_search"
+                android:contentDescription="@string/todo" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

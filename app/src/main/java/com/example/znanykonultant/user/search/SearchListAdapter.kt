@@ -35,7 +35,10 @@ class SearchListAdapter(private var data: MutableList<Consultant>) : RecyclerVie
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.consultantNameSurname.text = "będzie coś fajnego"
+        holder.consultantNameSurname.text = data[position].name + " " + data[position].surname
+        holder.consultantCity.text = data[position].city
+        holder.consultantRating.text = "5"
+        holder.consultantCategory.text = "IT"
     }
 
     override fun getItemCount(): Int {
