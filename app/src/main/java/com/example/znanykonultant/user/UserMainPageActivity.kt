@@ -8,7 +8,7 @@ import com.example.znanykonultant.R
 import com.example.znanykonultant.chat.ChatsFragment
 import com.example.znanykonultant.user.appointments.UserAppointmentsFragment
 import com.example.znanykonultant.user.favourites.UserFavouritesFragment
-import com.example.znanykonultant.user.search.UserSearchFragment
+import com.example.znanykonultant.user.search.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class UserMainPageActivity : AppCompatActivity() {

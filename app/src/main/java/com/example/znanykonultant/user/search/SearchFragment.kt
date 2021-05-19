@@ -1,4 +1,4 @@
-package com.example.znanykonultant.user
+package com.example.znanykonultant.user.search
 
 import android.os.Bundle
 import android.view.*
@@ -6,7 +6,6 @@ import android.widget.Button
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
