@@ -17,7 +17,7 @@ class Consultant(
                 var page : String = "",
                 var category: Map<String, Boolean> = mapOf(),
                 var rating : Map<Int, Boolean> = mapOf(),
-                var consultantService : Map<Int, ConsultantService> = mapOf(),
+                var consultantService : Map<String, ConsultantService> = mapOf(),
                 var appointments: Appointments? = null,
-                var favourites:  Map<Int, Favourite> = mapOf(),
+                var favourites:  Map<String, Favourite> = mapOf(),
                  ) {}
