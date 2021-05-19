@@ -23,12 +23,12 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/filterButton"
+                android:id="@+id/sortButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:insetLeft="10dp"
-                android:text="@string/filter" />
+                android:insetRight="10dp"
+                android:text="@string/sort_by" />
 
             <Space
                 android:layout_width="30dp"
@@ -36,12 +36,12 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/sortButton"
+                android:id="@+id/filterButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:insetRight="10dp"
-                android:text="@string/sort_by" />
+                android:insetLeft="10dp"
+                android:text="@string/filter" />
 
         </LinearLayout>
 

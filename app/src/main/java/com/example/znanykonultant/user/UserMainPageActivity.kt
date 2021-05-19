@@ -30,7 +30,7 @@ class UserMainPageActivity : AppCompatActivity() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.user_nav_search -> setFragment(UserSearchFragment())
+                R.id.user_nav_search -> setFragment(SearchFragment())
                 R.id.user_nav_favourites -> setFragment(UserFavouritesFragment())
                 R.id.user_nav_chats -> setFragment(ChatsFragment())
                 R.id.user_nav_appointments -> setFragment(UserAppointmentsFragment())
