@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import com.example.znanykonultant.R
 import com.example.znanykonultant.consultant.appointments.ConsultantAppointmentsFragment
-import com.example.znanykonultant.consultant.chats.ConsultantChatsFragment
+import com.example.znanykonultant.chat.ChatsFragment
 import com.example.znanykonultant.consultant.profile.ConsultantProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -30,7 +30,7 @@ class ConsultantMainPageActivity : AppCompatActivity() {
         bottomNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.consultant_nav_profile -> setFragment(ConsultantProfileFragment())
-                R.id.consultant_nav_chats -> setFragment(ConsultantChatsFragment())
+                R.id.consultant_nav_chats -> setFragment(ChatsFragment())
                 R.id.consultant_nav_appointments -> setFragment(ConsultantAppointmentsFragment())
                 else -> Log.e("famousConsultant", "consultant navigation, Unknown fragment id = ${it.itemId}")
             }

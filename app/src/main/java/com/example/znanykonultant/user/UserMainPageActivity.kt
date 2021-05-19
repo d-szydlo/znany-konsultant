@@ -3,18 +3,11 @@ package com.example.znanykonultant.user
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.WindowManager
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
-import com.example.znanykonultant.consultant.appointments.ConsultantAppointmentsFragment
-import com.example.znanykonultant.consultant.chats.ConsultantChatsFragment
-import com.example.znanykonultant.consultant.profile.ConsultantProfileFragment
+import com.example.znanykonultant.chat.ChatsFragment
 import com.example.znanykonultant.user.appointments.UserAppointmentsFragment
-import com.example.znanykonultant.user.chats.UserChatsFragment
 import com.example.znanykonultant.user.favourites.UserFavouritesFragment
-import com.example.znanykonultant.user.profile.UserProfileFragment
 import com.example.znanykonultant.user.search.UserSearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -39,9 +32,8 @@ class UserMainPageActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.user_nav_search -> setFragment(UserSearchFragment())
                 R.id.user_nav_favourites -> setFragment(UserFavouritesFragment())
-                R.id.user_nav_chats -> setFragment(UserChatsFragment())
+                R.id.user_nav_chats -> setFragment(ChatsFragment())
                 R.id.user_nav_appointments -> setFragment(UserAppointmentsFragment())
-                R.id.user_nav_profile -> setFragment(UserProfileFragment())
                 else -> Log.e("famousConsultant", "user navigation, Unknown fragment id = ${it.itemId}")
             }
             true

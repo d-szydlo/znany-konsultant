@@ -7,13 +7,9 @@ import com.example.znanykonultant.R
 import com.example.znanykonultant.databinding.ActivityRegistrationBinding
 
 class RegistrationActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityRegistrationBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegistrationBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(R.layout.activity_registration)
     }
 
     fun showUserFragment(view: View) {

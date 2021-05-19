@@ -8,26 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.example.znanykonultant.R
-import com.example.znanykonultant.databinding.FragmentConsultantRegisterBinding
+import com.example.znanykonultant.dao.UserDAO
 import com.example.znanykonultant.databinding.FragmentUserRegisterBinding
-import com.example.znanykonultant.login.LoginActivity
+import com.example.znanykonultant.user.UserMainPageActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 
 class UserRegisterFragment : Fragment() {
-    lateinit var mDatabaseReference: DatabaseReference
-    lateinit var mDatabase: FirebaseDatabase
+    lateinit var userDAO : UserDAO
     lateinit var mAuth: FirebaseAuth
     lateinit var binding: FragmentUserRegisterBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        mDatabase = FirebaseDatabase.getInstance()
-        mDatabaseReference = mDatabase.reference.child("Users")
+    ): View {
         mAuth = FirebaseAuth.getInstance()
         binding = FragmentUserRegisterBinding.inflate(inflater, container, false)
         binding.registerUserButton.setOnClickListener { createNewAccount() }
@@ -35,18 +29,22 @@ class UserRegisterFragment : Fragment() {
     }
 
     private fun createNewAccount() {
-        var name: String? = binding.name.text.toString()
-        var surname: String? = binding.surname.text.toString()
-        var email: String? = binding.email.text.toString()
-        var phone: String? = binding.phone.text.toString()
-        var pass1: String? = binding.pass1.text.toString()
-        var pass2: String? = binding.pass2.text.toString()
+        val name: String = binding.name.text.toString()
+        val surname: String = binding.surname.text.toString()
+        val email: String = binding.email.text.toString()
+        val phone: String = binding.phone.text.toString()
+        val pass1: String = binding.pass1.text.toString()
+        val pass2: String = binding.pass2.text.toString()
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(surname)
-            && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(phone)
+            && !TextUtils.isEmpty(email)
             && !TextUtils.isEmpty(pass1)  && !TextUtils.isEmpty(pass2) && TextUtils.equals(pass1, pass2)) { //TODO separate info when passwords are not the same
-            mAuth.createUserWithEmailAndPassword(email!!, pass1!!)
+            mAuth.createUserWithEmailAndPassword(email, pass1)
                 .addOnSuccessListener {
-                    verifyEmail(); // TODO add user data to database
+                    userDAO  = UserDAO()
+                    userDAO.addPerson(
+                        mAuth.uid.toString(), name, surname, email, phone
+                    )
+                    verifyEmail() // TODO add user data to database
                     updateUserInfoAndUI()
                 }.addOnFailureListener {  e ->
                     Toast.makeText(
@@ -60,7 +58,7 @@ class UserRegisterFragment : Fragment() {
     }
 
     private fun verifyEmail() {
-        val mUser = mAuth.currentUser;
+        val mUser = mAuth.currentUser
         mUser!!.sendEmailVerification()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -76,7 +74,7 @@ class UserRegisterFragment : Fragment() {
     }
 
     private fun updateUserInfoAndUI() {
-        val intent = Intent(this.activity, LoginActivity::class.java)
+        val intent = Intent(this.activity, UserMainPageActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
