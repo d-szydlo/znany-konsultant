@@ -7,31 +7,50 @@
     android:background="@color/blue">
 
     <TextView
+        android:id="@+id/consultantPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintStart_toEndOf="@+id/consultantPhoto"
+        app:layout_constraintTop_toBottomOf="@+id/consultantCategory"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="30.00 - 100.00" />
+
+    <TextView
         android:id="@+id/consultantNameSurname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.019"
         app:layout_constraintStart_toEndOf="@+id/consultantPhoto"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.121"
+        app:layout_constraintVertical_bias="0.177"
         tools:text="Oli Troli" />
 
     <ImageView
         android:id="@+id/consultantPhoto"
         android:layout_width="55dp"
         android:layout_height="58dp"
+        android:contentDescription="@string/consultant_photo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.008"
+        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.416"
-        android:contentDescription="@string/consultant_photo"
-        app:srcCompat="@drawable/blank_face"/>
+        app:layout_constraintVertical_bias="0.38"
+        app:srcCompat="@drawable/blank_face" />
 
     <TextView
         android:id="@+id/consultantCity"
@@ -39,9 +58,11 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/consultantNameSurname"
-        app:layout_constraintTop_toBottomOf="@+id/consultantNameSurname"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toEndOf="@+id/consultantNameSurname"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.358"
         tools:text="Wrocław" />
 
     <TextView
@@ -55,8 +76,10 @@
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/consultantCity"
-        app:layout_constraintTop_toBottomOf="@+id/consultantCity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.015"
+        app:layout_constraintStart_toEndOf="@+id/consultantPhoto"
+        app:layout_constraintTop_toBottomOf="@+id/consultantNameSurname"
         app:layout_constraintVertical_bias="0.0"
         tools:text="IT" />
 
@@ -72,7 +95,7 @@
         app:layout_constraintHorizontal_bias="0.957"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.488"
+        app:layout_constraintVertical_bias="0.489"
         tools:text="5.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

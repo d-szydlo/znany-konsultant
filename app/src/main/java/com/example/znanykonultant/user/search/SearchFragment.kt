@@ -4,9 +4,7 @@ import android.icu.util.BuddhistCalendar
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Button
-import android.widget.PopupMenu
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
@@ -41,7 +39,6 @@ class SearchFragment : Fragment() {
         }
     }
 
-
     private fun processFilters(bundle: Bundle) {
         adapter.cityFilter = bundle.getString("city", "")
 
@@ -62,7 +59,6 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_search, container, false)
 
         view.findViewById<Button>(R.id.sortButton).setOnClickListener { showPopup(view) }
@@ -70,6 +66,7 @@ class SearchFragment : Fragment() {
             setFragmentResult("old_filters", filters)
             (activity as UserMainPageActivity).setFragment(FilterFragment())
         }
+        view.findViewById<ImageButton>(R.id.searchButton).setOnClickListener { onSearch(view) }
 
         recyclerView = view.findViewById(R.id.searchRecycler)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
@@ -82,28 +79,10 @@ class SearchFragment : Fragment() {
         return view
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.by_availability -> {
-                adapter.sortItems(1)
-                true
-            }
-            R.id.by_price_asc -> {
-                adapter.sortItems(2)
-                true
-            }
-            R.id.by_price_desc -> {
-                adapter.sortItems(3)
-                true
-            }
-            R.id.by_rating -> {
-                adapter.sortItems(4)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
+    private fun onSearch(v : View) {
+        adapter.nameFilter  = v.findViewById<EditText>(R.id.consultantNameText).text.toString()
+        adapter.setData(consultants)
     }
-
 
     private fun setDatabaseListener(){
         val postListener = object : ValueEventListener {
@@ -111,7 +90,7 @@ class SearchFragment : Fragment() {
                 dataSnapshot.children.mapNotNullTo(consultants) {
                     it.getValue(Consultant::class.java)
                 }
-                adapter.notifyDataSetChanged()
+                adapter.setData(consultants)
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w("firebase", "loadPost:onCancelled", databaseError.toException())
@@ -121,9 +100,30 @@ class SearchFragment : Fragment() {
     }
 
     fun showPopup(v: View) {
-        val popup = PopupMenu(v.findViewById<Button>(R.id.sortButton).context, v)
+        val popup = PopupMenu(v.context, v.findViewById<Button>(R.id.sortButton))
         val inflater: MenuInflater = popup.menuInflater
         inflater.inflate(R.menu.sort_options, popup.menu)
+        popup.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.by_availability -> {
+                    adapter.sortItems(1)
+                    true
+                }
+                R.id.by_price_asc -> {
+                    adapter.sortItems(2)
+                    true
+                }
+                R.id.by_price_desc -> {
+                    adapter.sortItems(3)
+                    true
+                }
+                R.id.by_rating -> {
+                    adapter.sortItems(4)
+                    true
+                }
+                else -> super.onOptionsItemSelected(item)
+            }
+        }
         popup.show()
     }
 
