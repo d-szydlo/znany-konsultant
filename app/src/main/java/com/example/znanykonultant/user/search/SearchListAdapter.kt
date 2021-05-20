@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
 import com.example.znanykonultant.entity.Consultant
+import java.util.*
 import kotlin.Double.Companion.MAX_VALUE
 import kotlin.Double.Companion.MIN_VALUE
 
@@ -73,6 +74,15 @@ class SearchListAdapter(private var data: MutableList<Consultant>) : RecyclerVie
 
     fun sortItems(sortOption : Int){
         when (sortOption) {
+            1 -> {
+                //
+            }
+            2 -> {
+                data.sortWith { x, y -> (getMinPrice(x) - getMinPrice(y)).toInt() }
+            }
+            3 -> {
+                data.sortWith { x, y -> (getMinPrice(y) - getMinPrice(x)).toInt() }
+            }
             4 -> {
                 data.sortByDescending { it.averageRating }
             }
