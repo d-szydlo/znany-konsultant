@@ -10,12 +10,25 @@ import com.example.znanykonultant.entity.Chats
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ChatListAdapter(private val chats: List<Chats>)
+class ChatListAdapter(private val chats: List<Chats>, private val listener: OnChatClickListener)
     : RecyclerView.Adapter<ChatListAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         val lastMessageText: TextView = view.findViewById(R.id.lastMessageText)
         val lastMessageDate: TextView = view.findViewById(R.id.lastMessageDate)
+        val senderLogin: TextView = view.findViewById(R.id.lastMessageSenderLogin)
+
+        init { view.setOnClickListener(this) }
+
+        override fun onClick(v: View?) {
+            if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
+                listener.onChatClick(bindingAdapterPosition)
+            }
+        }
+    }
+
+    interface OnChatClickListener {
+        fun onChatClick(position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
@@ -26,6 +39,7 @@ class ChatListAdapter(private val chats: List<Chats>)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.senderLogin.text = chats[position].senderLogin
         holder.lastMessageText.text = chats[position].lastMessage
         holder.lastMessageDate.text = getTimeFormatted(chats[position].timestamp.time)
     }
