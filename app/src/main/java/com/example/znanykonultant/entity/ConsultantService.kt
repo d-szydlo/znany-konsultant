@@ -1,4 +1,7 @@
 package com.example.znanykonultant.entity
 
-class ConsultantService(val cost : Int, val description : String, val type : String) {
+class ConsultantService(
+    var cost : Int = 0,
+    var description : String = "",
+    var type : String = "") {
 }

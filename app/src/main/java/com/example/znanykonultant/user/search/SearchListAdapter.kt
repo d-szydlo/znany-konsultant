@@ -11,6 +11,17 @@ import com.example.znanykonultant.entity.Consultant
 
 class SearchListAdapter(private var data: MutableList<Consultant>) : RecyclerView.Adapter<SearchListAdapter.ViewHolder>() {
 
+    var cityFilter : String = ""
+    var priceMinFilter : Double = 0.0
+    var priceMaxFilter : Double = 100.0
+    var morningFilter : Boolean = false
+    var afternoonFilter : Boolean = false
+    var eveningFilter : Boolean = false
+    var catITFilter : Boolean = false
+    var catBusinessFilter : Boolean = false
+    var catFinanceFilter : Boolean = false
+    var catMarketingFilter : Boolean = false
+
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
         val consultantNameSurname: TextView
         val consultantCity: TextView
@@ -37,12 +48,16 @@ class SearchListAdapter(private var data: MutableList<Consultant>) : RecyclerVie
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.consultantNameSurname.text = data[position].name + " " + data[position].surname
         holder.consultantCity.text = data[position].city
-        holder.consultantRating.text = "5"
+        holder.consultantRating.text = data[position].averageRating.toString()
         holder.consultantCategory.text = "IT"
     }
 
     override fun getItemCount(): Int {
         return data.size
+    }
+
+    fun sortItems(sortOption : Int){
+        //
     }
 
 }

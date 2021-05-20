@@ -129,7 +129,6 @@
                     android:ems="10"
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
-                    android:text="@string/city"
                     app:layout_constraintBaseline_toBaselineOf="@+id/textView5"
                     app:layout_constraintStart_toEndOf="@+id/textView5"
                     app:layout_constraintStart_toStartOf="@+id/morningBox" />
@@ -203,12 +202,12 @@
                     android:text="@string/business"
                     android:textAllCaps="true"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/categoryMarcetingBox"
+                    app:layout_constraintStart_toStartOf="@+id/categoryMarketingBox"
                     app:layout_constraintTop_toBottomOf="@+id/categoryFinanceBox"
                     app:layout_constraintVertical_bias="0.0" />
 
                 <CheckBox
-                    android:id="@+id/categoryMarcetingBox"
+                    android:id="@+id/categoryMarketingBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/marceting"
@@ -228,7 +227,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/categoryMarcetingBox"
+                    app:layout_constraintTop_toBottomOf="@+id/categoryMarketingBox"
                     app:layout_constraintVertical_bias="0.348" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

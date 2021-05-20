@@ -58,6 +58,7 @@ class ConsultantDAO {
                       houseNumber : String = "",
                       description : String = "",
                       page : String = "",
+                      averageRating : Int = 0,
                       categories : MutableList<String> = mutableListOf()
 
     ){
@@ -75,6 +76,7 @@ class ConsultantDAO {
                 houseNumber,
                 description,
                 page,
+                averageRating,
                 Category(categories).toMap()
             )
         )
@@ -85,6 +87,9 @@ class ConsultantDAO {
         if (consultantUid != null) {
             consultantRef.child(consultantUid).updateChildren(consultantUpdate)
         }
+        //var consultantUpdate = mutableMapOf<String, Any>()
+        //consultantUpdate["averageRating"] = newAvg
+        //consultantRef.child(consultantUid).updateChildren(consultantUpdate)
     }
 
     fun getPersonData(): Consultant?{
