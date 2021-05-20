@@ -58,4 +58,7 @@ dependencies {
 
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation "com.android.support:design:$kotlin_version"
+
+    implementation "com.xwray:groupie:2.9.0"
+    implementation "com.xwray:groupie-viewbinding:2.9.0"
 }
