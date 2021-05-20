@@ -63,4 +63,9 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:+'
     implementation 'com.android.support:design:+'
     api 'com.google.android.material:material:1.1.0-alpha06'
+
+    implementation platform('com.google.firebase:firebase-bom:28.0.1')
+    implementation 'com.google.firebase:firebase-storage-ktx'
+
+    implementation 'com.squareup.picasso:picasso:+'
 }

@@ -3,7 +3,6 @@ package com.example.znanykonultant.consultant.profile
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -13,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +26,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
+import com.squareup.picasso.Picasso
+import java.io.File
+import java.io.FileNotFoundException
 
 
 class ConsultantProfileFragment : Fragment() {
@@ -45,6 +50,7 @@ class ConsultantProfileFragment : Fragment() {
     val database = Firebase.database
     val consultantRef = database.getReference("consultants")
     var consultants : MutableList<Consultant> = mutableListOf()
+    lateinit var storage: FirebaseStorage
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -102,6 +108,7 @@ class ConsultantProfileFragment : Fragment() {
             newPhoto(it)
         }
 
+        storage = Firebase.storage
         return view
     }
 
@@ -132,8 +139,31 @@ class ConsultantProfileFragment : Fragment() {
             imageUri = data?.data
             var x = imageUri.toString()
             photo.setImageURI(Uri.parse(x))
-            // TODO save in db uri
-            // TODO change in db picture type to string
+
+            var storageRef = storage.reference
+            try{
+                var path = "profile_pictures/" + consultantUid.toString() + "/1.jpg"
+                var ref = storageRef.child(path)
+                var uploadTask = imageUri?.let { ref.putFile(it) }
+                uploadTask?.continueWithTask { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
+                        }
+                    }
+                    ref.downloadUrl
+                }?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val downloadUri = task.result
+                        val new_data = mutableMapOf<String, Any>()
+                        new_data["picture"] = downloadUri.toString()
+                        updateData(new_data)
+                    } else {}
+                }
+            } catch (e: FileNotFoundException){
+                
+            }
+
         }
     }
 
@@ -144,6 +174,9 @@ class ConsultantProfileFragment : Fragment() {
         phone.setText(data?.phone)
         desc.setText(data?.description)
         url.setText(data?.page)
+        try {
+            Picasso.get().load(data?.picture).into(photo);
+        }catch(e: IllegalArgumentException){}
         //address.setText(data?.city + data?.street + data?.houseNumber)
     }
 
