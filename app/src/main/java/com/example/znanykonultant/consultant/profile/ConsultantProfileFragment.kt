@@ -5,14 +5,15 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.TextUtils.split
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
+import com.squareup.picasso.Picasso
+import java.io.File
+import java.io.FileNotFoundException
 
 
 class ConsultantProfileFragment : Fragment() {
@@ -45,10 +51,13 @@ class ConsultantProfileFragment : Fragment() {
     val database = Firebase.database
     val consultantRef = database.getReference("consultants")
     var consultants : MutableList<Consultant> = mutableListOf()
+    lateinit var storage: FirebaseStorage
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_consultant_profile, container, false)
+
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -77,13 +86,23 @@ class ConsultantProfileFragment : Fragment() {
         servicesRecycler.adapter = ConsultantServicesAdapter(view.context, servicesList)
         servicesRecycler.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
 
+        servicesRecycler.addOnLayoutChangeListener(View.OnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
+            if (bottom < oldBottom) {
+                servicesRecycler.postDelayed(Runnable {
+                    servicesRecycler.smoothScrollToPosition(
+                        (servicesRecycler.adapter as ConsultantServicesAdapter).itemCount - 1
+                    )
+                }, 100)
+            }
+        })
+
         name = view.findViewById(R.id.consultant_name)
         surname = view.findViewById(R.id.consultant_surname)
         email = view.findViewById(R.id.consultant_email)
         phone = view.findViewById(R.id.consultant_phone)
         desc = view.findViewById(R.id.consultant_description)
         url = view.findViewById(R.id.consultant_url)
-        address = view.findViewById(R.id.consultant_address)
+        //address = view.findViewById(R.id.consultant_address)
         photo  = view.findViewById(R.id.photo)
 
         view.findViewById<Button>(R.id.save).setOnClickListener { save(it) }
@@ -92,6 +111,7 @@ class ConsultantProfileFragment : Fragment() {
             newPhoto(it)
         }
 
+        storage = Firebase.storage
         return view
     }
 
@@ -122,8 +142,31 @@ class ConsultantProfileFragment : Fragment() {
             imageUri = data?.data
             var x = imageUri.toString()
             photo.setImageURI(Uri.parse(x))
-            // TODO save in db uri
-            // TODO change in db picture type to string
+
+            var storageRef = storage.reference
+            try{
+                var path = "profile_pictures/" + consultantUid.toString() + "/1.jpg"
+                var ref = storageRef.child(path)
+                var uploadTask = imageUri?.let { ref.putFile(it) }
+                uploadTask?.continueWithTask { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
+                        }
+                    }
+                    ref.downloadUrl
+                }?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val downloadUri = task.result
+                        val new_data = mutableMapOf<String, Any>()
+                        new_data["picture"] = downloadUri.toString()
+                        updateData(new_data)
+                    } else {}
+                }
+            } catch (e: FileNotFoundException){
+                
+            }
+
         }
     }
 
@@ -134,7 +177,10 @@ class ConsultantProfileFragment : Fragment() {
         phone.setText(data?.phone)
         desc.setText(data?.description)
         url.setText(data?.page)
-        address.setText(data?.city + data?.street + data?.houseNumber)
+        try {
+            Picasso.get().load(data?.picture).into(photo);
+        }catch(e: IllegalArgumentException){}
+        //address.setText(data?.city + data?.street + data?.houseNumber)
     }
 
     private fun updateData(consultantUpdate : MutableMap<String, Any>) {

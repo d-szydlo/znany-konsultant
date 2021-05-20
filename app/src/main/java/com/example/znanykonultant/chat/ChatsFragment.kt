@@ -14,11 +14,14 @@ import com.example.znanykonultant.entity.Chats
 import java.sql.Timestamp
 
 class ChatsFragment : Fragment(), ChatListAdapter.OnChatClickListener {
+    private lateinit var chats: List<Chats>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_chats, container, false)
+        genTempData()
         loadRecycler(view)
         return view
     }
@@ -26,12 +29,12 @@ class ChatsFragment : Fragment(), ChatListAdapter.OnChatClickListener {
     private fun loadRecycler(view: View) {
         val chatsRecycler = view.findViewById<RecyclerView>(R.id.chats_recycler)
         chatsRecycler.layoutManager = LinearLayoutManager(activity)
-        chatsRecycler.adapter = ChatListAdapter(genTempData(), this)
+        chatsRecycler.adapter = ChatListAdapter(chats, this)
         chatsRecycler.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
     }
 
-    private fun genTempData(): List<Chats> {
-        return listOf(
+    private fun genTempData() {
+        chats = listOf(
             Chats(
                 "First message ever",
                 "Unknown",
@@ -57,7 +60,11 @@ class ChatsFragment : Fragment(), ChatListAdapter.OnChatClickListener {
 
     override fun onChatClick(position: Int) {
         val intent = Intent(activity, SingleChatActivity::class.java)
-        intent.putExtra("message", "Welcome to chat activity!")
+        intent.putExtra(INTERLOCUTOR_KEY, chats[position].senderLogin)
         startActivity(intent)
+    }
+
+    companion object {
+        const val INTERLOCUTOR_KEY = "interlocutor"
     }
 }
