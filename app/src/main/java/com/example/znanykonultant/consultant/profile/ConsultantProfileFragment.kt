@@ -3,9 +3,9 @@ package com.example.znanykonultant.consultant.profile
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.TextUtils.split
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -77,13 +77,23 @@ class ConsultantProfileFragment : Fragment() {
         servicesRecycler.adapter = ConsultantServicesAdapter(view.context, servicesList)
         servicesRecycler.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
 
+        servicesRecycler.addOnLayoutChangeListener(View.OnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
+            if (bottom < oldBottom) {
+                servicesRecycler.postDelayed(Runnable {
+                    servicesRecycler.smoothScrollToPosition(
+                        (servicesRecycler.adapter as ConsultantServicesAdapter).itemCount - 1
+                    )
+                }, 100)
+            }
+        })
+
         name = view.findViewById(R.id.consultant_name)
         surname = view.findViewById(R.id.consultant_surname)
         email = view.findViewById(R.id.consultant_email)
         phone = view.findViewById(R.id.consultant_phone)
         desc = view.findViewById(R.id.consultant_description)
         url = view.findViewById(R.id.consultant_url)
-        address = view.findViewById(R.id.consultant_address)
+        //address = view.findViewById(R.id.consultant_address)
         photo  = view.findViewById(R.id.photo)
 
         view.findViewById<Button>(R.id.save).setOnClickListener { save(it) }
@@ -134,7 +144,7 @@ class ConsultantProfileFragment : Fragment() {
         phone.setText(data?.phone)
         desc.setText(data?.description)
         url.setText(data?.page)
-        address.setText(data?.city + data?.street + data?.houseNumber)
+        //address.setText(data?.city + data?.street + data?.houseNumber)
     }
 
     private fun updateData(consultantUpdate : MutableMap<String, Any>) {
