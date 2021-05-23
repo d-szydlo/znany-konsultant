@@ -1,6 +1,5 @@
 package com.example.znanykonultant.chat
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,58 +9,56 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
-import com.example.znanykonultant.entity.Chats
-import java.sql.Timestamp
+import com.example.znanykonultant.entity.Messages
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 
-class ChatsFragment : Fragment(), ChatListAdapter.OnChatClickListener {
-    private lateinit var chats: List<Chats>
+class ChatsFragment : Fragment() {
+    private val adapter = GroupAdapter<GroupieViewHolder>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_chats, container, false)
-        genTempData()
         loadRecycler(view)
+        listenForLatestMessages()
         return view
     }
 
     private fun loadRecycler(view: View) {
         val chatsRecycler = view.findViewById<RecyclerView>(R.id.chats_recycler)
+        chatsRecycler.adapter = adapter
         chatsRecycler.layoutManager = LinearLayoutManager(activity)
-        chatsRecycler.adapter = ChatListAdapter(chats, this)
         chatsRecycler.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
     }
 
-    private fun genTempData() {
-        chats = listOf(
-            Chats(
-                "First message ever",
-                "Unknown",
-                Timestamp(System.currentTimeMillis() - 100000000000000)),
-            Chats(
-                "Once upon a time",
-                "Storyteller",
-                Timestamp(System.currentTimeMillis() - 100000000000)),
-            Chats(
-                "I'm writing a long message to check how my fragment works",
-                "Tester",
-                Timestamp(System.currentTimeMillis() - 123456789)),
-            Chats(
-                "It's alpha version",
-                "Me",
-                Timestamp(System.currentTimeMillis())),
-            Chats(
-                "New will be released in the future",
-                "Me",
-                Timestamp(System.currentTimeMillis()))
-        )
-    }
+    private fun listenForLatestMessages() {
+        val fromId = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId")
+        ref.addChildEventListener(object: ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val message = snapshot.getValue(Messages::class.java) ?: return
+                adapter.add(LatestMessageRow(message))
+            }
 
-    override fun onChatClick(position: Int) {
-        val intent = Intent(activity, SingleChatActivity::class.java)
-        intent.putExtra(INTERLOCUTOR_KEY, chats[position].senderLogin)
-        startActivity(intent)
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
     }
 
     companion object {

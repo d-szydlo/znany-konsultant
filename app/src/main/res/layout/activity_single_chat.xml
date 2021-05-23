@@ -26,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:text="@string/send"
+        android:onClick="sendMessage"
         android:layout_margin="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
