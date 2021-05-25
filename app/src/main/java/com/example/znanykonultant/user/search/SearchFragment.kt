@@ -1,5 +1,6 @@
 package com.example.znanykonultant.user.search
 
+import android.content.Intent
 import android.icu.util.BuddhistCalendar
 import android.os.Bundle
 import android.util.Log
@@ -15,13 +16,18 @@ import com.example.znanykonultant.R
 import com.example.znanykonultant.dao.ConsultantDAO
 import com.example.znanykonultant.entity.Consultant
 import com.example.znanykonultant.user.UserMainPageActivity
+import com.example.znanykonultant.user.consultant.profile.UserConsultantProfileActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
-class SearchFragment : Fragment() {
+interface SearchResultClickListener {
+    fun onSearchResultClick(position: Int)
+}
+
+class SearchFragment : Fragment(), SearchResultClickListener {
 
     private lateinit var recyclerView : RecyclerView
     private lateinit var adapter: SearchListAdapter
@@ -70,7 +76,7 @@ class SearchFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.searchRecycler)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
-        adapter = SearchListAdapter(consultants)
+        adapter = SearchListAdapter(consultants, this)
         recyclerView.adapter = adapter
         recyclerView.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
 
@@ -125,6 +131,13 @@ class SearchFragment : Fragment() {
             }
         }
         popup.show()
+    }
+
+    override fun onSearchResultClick(position: Int) {
+        val myIntent = Intent(activity, UserConsultantProfileActivity::class.java)
+        myIntent.putExtra("consultant_uid", consultants[position].uid)
+        myIntent.putExtra("position", position.toString())
+        startActivity(myIntent)
     }
 
 }
