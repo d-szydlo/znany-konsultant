@@ -1,5 +1,6 @@
 package com.example.znanykonultant.chat
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,7 +10,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
+import com.example.znanykonultant.entity.Consultant
 import com.example.znanykonultant.entity.Messages
+import com.example.znanykonultant.entity.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -20,6 +23,7 @@ import com.xwray.groupie.GroupieViewHolder
 
 class ChatsFragment : Fragment() {
     private val adapter = GroupAdapter<GroupieViewHolder>()
+    private val latestMessagesMap = HashMap<String, Messages>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +40,23 @@ class ChatsFragment : Fragment() {
         chatsRecycler.adapter = adapter
         chatsRecycler.layoutManager = LinearLayoutManager(activity)
         chatsRecycler.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+
+        adapter.setOnItemClickListener { item, _ ->
+            val intent = Intent(activity, SingleChatActivity::class.java)
+            val row = item as LatestMessageRow
+
+            if (row.chatPartner is User) {
+                val user = row.chatPartner as User
+                intent.putExtra(NAME_KEY, "${user.name} ${user.surname}")
+                intent.putExtra(UID_KEY, user.uid)
+            } else if (row.chatPartner is Consultant) {
+                val consultant = row.chatPartner as Consultant
+                intent.putExtra(NAME_KEY, "${consultant.name} ${consultant.surname}")
+                intent.putExtra(UID_KEY, consultant.uid)
+            }
+
+            startActivity(intent)
+        }
     }
 
     private fun listenForLatestMessages() {
@@ -44,10 +65,14 @@ class ChatsFragment : Fragment() {
         ref.addChildEventListener(object: ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val message = snapshot.getValue(Messages::class.java) ?: return
-                adapter.add(LatestMessageRow(message))
+                latestMessagesMap[snapshot.key!!] = message
+                refreshRecyclerViewMessages()
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                val message = snapshot.getValue(Messages::class.java) ?: return
+                latestMessagesMap[snapshot.key!!] = message
+                refreshRecyclerViewMessages()
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
@@ -61,7 +86,13 @@ class ChatsFragment : Fragment() {
         })
     }
 
+    private fun refreshRecyclerViewMessages() {
+        adapter.clear()
+        latestMessagesMap.forEach { (_, message) -> adapter.add(LatestMessageRow(message)) }
+    }
+
     companion object {
-        const val INTERLOCUTOR_KEY = "interlocutor"
+        const val NAME_KEY = "name_key"
+        const val UID_KEY = "uid_key"
     }
 }

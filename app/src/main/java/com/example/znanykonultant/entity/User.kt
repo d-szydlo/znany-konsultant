@@ -3,7 +3,7 @@ package com.example.znanykonultant.entity
 import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties
-class User(
+class User (
     var uid: String = "",
     var name: String = "",
     var surname: String = "",
@@ -12,7 +12,6 @@ class User(
     var picture: String = "",
     var appointments: Appointments? = null,
     var favourites:  Map<Int, Favourite> = mapOf()
-) {
-
+) : Human() {
+    override fun getFullName() = "$name $surname"
 }
-

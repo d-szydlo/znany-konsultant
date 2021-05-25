@@ -21,4 +21,6 @@ class Consultant(
                 var consultantService : Map<String, ConsultantService> = mapOf(),
                 var appointments: Appointments? = null,
                 var favourites:  Map<String, Favourite> = mapOf(),
-                 ) {}
+) : Human() {
+    override fun getFullName() = "$name $surname"
+}

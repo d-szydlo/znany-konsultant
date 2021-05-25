@@ -3,21 +3,64 @@ package com.example.znanykonultant.chat
 import android.view.View
 import com.example.znanykonultant.R
 import com.example.znanykonultant.databinding.RecyclerLatestMessageItemBinding
+import com.example.znanykonultant.entity.Consultant
+import com.example.znanykonultant.entity.Human
 import com.example.znanykonultant.entity.Messages
+import com.example.znanykonultant.entity.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.xwray.groupie.viewbinding.BindableItem
 import java.text.SimpleDateFormat
 import java.util.*
 
-class LatestMessageRow(private val message: Messages)
+open class LatestMessageRow(private val message: Messages)
     : BindableItem<RecyclerLatestMessageItemBinding>() {
+    var chatPartner : Human? = null
+
     override fun getLayout(): Int {
         return R.layout.recycler_latest_message_item
     }
 
     override fun bind(viewBinding: RecyclerLatestMessageItemBinding, position: Int) {
         viewBinding.lastMessageText.text = message.text
-        viewBinding.lastMessageSenderLogin.text = message.fromId
         viewBinding.lastMessageDate.text = getTimeFormatted(message.timestamp)
+
+        val chatPartnerId : String = if (message.fromId == FirebaseAuth.getInstance().uid)
+            message.toId
+        else
+            message.fromId
+
+        val userRef = FirebaseDatabase.getInstance().getReference("/users/$chatPartnerId")
+        userRef.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user : User? = snapshot.getValue(User::class.java)
+                if (user != null) {
+                    chatPartner = user
+                    viewBinding.lastMessageSenderLogin.text = (chatPartner as User).getFullName()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+
+        val consultantRef = FirebaseDatabase.getInstance().getReference("/consultants/$chatPartnerId")
+        consultantRef.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val consultant : Consultant? = snapshot.getValue(Consultant::class.java)
+                if (consultant != null) {
+                    chatPartner = consultant
+                    viewBinding.lastMessageSenderLogin.text =
+                        (chatPartner as Consultant).getFullName()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
     }
 
     private fun getTimeFormatted(time: Long): String {

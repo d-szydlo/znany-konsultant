@@ -16,7 +16,8 @@ import com.xwray.groupie.GroupieViewHolder
 
 class SingleChatActivity : AppCompatActivity() {
     private lateinit var binding : ActivitySingleChatBinding
-    val adapter = GroupAdapter<GroupieViewHolder>()
+    private val adapter = GroupAdapter<GroupieViewHolder>()
+    private var chatPartnerId : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,14 +25,15 @@ class SingleChatActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        setInterlocutor()
+        setChatPartner()
         loadRecycler()
         listenForMessages()
     }
 
-    private fun setInterlocutor() {
-        val interlocutor = intent.getStringExtra(ChatsFragment.INTERLOCUTOR_KEY)
-        supportActionBar?.title = interlocutor
+    private fun setChatPartner() {
+        chatPartnerId = intent.getStringExtra(ChatsFragment.UID_KEY)
+        val chatPartnerName = intent.getStringExtra(ChatsFragment.NAME_KEY)
+        supportActionBar?.title = chatPartnerName
     }
 
     private fun loadRecycler() {
@@ -42,8 +44,7 @@ class SingleChatActivity : AppCompatActivity() {
 
     private fun listenForMessages() {
         val fromId = FirebaseAuth.getInstance().uid
-        val toId = "VQf0TQ1CKIPydNG58KLKF9gDmSl2"
-        val ref = FirebaseDatabase.getInstance().getReference("/messages/$fromId/$toId")
+        val ref = FirebaseDatabase.getInstance().getReference("/messages/$fromId/$chatPartnerId")
 
         ref.addChildEventListener(object: ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -73,20 +74,19 @@ class SingleChatActivity : AppCompatActivity() {
     fun sendMessage(view: View) {
         val text = binding.editText.text.toString()
         val fromId = FirebaseAuth.getInstance().uid
-        val toId = "VQf0TQ1CKIPydNG58KLKF9gDmSl2"
-        val reference = FirebaseDatabase.getInstance().getReference("/messages/$fromId/$toId").push()
-        val toReference = FirebaseDatabase.getInstance().getReference("/messages/$toId/$fromId").push()
+        val reference = FirebaseDatabase.getInstance().getReference("/messages/$fromId/$chatPartnerId").push()
+        val toReference = FirebaseDatabase.getInstance().getReference("/messages/$chatPartnerId/$fromId").push()
 
         if (fromId == null) return
 
-        val message = Messages(reference.key!!, text, fromId, toId, System.currentTimeMillis())
+        val message = Messages(reference.key!!, text, fromId, chatPartnerId!!, System.currentTimeMillis())
         reference.setValue(message).addOnSuccessListener {
             binding.singleChatRecyclerView.scrollToPosition(adapter.itemCount - 1)
         }
         toReference.setValue(message)
 
-        val latestMessageRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId").push()
-        val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$toId/$fromId").push()
+        val latestMessageRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$chatPartnerId")
+        val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$chatPartnerId/$fromId")
         latestMessageRef.setValue(message)
         latestMessageToRef.setValue(message)
 
