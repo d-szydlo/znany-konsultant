@@ -26,11 +26,42 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="56dp" />
 
-            <FrameLayout
-                android:id="@+id/fragmentContainerButtons"
+            <LinearLayout
+                android:id="@+id/buttonsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="56dp" />
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/setUpMeetingButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:onClick="makeAnAppointment"
+                    android:text="Umów się" />
+
+                <Button
+                    android:id="@+id/addOpinionButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:onClick="addOpinion"
+                    android:text="Dodaj opinię" />
+
+                <Button
+                    android:id="@+id/startChat"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:onClick="startChatting"
+                    android:text="Czat" />
+
+            </LinearLayout>
 
             <FrameLayout
                 android:id="@+id/fragmentContainerOpinions"
