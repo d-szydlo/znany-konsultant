@@ -16,4 +16,9 @@
         android:title="@string/appointments"
         android:icon="@drawable/ic_baseline_calendar_24"/>
 
+    <item
+        android:id="@+id/consultant_nav_services"
+        android:title="@string/services"
+        android:icon="@drawable/ic_baseline_service_24"/>
+
 </menu>

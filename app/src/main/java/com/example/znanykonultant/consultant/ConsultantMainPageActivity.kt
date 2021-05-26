@@ -8,6 +8,7 @@ import com.example.znanykonultant.R
 import com.example.znanykonultant.consultant.appointments.ConsultantAppointmentsFragment
 import com.example.znanykonultant.chat.ChatsFragment
 import com.example.znanykonultant.consultant.profile.ConsultantProfileFragment
+import com.example.znanykonultant.consultant.services.ConsultantServicesFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ConsultantMainPageActivity : AppCompatActivity() {
@@ -32,6 +33,7 @@ class ConsultantMainPageActivity : AppCompatActivity() {
                 R.id.consultant_nav_profile -> setFragment(ConsultantProfileFragment())
                 R.id.consultant_nav_chats -> setFragment(ChatsFragment())
                 R.id.consultant_nav_appointments -> setFragment(ConsultantAppointmentsFragment())
+                R.id.consultant_nav_services -> setFragment(ConsultantServicesFragment())
                 else -> Log.e("famousConsultant", "consultant navigation, Unknown fragment id = ${it.itemId}")
             }
             true
