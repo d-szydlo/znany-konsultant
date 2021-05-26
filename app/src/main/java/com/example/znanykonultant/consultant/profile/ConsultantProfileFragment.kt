@@ -42,9 +42,7 @@ class ConsultantProfileFragment : Fragment() {
     lateinit var phone: EditText
     lateinit var desc: EditText
     lateinit var url: EditText
-    lateinit var address: EditText
     lateinit var photo: ImageView
-    lateinit var servicesRecycler: RecyclerView
     private var imageUri: Uri? = null
     val consultantUid = FirebaseAuth.getInstance().uid
     var data : Consultant? = null
@@ -76,33 +74,12 @@ class ConsultantProfileFragment : Fragment() {
         }
         consultantRef.addValueEventListener(postListener)
 
-        var consultant: ConsultantService = ConsultantService(120.0, "bardzo dlugie konsultacje", "dlugie")
-        var consultant2: ConsultantService = ConsultantService(150.0, "kons", "rozmowa")
-        var servicesList = arrayListOf(consultant)
-        servicesList.add(consultant2)
-
-        servicesRecycler = view.findViewById<RecyclerView>(R.id.consultant_services)
-        servicesRecycler.layoutManager = LinearLayoutManager(view.context)
-        servicesRecycler.adapter = ConsultantServicesAdapter(view.context, servicesList)
-        servicesRecycler.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
-
-        servicesRecycler.addOnLayoutChangeListener(View.OnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
-            if (bottom < oldBottom) {
-                servicesRecycler.postDelayed(Runnable {
-                    servicesRecycler.smoothScrollToPosition(
-                        (servicesRecycler.adapter as ConsultantServicesAdapter).itemCount - 1
-                    )
-                }, 100)
-            }
-        })
-
         name = view.findViewById(R.id.consultant_name)
         surname = view.findViewById(R.id.consultant_surname)
         email = view.findViewById(R.id.consultant_email)
         phone = view.findViewById(R.id.consultant_phone)
         desc = view.findViewById(R.id.consultant_description)
         url = view.findViewById(R.id.consultant_url)
-        //address = view.findViewById(R.id.consultant_address)
         photo  = view.findViewById(R.id.photo)
 
         view.findViewById<Button>(R.id.save).setOnClickListener { save(it) }
@@ -121,6 +98,7 @@ class ConsultantProfileFragment : Fragment() {
         var new_email = email.text
         var new_phone = phone.text
         var new_desc = desc.text
+        var new_url = url.text
 
         val new_data = mutableMapOf<String, Any>()
         new_data["name"] = new_name.toString()
@@ -128,6 +106,7 @@ class ConsultantProfileFragment : Fragment() {
         new_data["email"] = new_email.toString()
         new_data["phone"] = new_phone.toString()
         new_data["description"] = new_desc.toString()
+        new_data["page"] = new_url.toString()
         updateData(new_data)
     }
 
