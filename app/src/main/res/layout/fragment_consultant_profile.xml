@@ -7,6 +7,7 @@
     tools:context=".consultant.profile.ConsultantProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/userConsultantProfileLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".consultant.profile.ConsultantPage">
@@ -41,9 +42,9 @@
                 android:layout_marginBottom="452dp"
                 android:background="@android:color/transparent"
                 android:ems="10"
+                android:fontFamily="cursive"
                 android:gravity="center"
                 android:hint="imię"
-                android:fontFamily="cursive"
                 android:inputType="textPersonName"
                 android:textSize="18sp"
                 app:layout_constraintHorizontal_bias="0.516"
@@ -70,9 +71,9 @@
                 android:layout_marginBottom="452dp"
                 android:background="@android:color/transparent"
                 android:ems="10"
+                android:fontFamily="cursive"
                 android:gravity="center"
                 android:hint="nazwisko"
-                android:fontFamily="cursive"
                 android:inputType="textPersonName"
                 android:textSize="18sp"
                 app:layout_constraintHorizontal_bias="0.516"
