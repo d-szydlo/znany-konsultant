@@ -15,12 +15,16 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
+import com.example.znanykonultant.consultant.ConsultantMainPageActivity
 import com.example.znanykonultant.entity.Consultant
 import com.example.znanykonultant.entity.ConsultantService
+import com.example.znanykonultant.user.UserMainPageActivity
+import com.example.znanykonultant.user.search.FilterFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -88,6 +92,10 @@ class ConsultantProfileFragment : Fragment() {
         }
 
         storage = Firebase.storage
+
+        view.findViewById<Button>(R.id.visitorsButton).setOnClickListener {
+            (activity as ConsultantMainPageActivity).setFragment(VisitorsChartFragment())
+        }
         return view
     }
 

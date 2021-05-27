@@ -1,4 +1,4 @@
-package com.example.znanykonultant.consultant
+package com.example.znanykonultant.consultant.profile
 
 import android.graphics.Color
 import android.os.Bundle
@@ -13,7 +13,6 @@ import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.Entry
 import kotlin.random.Random
 
 class VisitorsChartFragment : Fragment() {

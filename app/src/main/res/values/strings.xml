@@ -71,4 +71,5 @@
     <!-- Appointments -->
     <string name="app_consultant">Konsultant</string>
     <string name="app_client">Klient</string>
+    <string name="see_visitors">Zobacz zasięgi</string>
 </resources>

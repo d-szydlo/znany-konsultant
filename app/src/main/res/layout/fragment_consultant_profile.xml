@@ -12,6 +12,18 @@
         android:layout_height="match_parent"
         tools:context=".consultant.profile.ConsultantPage">
 
+        <Button
+            android:id="@+id/visitorsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/see_visitors"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.175"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputLayoutFullDesc"
+            app:layout_constraintVertical_bias="0.256" />
+
         <ImageView
             android:id="@+id/photo"
             android:layout_width="233dp"
