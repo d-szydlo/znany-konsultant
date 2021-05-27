@@ -5,7 +5,6 @@ import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 class Opinion(
-    var id : String = "",
     var rating : Float = 0f,
     var title : String = "",
     var description : String = "",

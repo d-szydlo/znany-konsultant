@@ -13,9 +13,12 @@ class UserConsultantProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_consultant_profile)
         consultantUid = this.intent.getStringExtra("consultant_uid").toString()
-        var newFragment: UserConsultantProfileFragment = UserConsultantProfileFragment(consultantUid) // TODO przechowywanie uid przy obrocie, lub zablokowanie obrotu
+
+        val newProfileFragment: UserConsultantProfileFragment = UserConsultantProfileFragment(consultantUid) // TODO przechowywanie uid przy obrocie, lub zablokowanie obrotu
+        val newOpinionFragment: UserConsultantOpinionFragment = UserConsultantOpinionFragment(consultantUid)
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragmentContainerProfil, newFragment)
+        transaction.replace(R.id.fragmentContainerProfil, newProfileFragment)
+        transaction.replace(R.id.fragmentContainerOpinions, newOpinionFragment)
         transaction.commit()
     }
 
