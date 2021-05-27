@@ -2,6 +2,7 @@ package com.example.znanykonultant.consultant.profile
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +10,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
 import com.example.znanykonultant.entity.ConsultantService
-import com.example.znanykonultant.main.MainActivity
 
 
-class ConsultantServicesAdapter(var context: Context, var ServicesList: ArrayList<ConsultantService>): RecyclerView.Adapter<ConsultantServicesAdapter.ConsultantServicesViewHolder>(){
+class ConsultantServicesAdapter(var context: Context, var ServicesList: MutableList<ConsultantService>): RecyclerView.Adapter<ConsultantServicesAdapter.ConsultantServicesViewHolder>(){
 
     class ConsultantServicesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var consultant_service_name: TextView
@@ -34,6 +34,7 @@ class ConsultantServicesAdapter(var context: Context, var ServicesList: ArrayLis
     }
 
     override fun getItemCount(): Int {
+        Log.i("niehalo", ServicesList.size.toString())
         return ServicesList.size
     }
 

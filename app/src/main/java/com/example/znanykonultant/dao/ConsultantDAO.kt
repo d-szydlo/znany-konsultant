@@ -58,7 +58,7 @@ class ConsultantDAO {
                       houseNumber : String = "",
                       description : String = "",
                       page : String = "",
-                      averageRating : Int = 0,
+                      averageRating : Float = 0f,
                       categories : MutableList<String> = mutableListOf()
 
     ){

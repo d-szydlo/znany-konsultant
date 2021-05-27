@@ -38,7 +38,6 @@
             android:layout_width="152dp"
             android:layout_height="47dp"
             android:layout_marginBottom="5dp"
-            android:onClick="addService"
             android:text="Dodaj usługę"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
