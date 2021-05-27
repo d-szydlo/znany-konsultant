@@ -93,6 +93,7 @@ class SearchFragment : Fragment(), SearchResultClickListener {
     private fun setDatabaseListener(){
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                consultants = mutableListOf()
                 dataSnapshot.children.mapNotNullTo(consultants) {
                     it.getValue(Consultant::class.java)
                 }

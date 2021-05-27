@@ -79,6 +79,7 @@ class SearchListAdapter(private var data: MutableList<Consultant>, var listener:
         return data.size
     }
 
+    // TODO po posortowaniu onSearchResultClick dostaje złe position, to stare a nie to nowe
     fun sortItems(sortOption : Int){
         when (sortOption) {
             1 -> {

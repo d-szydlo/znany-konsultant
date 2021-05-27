@@ -15,7 +15,7 @@ class Consultant(
                 var houseNumber : String = "",
                 var description : String = "",
                 var page : String = "",
-                var averageRating : Int = 0,
+                var averageRating : Float = 0f,
                 var category: Map<String, Boolean> = mapOf(),
                 var rating : Map<Int, Boolean> = mapOf(),
                 var consultantService : Map<String, ConsultantService> = mapOf(),
