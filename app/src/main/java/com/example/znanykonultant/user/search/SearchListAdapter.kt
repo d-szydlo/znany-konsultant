@@ -100,26 +100,22 @@ class SearchListAdapter(private var data: MutableList<Consultant>) : RecyclerVie
             data = data.filter { it.city == cityFilter } as MutableList<Consultant>
         }
 
-        if (catBusinessFilter){
-            data = data.filter { it.category.containsKey("biznes") } as MutableList<Consultant>
-        }
-
-        if (catFinanceFilter){
-            data = data.filter { it.category.containsKey("finanse i rachunkowość") } as MutableList<Consultant>
-        }
-
-        if (catITFilter){
-            data = data.filter { it.category.containsKey("IT")} as MutableList<Consultant>
-        }
-
-        if (catMarketingFilter){
-            data = data.filter { it.category.containsKey("marketing") } as MutableList<Consultant>
+        if (catITFilter || catMarketingFilter || catFinanceFilter || catBusinessFilter){
+            data = data.filter { categoryFilter(it)} as MutableList<Consultant>
         }
 
         data = data.filter { x -> getMinPrice(x) >= priceMinFilter } as MutableList<Consultant>
         data = data.filter { x -> getMaxPrice(x) <= priceMaxFilter } as MutableList<Consultant>
 
         notifyDataSetChanged()
+    }
+
+    fun categoryFilter(c : Consultant) : Boolean {
+        if (catITFilter && c.category.containsKey("IT")) return true
+        if (catFinanceFilter && c.category.containsKey("finanse i rachunkowość")) return true
+        if (catBusinessFilter && c.category.containsKey("biznes")) return true
+        if (catMarketingFilter && c.category.containsKey("marketing")) return true
+        return false
     }
 
     fun setData(data: MutableList<Consultant>){
