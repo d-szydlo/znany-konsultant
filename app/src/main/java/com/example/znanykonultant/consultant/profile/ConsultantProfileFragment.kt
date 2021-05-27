@@ -65,7 +65,6 @@ class ConsultantProfileFragment : Fragment() {
                 dataSnapshot.children.mapNotNullTo(consultants) {
                     it.getValue(Consultant::class.java)
                 }
-                Log.i("firebase", data.toString())
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
