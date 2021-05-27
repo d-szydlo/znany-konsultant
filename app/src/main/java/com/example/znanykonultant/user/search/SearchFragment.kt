@@ -87,17 +87,17 @@ class SearchFragment : Fragment(), SearchResultClickListener {
 
     private fun onSearch(v : View) {
         adapter.nameFilter  = v.findViewById<EditText>(R.id.consultantNameText).text.toString()
-        adapter.setData(consultants)
+        adapter.notifyDataSetChanged()
     }
 
     private fun setDatabaseListener(){
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                consultants = mutableListOf()
+                consultants.clear()
                 dataSnapshot.children.mapNotNullTo(consultants) {
                     it.getValue(Consultant::class.java)
                 }
-                adapter.setData(consultants)
+                adapter.notifyDataSetChanged()
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w("firebase", "loadPost:onCancelled", databaseError.toException())
