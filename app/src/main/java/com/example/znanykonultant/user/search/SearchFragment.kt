@@ -87,7 +87,7 @@ class SearchFragment : Fragment(), SearchResultClickListener {
 
     private fun onSearch(v : View) {
         adapter.nameFilter  = v.findViewById<EditText>(R.id.consultantNameText).text.toString()
-        adapter.notifyDataSetChanged()
+        adapter.setData(consultants)
     }
 
     private fun setDatabaseListener(){
@@ -97,7 +97,7 @@ class SearchFragment : Fragment(), SearchResultClickListener {
                 dataSnapshot.children.mapNotNullTo(consultants) {
                     it.getValue(Consultant::class.java)
                 }
-                adapter.notifyDataSetChanged()
+                adapter.setData(consultants)
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w("firebase", "loadPost:onCancelled", databaseError.toException())
