@@ -7,7 +7,7 @@ import java.sql.Timestamp
 @IgnoreExtraProperties
 class Appointments(var personLogin : String = "",
                    var consultantLogin : String = "",
-                   var timestamp: Timestamp = Timestamp(0),
+                   var timestamp: Long = System.nanoTime(),
                    var place : String = "",
                    var rate : Int = -1
 ) {

@@ -8,16 +8,17 @@ import java.sql.Timestamp
 
 class AppointmentsDAO {
     val database = Firebase.database
+    private val appointRef = database.getReference("appointments")
     fun addAppointment(user : String,
                        consultant : String,
-                       timestamp: Timestamp,
+                       timestamp: Long,
                        place : String
 
 
     ) {
         val userRef = database.getReference("person")
         val consultantRef = database.getReference("consultant")
-        val appointRef = database.getReference("appointments")
+
         val pushedRef = appointRef.push()
 
         // generated key
@@ -39,25 +40,9 @@ class AppointmentsDAO {
 
     }
 
-    // single get option
-    fun getAppointments(user: String) {
-        val userRef = database.getReference("person")
-        var data : Any? = "hejcia"
-
-        /**
-         *  THIS IS JUST A SAMPLE!
-         * */
-        val appointments = userRef.child(user).child("appointments").get().addOnSuccessListener {
-            Log.i("firebase", "Got value ${it.key}")
-            data = it.value
-        }.addOnFailureListener{
-            Log.e("firebase", "Error getting data", it)
-        }
-
-
-        Log.i("firebase", data as String)
-
-
+    // TODO delete ref!
+    fun deleteAppointment(appointmentId : String) {
+        appointRef.child(appointmentId).removeValue()
     }
 
 }

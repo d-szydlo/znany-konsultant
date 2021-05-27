@@ -68,4 +68,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="services">Usługi</string>
+    <!-- Appointments -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_consultant">Konsultant</string>
+    <string name="app_client">Klient</string>
 </resources>
