@@ -5,7 +5,7 @@ import java.sql.Timestamp
 
 class PageVisit(var visitor : String,
                 var consultant: String,
-                var timestamp: Timestamp) {
+                var timestamp: Long) {
 
     @Exclude
     fun toMap() : Map<String, Any?>{

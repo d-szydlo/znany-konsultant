@@ -14,7 +14,7 @@ class PageVisitDAO {
     fun addPageVisited(
         consultantLogin : String,
         userLogin : String,
-        timestamp: Timestamp,
+        timestamp: Long,
     ) {
         val pushedRef = pageRef.push()
 

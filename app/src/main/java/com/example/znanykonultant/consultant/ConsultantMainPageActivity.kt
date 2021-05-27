@@ -31,7 +31,8 @@ class ConsultantMainPageActivity : AppCompatActivity() {
         bottomNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.consultant_nav_profile -> setFragment(ConsultantProfileFragment())
-                R.id.consultant_nav_chats -> setFragment(ChatsFragment())
+                //R.id.consultant_nav_chats -> setFragment(ChatsFragment())
+                R.id.consultant_nav_chats -> setFragment(VisitorsChartFragment())
                 R.id.consultant_nav_appointments -> setFragment(ConsultantAppointmentsFragment())
                 R.id.consultant_nav_services -> setFragment(ConsultantServicesFragment())
                 else -> Log.e("famousConsultant", "consultant navigation, Unknown fragment id = ${it.itemId}")

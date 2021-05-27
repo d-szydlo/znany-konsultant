@@ -73,4 +73,6 @@ dependencies {
     implementation "com.xwray:groupie-viewbinding:2.9.0"
 
     implementation 'com.github.jrvansuita:PickImage:+'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
