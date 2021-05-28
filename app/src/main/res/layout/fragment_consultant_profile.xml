@@ -196,6 +196,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputLayoutFullDesc" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/consultant_services"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputLayoutFullDesc" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
