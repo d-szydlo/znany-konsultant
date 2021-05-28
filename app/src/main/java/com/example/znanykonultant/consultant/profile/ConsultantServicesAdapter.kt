@@ -34,7 +34,6 @@ class ConsultantServicesAdapter(var context: Context, var ServicesList: MutableL
     }
 
     override fun getItemCount(): Int {
-        Log.i("niehalo", ServicesList.size.toString())
         return ServicesList.size
     }
 
@@ -47,7 +46,7 @@ class ConsultantServicesAdapter(var context: Context, var ServicesList: MutableL
 
         holder.itemView.setOnClickListener{
             val intent = Intent(holder.view.context, ConsultantServiceEdit::class.java)
-            intent.putExtra("id", position)
+            intent.putExtra("key", currentService.id)
             intent.putExtra("type", currentService.type)
             intent.putExtra("desc", currentService.description)
             intent.putExtra("price", currentService.cost)

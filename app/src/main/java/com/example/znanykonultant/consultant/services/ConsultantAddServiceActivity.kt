@@ -66,7 +66,7 @@ class ConsultantAddServiceActivity : AppCompatActivity() {
             var new_price: String = price.text.toString()
 
             val reference = consultantRef.push()
-            val service = ConsultantService(new_price.toDouble(), new_desc.toString(), new_type.toString())
+            val service = ConsultantService(reference.key!!, new_price.toDouble(), new_desc.toString(), new_type.toString())
             reference.setValue(service)
 
             val intent = Intent(this, ConsultantMainPageActivity::class.java)

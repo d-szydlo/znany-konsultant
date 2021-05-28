@@ -75,8 +75,8 @@ class UserConsultantProfileFragment(uid: String?) : Fragment() {
         }
         consultantRef.addValueEventListener(postListener)
 
-        var consultant: ConsultantService = ConsultantService(120.0, "bardzo dlugie konsultacje", "dlugie")
-        var consultant2: ConsultantService = ConsultantService(150.0, "kons", "rozmowa")
+        var consultant: ConsultantService = ConsultantService("x",120.0, "bardzo dlugie konsultacje", "dlugie")
+        var consultant2: ConsultantService = ConsultantService("y", 150.0, "kons", "rozmowa")
         var servicesList = arrayListOf(consultant)
         servicesList.add(consultant2)
 
