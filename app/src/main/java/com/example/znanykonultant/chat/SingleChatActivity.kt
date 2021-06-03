@@ -73,23 +73,33 @@ class SingleChatActivity : AppCompatActivity() {
 
     fun sendMessage(view: View) {
         val text = binding.editText.text.toString()
-        val fromId = FirebaseAuth.getInstance().uid
-        val reference = FirebaseDatabase.getInstance().getReference("/messages/$fromId/$chatPartnerId").push()
-        val toReference = FirebaseDatabase.getInstance().getReference("/messages/$chatPartnerId/$fromId").push()
+        val fromId = FirebaseAuth.getInstance().uid ?: return
+        saveMessageToDatabase(fromId, text)
+        binding.editText.text.clear()
+    }
 
-        if (fromId == null) return
+    private fun saveMessageToDatabase(fromId: String, text: String) {
+        val reference =
+            FirebaseDatabase.getInstance().getReference("/messages/$fromId/$chatPartnerId").push()
+        val toReference =
+            FirebaseDatabase.getInstance().getReference("/messages/$chatPartnerId/$fromId").push()
 
-        val message = Messages(reference.key!!, text, fromId, chatPartnerId!!, System.currentTimeMillis())
+        val message =
+            Messages(reference.key!!, text, fromId, chatPartnerId!!, System.currentTimeMillis())
         reference.setValue(message).addOnSuccessListener {
             binding.singleChatRecyclerView.scrollToPosition(adapter.itemCount - 1)
         }
         toReference.setValue(message)
 
-        val latestMessageRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$chatPartnerId")
-        val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$chatPartnerId/$fromId")
+        saveLatestMessageToDatabase(fromId, message)
+    }
+
+    private fun saveLatestMessageToDatabase(fromId: String, message: Messages) {
+        val latestMessageRef =
+            FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$chatPartnerId")
+        val latestMessageToRef =
+            FirebaseDatabase.getInstance().getReference("/latest-messages/$chatPartnerId/$fromId")
         latestMessageRef.setValue(message)
         latestMessageToRef.setValue(message)
-
-        binding.editText.text.clear()
     }
 }
