@@ -35,6 +35,14 @@ class SearchFragment : Fragment(), SearchResultClickListener {
     private val consultantRef = database.getReference("consultants")
     private var consultants : MutableList<Consultant> = mutableListOf()
     private var filters : Bundle = Bundle()
+    private var nameFilter : String = ""
+    private var cityFilter : String = ""
+    private var priceMinFilter : Double = 0.0
+    private var priceMaxFilter : Double = 100.0
+    private var catITFilter : Boolean = false
+    private var catBusinessFilter : Boolean = false
+    private var catFinanceFilter : Boolean = false
+    private var catMarketingFilter : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,19 +54,15 @@ class SearchFragment : Fragment(), SearchResultClickListener {
     }
 
     private fun processFilters(bundle: Bundle) {
-        adapter.cityFilter = bundle.getString("city", "")
+        cityFilter = bundle.getString("city", "")
 
-        adapter.priceMaxFilter = bundle.getDouble("priceMax", 1000.0)
-        adapter.priceMinFilter = bundle.getDouble("priceMin", 0.0)
+        priceMaxFilter = bundle.getDouble("priceMax", 1000.0)
+        priceMinFilter = bundle.getDouble("priceMin", 0.0)
 
-        adapter.morningFilter = bundle.getBoolean("hoursMorning", false)
-        adapter.afternoonFilter = bundle.getBoolean("hoursAfternoon", false)
-        adapter.eveningFilter = bundle.getBoolean("hoursEvening", false)
-
-        adapter.catITFilter = bundle.getBoolean("catIT", false)
-        adapter.catBusinessFilter = bundle.getBoolean("catBusiness", false)
-        adapter.catFinanceFilter = bundle.getBoolean("catFinance", false)
-        adapter.catMarketingFilter = bundle.getBoolean("catMarketing", false)
+        catITFilter = bundle.getBoolean("catIT", false)
+        catBusinessFilter = bundle.getBoolean("catBusiness", false)
+        catFinanceFilter = bundle.getBoolean("catFinance", false)
+        catMarketingFilter = bundle.getBoolean("catMarketing", false)
     }
 
     override fun onCreateView(
@@ -86,8 +90,9 @@ class SearchFragment : Fragment(), SearchResultClickListener {
     }
 
     private fun onSearch(v : View) {
-        adapter.nameFilter  = v.findViewById<EditText>(R.id.consultantNameText).text.toString()
-        adapter.setData(consultants)
+        nameFilter  = v.findViewById<EditText>(R.id.consultantNameText).text.toString()
+        applyFilters()
+        adapter.notifyDataSetChanged()
     }
 
     private fun setDatabaseListener(){
@@ -97,7 +102,8 @@ class SearchFragment : Fragment(), SearchResultClickListener {
                 dataSnapshot.children.mapNotNullTo(consultants) {
                     it.getValue(Consultant::class.java)
                 }
-                adapter.setData(consultants)
+                applyFilters()
+                adapter.notifyDataSetChanged()
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w("firebase", "loadPost:onCancelled", databaseError.toException())
@@ -106,32 +112,92 @@ class SearchFragment : Fragment(), SearchResultClickListener {
         consultantRef.addValueEventListener(postListener)
     }
 
-    fun showPopup(v: View) {
+    private fun showPopup(v: View) {
         val popup = PopupMenu(v.context, v.findViewById<Button>(R.id.sortButton))
         val inflater: MenuInflater = popup.menuInflater
         inflater.inflate(R.menu.sort_options, popup.menu)
         popup.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.by_availability -> {
-                    adapter.sortItems(1)
-                    true
-                }
                 R.id.by_price_asc -> {
-                    adapter.sortItems(2)
+                    sortItems(1)
                     true
                 }
                 R.id.by_price_desc -> {
-                    adapter.sortItems(3)
+                    sortItems(2)
                     true
                 }
                 R.id.by_rating -> {
-                    adapter.sortItems(4)
+                    sortItems(3)
                     true
                 }
                 else -> super.onOptionsItemSelected(item)
             }
         }
         popup.show()
+    }
+
+    private fun sortItems(sortOption : Int){
+        when (sortOption) {
+            1 -> {
+                consultants.sortWith { x, y -> (getMinPrice(x) - getMinPrice(y)).toInt() }
+            }
+            2 -> {
+                consultants.sortWith { x, y -> (getMinPrice(y) - getMinPrice(x)).toInt() }
+            }
+            3 -> {
+                consultants.sortByDescending { it.averageRating }
+            }
+        }
+        adapter.notifyDataSetChanged()
+    }
+
+    fun applyFilters(){
+
+        if (nameFilter != ""){
+            consultants = consultants.filter { (it.name + " " + it.surname) == nameFilter } as MutableList<Consultant>
+        }
+
+        if (cityFilter != ""){
+            consultants = consultants.filter { it.city == cityFilter } as MutableList<Consultant>
+        }
+
+        if (catITFilter || catMarketingFilter || catFinanceFilter || catBusinessFilter){
+            consultants = consultants.filter { categoryFilter(it)} as MutableList<Consultant>
+        }
+
+        consultants = consultants.filter { x -> getMinPrice(x) >= priceMinFilter } as MutableList<Consultant>
+        consultants = consultants.filter { x -> getMaxPrice(x) <= priceMaxFilter } as MutableList<Consultant>
+
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun getMinPrice(c : Consultant) : Double {
+        var curMin = Double.MAX_VALUE
+        for ((_, value) in c.consultantService){
+            if (value.cost < curMin){
+                curMin = value.cost
+            }
+        }
+        return curMin
+    }
+
+    private fun getMaxPrice(c : Consultant) : Double {
+        var curMax = 0.0
+        for ((_, value) in c.consultantService){
+            if (value.cost > curMax){
+                curMax = value.cost
+            }
+        }
+        return curMax
+    }
+
+
+    private fun categoryFilter(c : Consultant) : Boolean {
+        if (catITFilter && c.category.containsKey("IT")) return true
+        if (catFinanceFilter && c.category.containsKey("finanse i rachunkowość")) return true
+        if (catBusinessFilter && c.category.containsKey("biznes")) return true
+        if (catMarketingFilter && c.category.containsKey("marketing")) return true
+        return false
     }
 
     override fun onSearchResultClick(position: Int) {

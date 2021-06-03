@@ -19,9 +19,6 @@ class FilterFragment : Fragment() {
     private lateinit var cityTextField : EditText
     private lateinit var priceMinField : EditText
     private lateinit var priceMaxField : EditText
-    private lateinit var hoursMorning : CheckBox
-    private lateinit var hoursAfternoon : CheckBox
-    private lateinit var hoursEvening : CheckBox
     private lateinit var catIT : CheckBox
     private lateinit var catBusiness : CheckBox
     private lateinit var catFinance : CheckBox
@@ -46,10 +43,6 @@ class FilterFragment : Fragment() {
         priceMinField = view.findViewById(R.id.priceMinText)
         priceMaxField = view.findViewById(R.id.priceMaxText)
 
-        hoursMorning = view.findViewById(R.id.morningBox)
-        hoursAfternoon = view.findViewById(R.id.afternoonBox)
-        hoursEvening = view.findViewById(R.id.eveningBox)
-
         catIT = view.findViewById(R.id.categoryITBox)
         catBusiness = view.findViewById(R.id.categoryBusinessBox)
         catFinance = view.findViewById(R.id.categoryFinanceBox)
@@ -63,10 +56,6 @@ class FilterFragment : Fragment() {
         priceMinField.setText(bundle.getDouble("priceMin", 0.0).toString().replace('.', ','))
         priceMaxField.setText(bundle.getDouble("priceMax", 1000.0).toString().replace('.', ','))
 
-        hoursMorning.isChecked = bundle.getBoolean("hoursMorning", false)
-        hoursAfternoon.isChecked = bundle.getBoolean("hoursAfternoon", false)
-        hoursEvening.isChecked = bundle.getBoolean("hoursEvening", false)
-
         catIT.isChecked = bundle.getBoolean("catIT", false)
         catBusiness.isChecked = bundle.getBoolean("catBusiness", false)
         catFinance.isChecked = bundle.getBoolean("catFinance", false)
@@ -78,16 +67,6 @@ class FilterFragment : Fragment() {
 
         if (cityTextField.text != null){
             bundle.putString("city", cityTextField.text.toString())
-        }
-
-        if (hoursMorning.isChecked){
-            bundle.putBoolean("hoursMorning", true)
-        }
-        if (hoursAfternoon.isChecked){
-            bundle.putBoolean("hoursAfternoon", true)
-        }
-        if (hoursEvening.isChecked){
-            bundle.putBoolean("hoursEvening", true)
         }
 
         if (priceMaxField.text.toString() != ""){

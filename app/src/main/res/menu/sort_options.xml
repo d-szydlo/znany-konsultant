@@ -6,6 +6,4 @@
         android:title="@string/by_price_asc" />
     <item android:id="@+id/by_price_desc"
         android:title="@string/by_price_desc" />
-    <item android:id="@+id/by_availability"
-        android:title="@string/by_availability"/>
 </menu>
