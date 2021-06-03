@@ -15,15 +15,16 @@ import java.util.*
 import kotlin.Double.Companion.MAX_VALUE
 import kotlin.Double.Companion.MIN_VALUE
 
-class SearchListAdapter(private var data: MutableList<Consultant>, var listener: SearchResultClickListener) : RecyclerView.Adapter<SearchListAdapter.ViewHolder>() {
+class SearchListAdapter(
+    private var data: MutableList<Consultant>,
+    private var allData: MutableList<Consultant>,
+    private var listener: SearchResultClickListener
+    ) : RecyclerView.Adapter<SearchListAdapter.ViewHolder>() {
 
     var nameFilter : String = ""
     var cityFilter : String = ""
-    var priceMinFilter : Double = 0.0
-    var priceMaxFilter : Double = 100.0
-    var morningFilter : Boolean = false
-    var afternoonFilter : Boolean = false
-    var eveningFilter : Boolean = false
+    var priceMinFilter : Double = SearchFragment.PRICE_MIN_DEFAULT
+    var priceMaxFilter : Double = SearchFragment.PRICE_MAX_DEFAULT
     var catITFilter : Boolean = false
     var catBusinessFilter : Boolean = false
     var catFinanceFilter : Boolean = false
@@ -71,7 +72,7 @@ class SearchListAdapter(private var data: MutableList<Consultant>, var listener:
         }
 
         holder.searchItem.setOnClickListener {
-            listener?.onSearchResultClick(position)
+            listener.onSearchResultClick(position)
         }
     }
 
@@ -79,19 +80,15 @@ class SearchListAdapter(private var data: MutableList<Consultant>, var listener:
         return data.size
     }
 
-    // TODO po posortowaniu onSearchResultClick dostaje złe position, to stare a nie to nowe
     fun sortItems(sortOption : Int){
         when (sortOption) {
             1 -> {
-                //
-            }
-            2 -> {
                 data.sortWith { x, y -> (getMinPrice(x) - getMinPrice(y)).toInt() }
             }
-            3 -> {
+            2 -> {
                 data.sortWith { x, y -> (getMinPrice(y) - getMinPrice(x)).toInt() }
             }
-            4 -> {
+            3 -> {
                 data.sortByDescending { it.averageRating }
             }
         }
@@ -99,36 +96,30 @@ class SearchListAdapter(private var data: MutableList<Consultant>, var listener:
     }
 
     fun applyFilters(){
+        data.clear()
+        data.addAll(allData)
 
-        if (nameFilter != ""){
-            data = data.filter { (it.name + " " + it.surname) == nameFilter } as MutableList<Consultant>
-        }
+        if (nameFilter != "")
+            data.removeAll { !(it.name + " " + it.surname).contains(nameFilter) }
 
-        if (cityFilter != ""){
-            data = data.filter { it.city == cityFilter } as MutableList<Consultant>
-        }
+        if (cityFilter != "")
+            data.removeAll { it.city != cityFilter }
 
-        if (catITFilter || catMarketingFilter || catFinanceFilter || catBusinessFilter){
-            data = data.filter { categoryFilter(it)} as MutableList<Consultant>
-        }
+        if (catITFilter || catMarketingFilter || catFinanceFilter || catBusinessFilter)
+            data.removeAll { !hasCategory(it) }
 
-        data = data.filter { x -> getMinPrice(x) >= priceMinFilter } as MutableList<Consultant>
-        data = data.filter { x -> getMaxPrice(x) <= priceMaxFilter } as MutableList<Consultant>
+        data.removeAll { getMinPrice(it) < priceMinFilter }
+        data.removeAll { getMaxPrice(it) > priceMaxFilter }
 
         notifyDataSetChanged()
     }
 
-    fun categoryFilter(c : Consultant) : Boolean {
+    private fun hasCategory(c : Consultant) : Boolean {
         if (catITFilter && c.category.containsKey("IT")) return true
         if (catFinanceFilter && c.category.containsKey("finanse i rachunkowość")) return true
         if (catBusinessFilter && c.category.containsKey("biznes")) return true
         if (catMarketingFilter && c.category.containsKey("marketing")) return true
         return false
-    }
-
-    fun setData(data: MutableList<Consultant>){
-        this.data = data
-        applyFilters()
     }
 
     private fun getMinPrice(c : Consultant) : Double {
@@ -150,5 +141,4 @@ class SearchListAdapter(private var data: MutableList<Consultant>, var listener:
         }
         return curMax
     }
-
 }

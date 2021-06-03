@@ -1,7 +1,6 @@
 package com.example.znanykonultant.user.search
 
 import android.content.Intent
-import android.icu.util.BuddhistCalendar
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
-import com.example.znanykonultant.dao.ConsultantDAO
 import com.example.znanykonultant.entity.Consultant
 import com.example.znanykonultant.user.UserMainPageActivity
 import com.example.znanykonultant.user.consultant.profile.UserConsultantProfileActivity
@@ -34,6 +32,7 @@ class SearchFragment : Fragment(), SearchResultClickListener {
     private val database = Firebase.database
     private val consultantRef = database.getReference("consultants")
     private var consultants : MutableList<Consultant> = mutableListOf()
+    private var filterConsultants : MutableList<Consultant> = mutableListOf()
     private var filters : Bundle = Bundle()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,10 +50,6 @@ class SearchFragment : Fragment(), SearchResultClickListener {
         adapter.priceMaxFilter = bundle.getDouble("priceMax", 1000.0)
         adapter.priceMinFilter = bundle.getDouble("priceMin", 0.0)
 
-        adapter.morningFilter = bundle.getBoolean("hoursMorning", false)
-        adapter.afternoonFilter = bundle.getBoolean("hoursAfternoon", false)
-        adapter.eveningFilter = bundle.getBoolean("hoursEvening", false)
-
         adapter.catITFilter = bundle.getBoolean("catIT", false)
         adapter.catBusinessFilter = bundle.getBoolean("catBusiness", false)
         adapter.catFinanceFilter = bundle.getBoolean("catFinance", false)
@@ -67,27 +62,65 @@ class SearchFragment : Fragment(), SearchResultClickListener {
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_search, container, false)
 
-        view.findViewById<Button>(R.id.sortButton).setOnClickListener { showPopup(view) }
-        view.findViewById<Button>(R.id.filterButton).setOnClickListener {
-            setFragmentResult("old_filters", filters)
-            (activity as UserMainPageActivity).setFragment(FilterFragment())
-        }
-        view.findViewById<ImageButton>(R.id.searchButton).setOnClickListener { onSearch(view) }
-
-        recyclerView = view.findViewById(R.id.searchRecycler)
-        recyclerView.layoutManager = LinearLayoutManager(view.context)
-        adapter = SearchListAdapter(consultants, this)
-        recyclerView.adapter = adapter
-        recyclerView.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
-
+        setButtonsOnClick(view)
+        prepareRecycler(view)
         setDatabaseListener()
 
         return view
     }
 
+    private fun setButtonsOnClick(view: View) {
+        view.findViewById<Button>(R.id.sortButton).setOnClickListener { showPopup(view) }
+        view.findViewById<Button>(R.id.filterButton).setOnClickListener { onFilter() }
+        view.findViewById<ImageButton>(R.id.searchButton).setOnClickListener { onSearch(view) }
+    }
+
+    fun showPopup(v: View) {
+        val popup = PopupMenu(v.context, v.findViewById<Button>(R.id.sortButton))
+        val inflater: MenuInflater = popup.menuInflater
+        inflater.inflate(R.menu.sort_options, popup.menu)
+        popup.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.by_price_asc -> {
+                    adapter.sortItems(1)
+                    true
+                }
+                R.id.by_price_desc -> {
+                    adapter.sortItems(2)
+                    true
+                }
+                R.id.by_rating -> {
+                    adapter.sortItems(3)
+                    true
+                }
+                else -> super.onOptionsItemSelected(item)
+            }
+        }
+        popup.show()
+    }
+
+    private fun onFilter() {
+        setFragmentResult("old_filters", filters)
+        (activity as UserMainPageActivity).setFragment(FilterFragment())
+    }
+
     private fun onSearch(v : View) {
         adapter.nameFilter  = v.findViewById<EditText>(R.id.consultantNameText).text.toString()
-        adapter.setData(consultants)
+        adapter.applyFilters()
+    }
+
+    private fun prepareRecycler(view: View) {
+        recyclerView = view.findViewById(R.id.searchRecycler)
+        recyclerView.layoutManager = LinearLayoutManager(view.context)
+        adapter = SearchListAdapter(filterConsultants, consultants, this)
+        recyclerView.adapter = adapter
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                view.context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+        adapter.applyFilters()
     }
 
     private fun setDatabaseListener(){
@@ -97,7 +130,7 @@ class SearchFragment : Fragment(), SearchResultClickListener {
                 dataSnapshot.children.mapNotNullTo(consultants) {
                     it.getValue(Consultant::class.java)
                 }
-                adapter.setData(consultants)
+                adapter.applyFilters()
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w("firebase", "loadPost:onCancelled", databaseError.toException())
@@ -106,39 +139,14 @@ class SearchFragment : Fragment(), SearchResultClickListener {
         consultantRef.addValueEventListener(postListener)
     }
 
-    fun showPopup(v: View) {
-        val popup = PopupMenu(v.context, v.findViewById<Button>(R.id.sortButton))
-        val inflater: MenuInflater = popup.menuInflater
-        inflater.inflate(R.menu.sort_options, popup.menu)
-        popup.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.by_availability -> {
-                    adapter.sortItems(1)
-                    true
-                }
-                R.id.by_price_asc -> {
-                    adapter.sortItems(2)
-                    true
-                }
-                R.id.by_price_desc -> {
-                    adapter.sortItems(3)
-                    true
-                }
-                R.id.by_rating -> {
-                    adapter.sortItems(4)
-                    true
-                }
-                else -> super.onOptionsItemSelected(item)
-            }
-        }
-        popup.show()
-    }
-
     override fun onSearchResultClick(position: Int) {
         val myIntent = Intent(activity, UserConsultantProfileActivity::class.java)
-        myIntent.putExtra("consultant_uid", consultants[position].uid)
-        myIntent.putExtra("position", position.toString())
+        myIntent.putExtra("consultant_uid", filterConsultants[position].uid)
         startActivity(myIntent)
     }
 
+    companion object {
+        const val PRICE_MAX_DEFAULT = 1000.0
+        const val PRICE_MIN_DEFAULT = 0.0
+    }
 }

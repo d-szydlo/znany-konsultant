@@ -27,40 +27,7 @@ open class LatestMessageRow(private val message: Messages)
     override fun bind(viewBinding: RecyclerLatestMessageItemBinding, position: Int) {
         viewBinding.lastMessageText.text = message.text
         viewBinding.lastMessageDate.text = getTimeFormatted(message.timestamp)
-
-        val chatPartnerId : String = if (message.fromId == FirebaseAuth.getInstance().uid)
-            message.toId
-        else
-            message.fromId
-
-        val userRef = FirebaseDatabase.getInstance().getReference("/users/$chatPartnerId")
-        userRef.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val user : User? = snapshot.getValue(User::class.java)
-                if (user != null) {
-                    chatPartner = user
-                    viewBinding.lastMessageSenderLogin.text = (chatPartner as User).getFullName()
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
-
-        val consultantRef = FirebaseDatabase.getInstance().getReference("/consultants/$chatPartnerId")
-        consultantRef.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val consultant : Consultant? = snapshot.getValue(Consultant::class.java)
-                if (consultant != null) {
-                    chatPartner = consultant
-                    viewBinding.lastMessageSenderLogin.text =
-                        (chatPartner as Consultant).getFullName()
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
+        bindSenderLogin(viewBinding)
     }
 
     private fun getTimeFormatted(time: Long): String {
@@ -72,6 +39,60 @@ open class LatestMessageRow(private val message: Messages)
 
     private fun isLessThanOneDayAgo(time: Long) =
         time + DAY_IN_MILLIS > System.currentTimeMillis()
+
+    private fun bindSenderLogin(viewBinding: RecyclerLatestMessageItemBinding) {
+        val chatPartnerId: String = if (message.fromId == FirebaseAuth.getInstance().uid)
+            message.toId
+        else
+            message.fromId
+
+        bindUserLogin(chatPartnerId, viewBinding)
+        if (isSenderLoginEmptyAfterBindingUser(viewBinding))
+            bindConsultantLogin(chatPartnerId, viewBinding)
+    }
+
+    private fun bindUserLogin(
+        chatPartnerId: String,
+        viewBinding: RecyclerLatestMessageItemBinding
+    ) {
+        val userRef = FirebaseDatabase.getInstance().getReference("/users/$chatPartnerId")
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user: User? = snapshot.getValue(User::class.java)
+                if (user != null) {
+                    chatPartner = user
+                    viewBinding.lastMessageSenderLogin.text = (chatPartner as User).getFullName()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+
+    private fun isSenderLoginEmptyAfterBindingUser(viewBinding: RecyclerLatestMessageItemBinding) =
+        viewBinding.lastMessageSenderLogin.text == ""
+
+    private fun bindConsultantLogin(
+        chatPartnerId: String,
+        viewBinding: RecyclerLatestMessageItemBinding
+    ) {
+        val consultantRef =
+            FirebaseDatabase.getInstance().getReference("/consultants/$chatPartnerId")
+        consultantRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val consultant: Consultant? = snapshot.getValue(Consultant::class.java)
+                if (consultant != null) {
+                    chatPartner = consultant
+                    viewBinding.lastMessageSenderLogin.text =
+                        (chatPartner as Consultant).getFullName()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
 
     override fun initializeViewBinding(view: View): RecyclerLatestMessageItemBinding {
         return RecyclerLatestMessageItemBinding.bind(view)

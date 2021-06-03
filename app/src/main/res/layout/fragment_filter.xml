@@ -15,86 +15,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textView11"
+                <Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/category"
-                    android:textAllCaps="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/textView8"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8"
-                    app:layout_constraintVertical_bias="0.108" />
-
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pln"
-                    android:textAllCaps="true"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/priceMinText"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/priceMaxText" />
-
-                <EditText
-                    android:id="@+id/priceMaxText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:importantForAutofill="no"
-                    android:inputType="numberDecimal"
-                    android:text="@string/hundred"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView8"
-                    app:layout_constraintStart_toEndOf="@+id/textView8"
-                    app:layout_constraintStart_toStartOf="@+id/categoryITBox" />
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/price_per_hour_max"
-                    android:textAllCaps="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/textView7"
-                    app:layout_constraintTop_toBottomOf="@+id/textView7"
-                    app:layout_constraintVertical_bias="0.099" />
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/price_per_hour_min"
-                    android:textAllCaps="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/textView6"
-                    app:layout_constraintTop_toBottomOf="@+id/textView6"
-                    app:layout_constraintVertical_bias="0.281" />
-
-                <CheckBox
-                    android:id="@+id/eveningBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/evening_hours"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView6"
-                    app:layout_constraintStart_toStartOf="@+id/priceMinText"
-                    app:layout_constraintTop_toBottomOf="@+id/afternoonBox"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <CheckBox
-                    android:id="@+id/afternoonBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/afternoon_hours"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView6"
-                    app:layout_constraintStart_toStartOf="@+id/eveningBox"
-                    app:layout_constraintTop_toBottomOf="@+id/morningBox"
-                    app:layout_constraintVertical_bias="0.0" />
+                    android:layout_weight="1" />
 
                 <TextView
                     android:id="@+id/textView4"
@@ -102,25 +31,36 @@
                     android:layout_height="wrap_content"
                     android:text="@string/filters"
                     android:textAllCaps="true"
-                    android:textSize="34sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.023" />
+                    android:textSize="34sp" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <TextView
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/city"
-                    android:textAllCaps="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.183"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView4"
-                    app:layout_constraintVertical_bias="0.041" />
+                    android:textAllCaps="true" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <EditText
                     android:id="@+id/cityTextField"
@@ -128,30 +68,36 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:importantForAutofill="no"
-                    android:inputType="textPersonName"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView5"
-                    app:layout_constraintStart_toEndOf="@+id/textView5"
-                    app:layout_constraintStart_toStartOf="@+id/morningBox" />
+                    android:inputType="textPersonName" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/textView7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/meeting_tim"
-                    android:textAllCaps="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/textView5"
-                    app:layout_constraintTop_toBottomOf="@+id/textView5"
-                    app:layout_constraintVertical_bias="0.069" />
+                    android:text="@string/price_per_hour_min"
+                    android:textAllCaps="true" />
 
-                <CheckBox
-                    android:id="@+id/morningBox"
+                <Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/morning_hours"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView6"
-                    app:layout_constraintStart_toEndOf="@+id/textView6"
-                    app:layout_constraintStart_toStartOf="@+id/afternoonBox" />
+                    android:layout_weight="1" />
 
                 <EditText
                     android:id="@+id/priceMinText"
@@ -160,77 +106,159 @@
                     android:ems="10"
                     android:importantForAutofill="no"
                     android:inputType="numberDecimal"
-                    android:text="@string/zero"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView7"
-                    app:layout_constraintStart_toEndOf="@+id/textView7"
-                    app:layout_constraintStart_toStartOf="@+id/priceMaxText" />
+                    android:text="@string/zero" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pln"
+                    android:textAllCaps="true" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/price_per_hour_max"
+                    android:textAllCaps="true" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <EditText
+                    android:id="@+id/priceMaxText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:importantForAutofill="no"
+                    android:inputType="numberDecimal"
+                    android:text="@string/hundred" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <TextView
                     android:id="@+id/textView9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/pln"
-                    android:textAllCaps="true"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/priceMaxText"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/priceMaxText" />
+                    android:textAllCaps="true" />
 
-                <CheckBox
-                    android:id="@+id/categoryITBox"
+                <Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/it"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView11"
-                    app:layout_constraintStart_toEndOf="@+id/textView11"
-                    app:layout_constraintStart_toStartOf="@+id/categoryFinanceBox" />
+                    android:layout_weight="1" />
 
-                <CheckBox
-                    android:id="@+id/categoryFinanceBox"
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/finance_and_accountancy"
-                    android:textAllCaps="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/categoryBusinessBox"
-                    app:layout_constraintTop_toBottomOf="@+id/categoryITBox"
-                    app:layout_constraintVertical_bias="0.0" />
+                    android:layout_weight="1" />
 
-                <CheckBox
-                    android:id="@+id/categoryBusinessBox"
+                <TextView
+                    android:id="@+id/textView11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/business"
-                    android:textAllCaps="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/categoryMarketingBox"
-                    app:layout_constraintTop_toBottomOf="@+id/categoryFinanceBox"
-                    app:layout_constraintVertical_bias="0.0" />
+                    android:text="@string/category"
+                    android:textAllCaps="true" />
 
-                <CheckBox
-                    android:id="@+id/categoryMarketingBox"
+                <Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/marceting"
-                    android:textAllCaps="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.555"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/categoryBusinessBox"
-                    app:layout_constraintVertical_bias="0.0" />
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/categoryITBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/it" />
+
+                    <CheckBox
+                        android:id="@+id/categoryFinanceBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/finance_and_accountancy"
+                        android:textAllCaps="true" />
+
+                    <CheckBox
+                        android:id="@+id/categoryBusinessBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/business"
+                        android:textAllCaps="true" />
+
+                    <CheckBox
+                        android:id="@+id/categoryMarketingBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/marceting"
+                        android:textAllCaps="true" />
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/confirmButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/confirm"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/categoryMarketingBox"
-                    app:layout_constraintVertical_bias="0.348" />
+                    android:text="@string/confirm" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
