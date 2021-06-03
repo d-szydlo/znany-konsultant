@@ -25,9 +25,6 @@ class SearchListAdapter(
     var cityFilter : String = ""
     var priceMinFilter : Double = SearchFragment.PRICE_MIN_DEFAULT
     var priceMaxFilter : Double = SearchFragment.PRICE_MAX_DEFAULT
-    var morningFilter : Boolean = false
-    var afternoonFilter : Boolean = false
-    var eveningFilter : Boolean = false
     var catITFilter : Boolean = false
     var catBusinessFilter : Boolean = false
     var catFinanceFilter : Boolean = false
@@ -86,15 +83,12 @@ class SearchListAdapter(
     fun sortItems(sortOption : Int){
         when (sortOption) {
             1 -> {
-                //
-            }
-            2 -> {
                 data.sortWith { x, y -> (getMinPrice(x) - getMinPrice(y)).toInt() }
             }
-            3 -> {
+            2 -> {
                 data.sortWith { x, y -> (getMinPrice(y) - getMinPrice(x)).toInt() }
             }
-            4 -> {
+            3 -> {
                 data.sortByDescending { it.averageRating }
             }
         }

@@ -50,10 +50,6 @@ class SearchFragment : Fragment(), SearchResultClickListener {
         adapter.priceMaxFilter = bundle.getDouble("priceMax", 1000.0)
         adapter.priceMinFilter = bundle.getDouble("priceMin", 0.0)
 
-        adapter.morningFilter = bundle.getBoolean("hoursMorning", false)
-        adapter.afternoonFilter = bundle.getBoolean("hoursAfternoon", false)
-        adapter.eveningFilter = bundle.getBoolean("hoursEvening", false)
-
         adapter.catITFilter = bundle.getBoolean("catIT", false)
         adapter.catBusinessFilter = bundle.getBoolean("catBusiness", false)
         adapter.catFinanceFilter = bundle.getBoolean("catFinance", false)
@@ -86,15 +82,15 @@ class SearchFragment : Fragment(), SearchResultClickListener {
         popup.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.by_price_asc -> {
-                    adapter.sortItems(2)
+                    adapter.sortItems(1)
                     true
                 }
                 R.id.by_price_desc -> {
-                    adapter.sortItems(3)
+                    adapter.sortItems(2)
                     true
                 }
                 R.id.by_rating -> {
-                    adapter.sortItems(4)
+                    adapter.sortItems(3)
                     true
                 }
                 else -> super.onOptionsItemSelected(item)
