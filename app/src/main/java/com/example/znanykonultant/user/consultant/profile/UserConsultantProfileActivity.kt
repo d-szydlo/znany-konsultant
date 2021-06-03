@@ -3,19 +3,25 @@ package com.example.znanykonultant.user.consultant.profile
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.CheckBox
 import com.example.znanykonultant.R
 import com.example.znanykonultant.chat.ChatsFragment
 import com.example.znanykonultant.chat.SingleChatActivity
 import com.example.znanykonultant.entity.Consultant
 import com.example.znanykonultant.user.consultant.profile.opinion.OpinionActivity
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class UserConsultantProfileActivity : AppCompatActivity() {
+
     lateinit var consultantUid : String
+    private lateinit var clientFavoritesReference : DatabaseReference
+    private lateinit var database: DatabaseReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_consultant_profile)
@@ -27,6 +33,24 @@ class UserConsultantProfileActivity : AppCompatActivity() {
         transaction.replace(R.id.fragmentContainerProfil, newProfileFragment)
         transaction.replace(R.id.fragmentContainerOpinions, newOpinionFragment)
         transaction.commit()
+
+        setFavoriteButton()
+    }
+
+    private fun setFavoriteButton(){
+        database = Firebase.database.reference
+        val clientUid = FirebaseAuth.getInstance().currentUser!!.uid
+        clientFavoritesReference = database.child("users").child(clientUid).child("favorites")
+
+        val starBtn = findViewById<CheckBox>(R.id.favorite)
+
+        clientFavoritesReference.child(consultantUid).get().addOnSuccessListener {
+            if (it.value != null){
+                starBtn.isChecked = true
+            }
+        }.addOnFailureListener {
+            Log.e("firebase", "Error getting data", it)
+        }
     }
 
     fun makeAnAppointment(view: View) {}
@@ -42,6 +66,15 @@ class UserConsultantProfileActivity : AppCompatActivity() {
         intent.putExtra(ChatsFragment.NAME_KEY, getConsultantName(consultantUid))
         intent.putExtra(ChatsFragment.UID_KEY, consultantUid)
         startActivity(intent)
+    }
+
+    fun checkFavorite(view : View){
+        val btn = view.findViewById<CheckBox>(R.id.favorite)
+        if (btn.isChecked){
+            clientFavoritesReference.child(consultantUid).setValue(true)
+        } else {
+            clientFavoritesReference.child(consultantUid).removeValue()
+        }
     }
 
     private fun getConsultantName(uid: String) : String {
