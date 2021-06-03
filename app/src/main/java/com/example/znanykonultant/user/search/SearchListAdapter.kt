@@ -15,7 +15,23 @@ import java.util.*
 import kotlin.Double.Companion.MAX_VALUE
 import kotlin.Double.Companion.MIN_VALUE
 
-class SearchListAdapter(private var data: MutableList<Consultant>, var listener: SearchResultClickListener) : RecyclerView.Adapter<SearchListAdapter.ViewHolder>() {
+class SearchListAdapter(
+    private var data: MutableList<Consultant>,
+    private var allData: MutableList<Consultant>,
+    private var listener: SearchResultClickListener
+    ) : RecyclerView.Adapter<SearchListAdapter.ViewHolder>() {
+
+    var nameFilter : String = ""
+    var cityFilter : String = ""
+    var priceMinFilter : Double = SearchFragment.PRICE_MIN_DEFAULT
+    var priceMaxFilter : Double = SearchFragment.PRICE_MAX_DEFAULT
+    var morningFilter : Boolean = false
+    var afternoonFilter : Boolean = false
+    var eveningFilter : Boolean = false
+    var catITFilter : Boolean = false
+    var catBusinessFilter : Boolean = false
+    var catFinanceFilter : Boolean = false
+    var catMarketingFilter : Boolean = false
 
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
         val searchItem : ConstraintLayout
@@ -59,12 +75,57 @@ class SearchListAdapter(private var data: MutableList<Consultant>, var listener:
         }
 
         holder.searchItem.setOnClickListener {
-            listener?.onSearchResultClick(position)
+            listener.onSearchResultClick(position)
         }
     }
 
     override fun getItemCount(): Int {
         return data.size
+    }
+
+    fun sortItems(sortOption : Int){
+        when (sortOption) {
+            1 -> {
+                //
+            }
+            2 -> {
+                data.sortWith { x, y -> (getMinPrice(x) - getMinPrice(y)).toInt() }
+            }
+            3 -> {
+                data.sortWith { x, y -> (getMinPrice(y) - getMinPrice(x)).toInt() }
+            }
+            4 -> {
+                data.sortByDescending { it.averageRating }
+            }
+        }
+        notifyDataSetChanged()
+    }
+
+    fun applyFilters(){
+        data.clear()
+        data.addAll(allData)
+
+        if (nameFilter != "")
+            data.removeAll { !(it.name + " " + it.surname).contains(nameFilter) }
+
+        if (cityFilter != "")
+            data.removeAll { it.city != cityFilter }
+
+        if (catITFilter || catMarketingFilter || catFinanceFilter || catBusinessFilter)
+            data.removeAll { !hasCategory(it) }
+
+        data.removeAll { getMinPrice(it) < priceMinFilter }
+        data.removeAll { getMaxPrice(it) > priceMaxFilter }
+
+        notifyDataSetChanged()
+    }
+
+    private fun hasCategory(c : Consultant) : Boolean {
+        if (catITFilter && c.category.containsKey("IT")) return true
+        if (catFinanceFilter && c.category.containsKey("finanse i rachunkowość")) return true
+        if (catBusinessFilter && c.category.containsKey("biznes")) return true
+        if (catMarketingFilter && c.category.containsKey("marketing")) return true
+        return false
     }
 
     private fun getMinPrice(c : Consultant) : Double {
@@ -86,5 +147,4 @@ class SearchListAdapter(private var data: MutableList<Consultant>, var listener:
         }
         return curMax
     }
-
 }
