@@ -10,6 +10,7 @@ import com.example.znanykonultant.R
 import com.example.znanykonultant.chat.ChatsFragment
 import com.example.znanykonultant.chat.SingleChatActivity
 import com.example.znanykonultant.entity.Consultant
+import com.example.znanykonultant.user.appointments.UserAppointmentsActivity
 import com.example.znanykonultant.user.consultant.profile.opinion.OpinionActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -53,7 +54,11 @@ class UserConsultantProfileActivity : AppCompatActivity() {
         }
     }
 
-    fun makeAnAppointment(view: View) {}
+    fun makeAnAppointment(view: View) {
+        val myIntent = Intent(this, UserAppointmentsActivity::class.java)
+        myIntent.putExtra("consultant_uid",consultantUid)
+        startActivity(myIntent)
+    }
 
     fun addOpinion(view: View) {
         val myIntent = Intent(this, OpinionActivity::class.java)

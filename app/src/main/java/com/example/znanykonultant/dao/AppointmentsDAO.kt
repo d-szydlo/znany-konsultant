@@ -9,16 +9,17 @@ import java.sql.Timestamp
 class AppointmentsDAO {
     val database = Firebase.database
     private val appointRef = database.getReference("appointments")
+    private val userRef = database.getReference("users")
+    private val consultantRef = database.getReference("consultants")
     fun addAppointment(user : String,
                        consultant : String,
-                       timestamp: Long,
-                       place : String
-
+                       timestampStart: Long,
+                       timestampStop: Long,
+                       place : String,
+                       username : String,
+                       consultantname : String
 
     ) {
-        val userRef = database.getReference("person")
-        val consultantRef = database.getReference("consultant")
-
         val pushedRef = appointRef.push()
 
         // generated key
@@ -27,9 +28,12 @@ class AppointmentsDAO {
         // push() generates auto id
         pushedRef.setValue(
             Appointments(
+                username,
+                consultantname,
                 user,
                 consultant,
-                timestamp,
+                timestampStart,
+                timestampStop,
                 place
             )
         )
@@ -40,9 +44,14 @@ class AppointmentsDAO {
 
     }
 
-    // TODO delete ref!
-    fun deleteAppointment(appointmentId : String) {
+    fun modifyAppointment(update : MutableMap<String, Any>, appointmentId: String) {
+        appointRef.child(appointmentId).updateChildren(update)
+    }
+
+    fun deleteAppointment(appointmentId : String, personID : String, consultantID: String) {
         appointRef.child(appointmentId).removeValue()
+        userRef.child(personID).child("appointments").child(appointmentId).removeValue()
+        consultantRef.child(consultantID).child("appointments").child(appointmentId).removeValue()
     }
 
 }
