@@ -17,22 +17,22 @@
             android:text="Wróć"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.154"
+            app:layout_constraintHorizontal_bias="0.092"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView24"
-            app:layout_constraintVertical_bias="0.205" />
+            app:layout_constraintTop_toBottomOf="@+id/appointmentsUserConfirmed"
+            app:layout_constraintVertical_bias="0.17" />
 
         <Button
             android:id="@+id/usrCancelBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Anuluj wizytę"
+            android:text="@string/delete_visit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.62"
+            app:layout_constraintHorizontal_bias="0.882"
             app:layout_constraintStart_toEndOf="@+id/userBackBtn"
-            app:layout_constraintTop_toBottomOf="@+id/textView24"
-            app:layout_constraintVertical_bias="0.205" />
+            app:layout_constraintTop_toBottomOf="@+id/appointmentsUserConfirmed"
+            app:layout_constraintVertical_bias="0.17" />
 
         <TextView
             android:id="@+id/textView15"
@@ -55,8 +55,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.091"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView23"
-            app:layout_constraintVertical_bias="0.089" />
+            app:layout_constraintTop_toBottomOf="@+id/appointmentUserTimeStart"
+            app:layout_constraintVertical_bias="0.064" />
 
         <TextView
             android:id="@+id/textView19"
@@ -66,10 +66,10 @@
             android:text="Data"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.086"
+            app:layout_constraintHorizontal_bias="0.096"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView22"
-            app:layout_constraintVertical_bias="0.112" />
+            app:layout_constraintTop_toBottomOf="@+id/appointmentsUserName"
+            app:layout_constraintVertical_bias="0.116" />
 
         <TextView
             android:id="@+id/textView20"
@@ -86,7 +86,7 @@
             app:layout_constraintVertical_bias="0.022" />
 
         <TextView
-            android:id="@+id/textView21"
+            android:id="@+id/appointmentsUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tu będzie imie"
@@ -97,40 +97,95 @@
             app:layout_constraintTop_toBottomOf="@+id/textView15"
             app:layout_constraintVertical_bias="0.038" />
 
-        <TextView
-            android:id="@+id/textView22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tu będzie nazwisko"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.153"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView21"
-            app:layout_constraintVertical_bias="0.029" />
 
-        <TextView
-            android:id="@+id/textView23"
+        <EditText
+            android:id="@+id/appointmentsUserDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tu będzie data"
+            android:ems="10"
+            android:hint="@string/date_info"
+            android:inputType="date"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.138"
+            app:layout_constraintHorizontal_bias="0.512"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView19"
-            app:layout_constraintVertical_bias="0.054" />
+            app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
-            android:id="@+id/textView24"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/appointmentUserTimeStart"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Tu będzie miejsce"
+            android:ems="10"
+            android:inputType="time"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.148"
+            app:layout_constraintHorizontal_bias="0.331"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/appointmentsUserDate"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <EditText
+            android:id="@+id/appointmentUserTimeStop"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="time"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.092"
+            app:layout_constraintStart_toEndOf="@+id/appointmentUserTimeStart"
+            app:layout_constraintTop_toBottomOf="@+id/appointmentsUserDate"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/appointmentsUserPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.131"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView18"
+            app:layout_constraintVertical_bias="0.034" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Potwierdzono"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.049"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appointmentsUserPlace"
+            app:layout_constraintVertical_bias="0.052" />
+
+        <TextView
+            android:id="@+id/appointmentsUserConfirmed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.093"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView16"
+            app:layout_constraintVertical_bias="0.045" />
+
+        <Button
+            android:id="@+id/usrChangeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ask_for_new"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.415"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userBackBtn"
+            app:layout_constraintVertical_bias="0.151" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

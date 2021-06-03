@@ -5,22 +5,16 @@ import com.google.firebase.database.IgnoreExtraProperties
 import java.sql.Timestamp
 
 @IgnoreExtraProperties
-class Appointments(var personLogin : String = "",
-                   var consultantLogin : String = "",
-                   var timestamp: Long = System.nanoTime(),
+class Appointments(var person : String = "",
+                   var consultant : String = "",
+                   var personID : String =  "",
+                   var consultantID : String =  "",
+                   var timestampStart: Long = System.nanoTime(),
+                   var timestampStop: Long = System.nanoTime(),
                    var place : String = "",
-                   var rate : Int = -1
+                   var confirmed : Boolean = false,
+                   var rate : Int = -1,
+
 ) {
 
-    @Exclude
-    fun toMap() : Map<String, Any?>{
-        return mapOf(
-            personLogin to true,
-            consultantLogin to true,
-            "rate" to rate,
-            "timestamp" to timestamp,
-            "place" to place,
-            "rate" to rate
-        )
-    }
 }

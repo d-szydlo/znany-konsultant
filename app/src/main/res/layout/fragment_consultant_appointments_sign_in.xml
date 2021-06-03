@@ -17,10 +17,10 @@
             android:text="Wróć"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.154"
+            app:layout_constraintHorizontal_bias="0.111"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView24"
-            app:layout_constraintVertical_bias="0.205" />
+            app:layout_constraintTop_toBottomOf="@+id/appointmentsConsultantConfirmed"
+            app:layout_constraintVertical_bias="0.073" />
 
         <Button
             android:id="@+id/consultantCancelBtn"
@@ -29,10 +29,10 @@
             android:text="Anuluj wizytę"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.62"
+            app:layout_constraintHorizontal_bias="0.607"
             app:layout_constraintStart_toEndOf="@+id/consultantBackBtn"
-            app:layout_constraintTop_toBottomOf="@+id/textView24"
-            app:layout_constraintVertical_bias="0.205" />
+            app:layout_constraintTop_toBottomOf="@+id/appointmentsConsultantConfirmed"
+            app:layout_constraintVertical_bias="0.076" />
 
         <TextView
             android:id="@+id/textView15"
@@ -46,6 +46,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView20"
             app:layout_constraintVertical_bias="0.04" />
 
+
         <TextView
             android:id="@+id/textView18"
             android:layout_width="wrap_content"
@@ -55,8 +56,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.091"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView23"
-            app:layout_constraintVertical_bias="0.089" />
+            app:layout_constraintTop_toBottomOf="@+id/appointmentConsultantTimeStart"
+            app:layout_constraintVertical_bias="0.046" />
 
         <TextView
             android:id="@+id/textView19"
@@ -68,8 +69,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.086"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView22"
-            app:layout_constraintVertical_bias="0.112" />
+            app:layout_constraintTop_toBottomOf="@+id/appointmentsConsultantName"
+            app:layout_constraintVertical_bias="0.077" />
 
         <TextView
             android:id="@+id/textView20"
@@ -86,7 +87,7 @@
             app:layout_constraintVertical_bias="0.022" />
 
         <TextView
-            android:id="@+id/textView21"
+            android:id="@+id/appointmentsConsultantName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tu będzie imie"
@@ -97,40 +98,94 @@
             app:layout_constraintTop_toBottomOf="@+id/textView15"
             app:layout_constraintVertical_bias="0.038" />
 
-        <TextView
-            android:id="@+id/textView22"
+        <EditText
+            android:id="@+id/appointmentsConsultantDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tu będzie nazwisko"
+            android:ems="10"
+            android:hint="@string/date_info"
+            android:inputType="date"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.153"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView21"
-            app:layout_constraintVertical_bias="0.029" />
-
-        <TextView
-            android:id="@+id/textView23"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tu będzie data"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.138"
+            app:layout_constraintHorizontal_bias="0.512"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView19"
-            app:layout_constraintVertical_bias="0.054" />
+            app:layout_constraintVertical_bias="0.0" />
+
+        <EditText
+            android:id="@+id/appointmentConsultantTimeStart"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="time"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.331"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appointmentsConsultantDate"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <EditText
+            android:id="@+id/appointmentConsultantTimeStop"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="time"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.092"
+            app:layout_constraintStart_toEndOf="@+id/appointmentConsultantTimeStart"
+            app:layout_constraintTop_toBottomOf="@+id/appointmentsConsultantDate"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/textView24"
+            android:id="@+id/appointmentsConsultantPlace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tu będzie miejsce"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.148"
+            app:layout_constraintHorizontal_bias="0.121"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/textView18"
+            app:layout_constraintVertical_bias="0.052" />
+
+        <Button
+            android:id="@+id/consultantUpdateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modyfikuj"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/consultantBackBtn"
+            app:layout_constraintVertical_bias="0.034" />
+
+        <Button
+            android:id="@+id/consultantConfirmBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Zatwierdź"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.525"
+            app:layout_constraintStart_toEndOf="@+id/consultantUpdateBtn"
+            app:layout_constraintTop_toBottomOf="@+id/consultantCancelBtn"
+            app:layout_constraintVertical_bias="0.03" />
+
+        <TextView
+            android:id="@+id/appointmentsConsultantConfirmed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.093"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appointmentsConsultantPlace"
+            app:layout_constraintVertical_bias="0.069" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

@@ -72,4 +72,8 @@
     <string name="app_consultant">Konsultant</string>
     <string name="app_client">Klient</string>
     <string name="see_visitors">Zobacz zasięgi</string>
+    <string name="date_info">Brak daty</string>
+    <string name="add_visit">Zapisz się</string>
+    <string name="delete_visit">Anuluj wizytę</string>
+    <string name="ask_for_new">Poproś o zmianę terminu</string>
 </resources>

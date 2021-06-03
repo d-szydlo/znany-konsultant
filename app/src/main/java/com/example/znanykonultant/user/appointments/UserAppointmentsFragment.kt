@@ -1,17 +1,21 @@
 package com.example.znanykonultant.user.appointments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
 import com.example.znanykonultant.entity.Appointments
+import com.example.znanykonultant.entity.Consultant
+import com.example.znanykonultant.entity.User
 import com.example.znanykonultant.tools.DateTimeConverter
 import com.example.znanykonultant.user.UserMainPageActivity
 import com.example.znanykonultant.user.search.SearchFragment
@@ -39,8 +43,11 @@ class UserAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemClickList
     ): View? {
         val view = inflater.inflate(R.layout.fragment_user_appointments, container, false)
         listAdapter = AppointmentsAdapter(data, appointmentIds, this)
+
         setDatabaseListener()
         initRecycler(view)
+
+
 
         return view
     }
@@ -74,6 +81,7 @@ class UserAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemClickList
                 for (key in appointmentIds) {
                     Log.e("firebase", key)
                     val appointment = dataSnapshot.child(key).getValue(Appointments::class.java)
+
                     if (appointment != null) {
                         data.add(appointment)
                     }
@@ -97,9 +105,13 @@ class UserAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemClickList
         val sendData = Bundle()
 
         sendData.putString("id", id)
-        sendData.putString("consultant", appointment.consultantLogin)
-        sendData.putLong("date", appointment.timestamp)
+        sendData.putString("consultant", appointment.consultant)
+        sendData.putString("clientID", appointment.personID)
+        sendData.putString("consultantID", appointment.consultantID)
+        sendData.putLong("dateStart", appointment.timestampStart)
+        sendData.putLong("dateStop", appointment.timestampStop)
         sendData.putString("place", appointment.place)
+        sendData.putBoolean("confirmed", appointment.confirmed)
 
         setFragmentResult("data", sendData)
         (activity as UserMainPageActivity).setFragment(UserAppointmentsSignInFragment())

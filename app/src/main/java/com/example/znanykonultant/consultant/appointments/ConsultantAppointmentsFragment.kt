@@ -102,9 +102,13 @@ class ConsultantAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemCli
         val sendData = Bundle()
 
         sendData.putString("id", id)
-        sendData.putString("client", appointment.personLogin)
-        sendData.putLong("date", appointment.timestamp)
+        sendData.putString("client", appointment.person)
+        sendData.putString("clientID", appointment.personID)
+        sendData.putString("consultantID", appointment.consultantID)
+        sendData.putLong("dateStart", appointment.timestampStart)
+        sendData.putLong("dateStop", appointment.timestampStop)
         sendData.putString("place", appointment.place)
+        sendData.putBoolean("confirmed", appointment.confirmed)
 
         setFragmentResult("data", sendData)
         (activity as ConsultantMainPageActivity).setFragment(ConsultantAppointmentsSignInFragment())

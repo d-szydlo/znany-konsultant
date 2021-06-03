@@ -23,4 +23,13 @@ class Consultant(
                 var favourites:  Map<String, Favourite> = mapOf(),
 ) : Human() {
     override fun getFullName() = "$name $surname"
+    fun getAllServiceNames(): MutableList<String> {
+        val items = mutableListOf<String>()
+        for(service in consultantService){
+            items.add(service.value.description)
+        }
+        return items
+
+    }
+
 }
