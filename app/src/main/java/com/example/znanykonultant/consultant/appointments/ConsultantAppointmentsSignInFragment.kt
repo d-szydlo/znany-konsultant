@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -41,6 +42,8 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_consultant_appointments_sign_in, container, false)
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         initFields(view)
         initDialog(view)
         val info = FormDialogs()
@@ -55,7 +58,7 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
         }
 
         val delete = FormDialogs()
-        val deleteBuilder = info.createYesNoDialog(view, 0, positiveButtonClick)
+        val deleteBuilder = delete.createYesNoDialog(view, 0, positiveButtonClick)
 
         setFragmentResultListener("data") { _, bundle ->
             getData(bundle, view)

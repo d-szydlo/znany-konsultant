@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="718dp">
+        android:layout_height="match_parent">
 
         <Button
             android:id="@+id/userBackBtn"
@@ -17,10 +17,10 @@
             android:text="Wróć"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.092"
+            app:layout_constraintHorizontal_bias="0.136"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appointmentsUserConfirmed"
-            app:layout_constraintVertical_bias="0.17" />
+            app:layout_constraintTop_toBottomOf="@+id/textView16"
+            app:layout_constraintVertical_bias="0.075" />
 
         <Button
             android:id="@+id/usrCancelBtn"
@@ -29,10 +29,10 @@
             android:text="@string/delete_visit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.882"
+            app:layout_constraintHorizontal_bias="0.726"
             app:layout_constraintStart_toEndOf="@+id/userBackBtn"
             app:layout_constraintTop_toBottomOf="@+id/appointmentsUserConfirmed"
-            app:layout_constraintVertical_bias="0.17" />
+            app:layout_constraintVertical_bias="0.072" />
 
         <TextView
             android:id="@+id/textView15"
@@ -169,10 +169,10 @@
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.093"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView16"
-            app:layout_constraintVertical_bias="0.045" />
+            app:layout_constraintHorizontal_bias="0.112"
+            app:layout_constraintStart_toEndOf="@+id/textView16"
+            app:layout_constraintTop_toBottomOf="@+id/appointmentsUserPlace"
+            app:layout_constraintVertical_bias="0.055" />
 
         <Button
             android:id="@+id/usrChangeBtn"
@@ -184,7 +184,7 @@
             app:layout_constraintHorizontal_bias="0.415"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/userBackBtn"
-            app:layout_constraintVertical_bias="0.151" />
+            app:layout_constraintVertical_bias="0.047" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
