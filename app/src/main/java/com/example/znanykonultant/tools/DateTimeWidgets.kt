@@ -39,13 +39,13 @@ class DateTimeWidgets(private val context: Context, private val editField : Edit
                 val simpleDateFormat = SimpleDateFormat("HH:mm")
                 editField.setText(simpleDateFormat.format(calendar.time))
             }
-        val tp = TimePickerDialog(
+        TimePickerDialog(
             context,
             timeSetListener,
             calendar.get(Calendar.HOUR_OF_DAY),
             calendar.get(Calendar.MINUTE),
             true
-        )
+        ).show()
     }
 
     fun initDate() {
