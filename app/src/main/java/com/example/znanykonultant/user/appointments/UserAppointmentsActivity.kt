@@ -1,17 +1,19 @@
 package com.example.znanykonultant.user.appointments
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
-import androidx.appcompat.app.AppCompatActivity
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.text.InputType
-import android.text.format.Time
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.znanykonultant.R
 import com.example.znanykonultant.dao.AppointmentsDAO
 import com.example.znanykonultant.entity.Consultant
@@ -24,11 +26,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import java.text.SimpleDateFormat
-import java.util.*
 
 class UserAppointmentsActivity : AppCompatActivity() {
 
+    var NOTIFICATION_ID = 100
     var consultant : Consultant? = null
     var user : User? = null
     private val pattern : String = "dd.MM.yyyy HH:mm"
@@ -43,6 +44,9 @@ class UserAppointmentsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        createNotificationChannel()
+
         setContentView(R.layout.activity_user_appointments)
         name = findViewById(R.id.appointmentsUserName)
         surname = findViewById(R.id.appointmentsUserSurname)
@@ -101,6 +105,18 @@ class UserAppointmentsActivity : AppCompatActivity() {
         val date = findViewById<EditText>(R.id.editTextDate).text.toString()
 
         val timeStart = findViewById<EditText>(R.id.appointmentTimeStart).text.toString()
+
+        val timeStartSplited = timeStart.split(":")
+        val timeStartMinusOneHour: Int
+        timeStartMinusOneHour = if (timeStartSplited[0] == "00"){
+            23
+        }
+        else{
+            timeStartSplited[0].toInt() - 1
+        }
+        val timeStartForAlarm = timeStartMinusOneHour.toString() + ":" + timeStartSplited[1]
+
+
         val timeStop = findViewById<EditText>(R.id.appointmentTimeStop).text.toString()
         dao.addAppointment(
             userUID!!,
@@ -112,6 +128,30 @@ class UserAppointmentsActivity : AppCompatActivity() {
             consultant!!.getFullName()
         )
         finish()
+        val desc = "Konsultacja z " + name.text.toString() + " " + surname.text.toString()
+        setAlarm(TimestampConverter("$date $timeStartForAlarm", pattern).convert(), "Konsultacja", desc)
+    }
+
+    fun setAlarm(time: Long, name: String, description: String){
+        val intent = Intent(this, NotificationContent::class.java)
+        intent.putExtra("name", name)
+        intent.putExtra("description", description)
+        val pendingIntent = PendingIntent.getBroadcast(this, NOTIFICATION_ID, intent, 0)
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent)
+    }
+
+    fun createNotificationChannel(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            var name: String = "reminderChannel"
+            var description: String = "Channel for reminders"
+            var importance: Int = NotificationManager.IMPORTANCE_DEFAULT
+            var channel: NotificationChannel = NotificationChannel("reminder", name, importance)
+            channel.description = description
+
+            var notificationManager: NotificationManager = getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
 }
