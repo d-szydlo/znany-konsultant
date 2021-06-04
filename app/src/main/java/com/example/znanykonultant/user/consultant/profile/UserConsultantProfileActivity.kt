@@ -9,6 +9,7 @@ import android.widget.CheckBox
 import com.example.znanykonultant.R
 import com.example.znanykonultant.chat.ChatsFragment
 import com.example.znanykonultant.chat.SingleChatActivity
+import com.example.znanykonultant.entity.Appointments
 import com.example.znanykonultant.entity.Consultant
 import com.example.znanykonultant.user.appointments.UserAppointmentsActivity
 import com.example.znanykonultant.user.consultant.profile.opinion.OpinionActivity
@@ -22,6 +23,7 @@ class UserConsultantProfileActivity : AppCompatActivity() {
     lateinit var consultantUid : String
     private lateinit var clientFavoritesReference : DatabaseReference
     private lateinit var database: DatabaseReference
+    private lateinit var clientUid: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +37,25 @@ class UserConsultantProfileActivity : AppCompatActivity() {
         transaction.replace(R.id.fragmentContainerOpinions, newOpinionFragment)
         transaction.commit()
 
+        addPageVisit()
         setFavoriteButton()
     }
 
-    private fun setFavoriteButton(){
+    private fun addPageVisit(){
         database = Firebase.database.reference
-        val clientUid = FirebaseAuth.getInstance().currentUser!!.uid
+        clientUid = FirebaseAuth.getInstance().currentUser!!.uid
+
+        val now : Long = System.currentTimeMillis()
+
+        val pageVisitReference = database.child("pagevisit")
+        val pushedRef = pageVisitReference.push()
+
+        pushedRef.child("consultant").setValue(consultantUid)
+        pushedRef.child("client").setValue(clientUid)
+        pushedRef.child("timestamp").setValue(now)
+    }
+
+    private fun setFavoriteButton(){
         clientFavoritesReference = database.child("users").child(clientUid).child("favorites")
 
         val starBtn = findViewById<CheckBox>(R.id.favorite)

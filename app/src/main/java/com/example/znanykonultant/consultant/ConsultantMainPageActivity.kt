@@ -8,7 +8,6 @@ import com.example.znanykonultant.R
 import com.example.znanykonultant.chat.ChatsFragment
 import com.example.znanykonultant.consultant.appointments.ConsultantAppointmentsFragment
 import com.example.znanykonultant.consultant.profile.ConsultantProfileFragment
-import com.example.znanykonultant.consultant.profile.VisitorsChartFragment
 import com.example.znanykonultant.consultant.services.ConsultantServicesFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 

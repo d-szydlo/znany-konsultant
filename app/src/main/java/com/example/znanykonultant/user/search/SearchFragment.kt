@@ -75,7 +75,7 @@ class SearchFragment : Fragment(), SearchResultClickListener {
         view.findViewById<ImageButton>(R.id.searchButton).setOnClickListener { onSearch(view) }
     }
 
-    fun showPopup(v: View) {
+    private fun showPopup(v: View) {
         val popup = PopupMenu(v.context, v.findViewById<Button>(R.id.sortButton))
         val inflater: MenuInflater = popup.menuInflater
         inflater.inflate(R.menu.sort_options, popup.menu)

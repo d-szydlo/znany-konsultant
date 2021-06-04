@@ -2,22 +2,29 @@ package com.example.znanykonultant.consultant.profile
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.znanykonultant.R
+import com.example.znanykonultant.entity.Consultant
 import com.example.znanykonultant.entity.PageVisit
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import kotlin.random.Random
 
-class VisitorsChartFragment : Fragment() {
+class ConsultantVisitorsChartFragment : Fragment() {
 
     private lateinit var chart : BarChart
+    private lateinit var database : DatabaseReference
     private val dayInMillis : Long = 86400000
     private var now : Long = 0
 
@@ -33,7 +40,21 @@ class VisitorsChartFragment : Fragment() {
     }
 
     private fun loadData() {
-        val data = genData()
+        var data = mutableListOf<PageVisit>()
+        database = Firebase.database.reference
+        database.child("pagevisit").get().addOnSuccessListener { dataSnapshot ->
+            dataSnapshot.children.mapNotNullTo(data) {
+                it.getValue(PageVisit::class.java)
+            }
+            val consultantUid = FirebaseAuth.getInstance().currentUser!!.uid
+            data = data.filter { it.consultant == consultantUid } as MutableList<PageVisit>
+            loadChart(data)
+        }.addOnFailureListener {
+            Log.e("firebase", "Error getting data", it)
+        }
+    }
+
+    private fun loadChart(data : MutableList<PageVisit>){
         val entries = prepareData(data)
         val barDataSet = BarDataSet(entries, "Liczba wyświetleń w ciągu ostatniego tygodnia")
         val barData = BarData(barDataSet)
@@ -43,18 +64,6 @@ class VisitorsChartFragment : Fragment() {
         chart.description = description
         chart.setGridBackgroundColor(Color.WHITE)
         chart.invalidate()
-    }
-
-    private fun genData() : MutableList<PageVisit> {
-        val data = mutableListOf<PageVisit>()
-
-        for (i in 0..50){
-            val timestamp = now - dayInMillis * Random.nextInt(1,8) + Random.nextLong(dayInMillis)
-            val p = PageVisit("adfdvasf", "fdabdfb", timestamp)
-            data.add(p)
-        }
-
-        return data
     }
 
     private fun prepareData(data : MutableList<PageVisit>) : MutableList<BarEntry> {
