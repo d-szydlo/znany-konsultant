@@ -188,6 +188,7 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
             bundle.getLong("dateStart", 0L),
             bundle.getLong("dateStop", 0L),
             bundle.getString("place", ""),
+            bundle.getString("type", ""),
             bundle.getBoolean("confirmed", false)
         )
         if(appointment.confirmed) {
@@ -200,7 +201,7 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
 
     private fun setData() {
         name.text = appointment.person
-        place.text = appointment.place
+        place.text = appointment.type
         if(appointment.confirmed)
             confirmed.text = "Tak"
         else
@@ -216,6 +217,8 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
 
     fun checkDate(view: View) {
         val noWork = view.findViewById<TextView>(R.id.workHoursCons)
+        val noTerms = view.findViewById<TextView>(R.id.termsConsultant)
+
         val f = CommonFunctions()
         val dateText = date.text.toString()
         if (dateText.isNotEmpty()) {
@@ -230,6 +233,7 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
             val days = timetable.filter {it.value.day == dayOfWeek}
 
             noWork.text = getString(R.string.work_hours)
+            noTerms.text = getString(R.string.occupied_hours)
             if(days.isNotEmpty()) {
                 val pickedDay : MutableList<WorkDays> = mutableListOf()
                 days.forEach {pickedDay.add(it.value)}
@@ -238,6 +242,7 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
                     listAdapter2.updateData(pickedDay)
                 } else {
                     listAdapter2.updateData(pickedDay)
+                    noTerms.text = ""
                 }
             }
             else {

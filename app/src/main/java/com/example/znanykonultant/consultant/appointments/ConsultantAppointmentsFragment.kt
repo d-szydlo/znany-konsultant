@@ -110,6 +110,7 @@ class ConsultantAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemCli
         sendData.putLong("dateStart", appointment.timestampStart)
         sendData.putLong("dateStop", appointment.timestampStop)
         sendData.putString("place", appointment.place)
+        sendData.putString("type", appointment.type)
         sendData.putBoolean("confirmed", appointment.confirmed)
         sendData.putSerializable("terms", f.calculateTerms(data))
 

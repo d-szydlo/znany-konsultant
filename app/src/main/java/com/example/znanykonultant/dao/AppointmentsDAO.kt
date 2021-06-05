@@ -17,7 +17,8 @@ class AppointmentsDAO {
                        timestampStop: Long,
                        place : String,
                        username : String,
-                       consultantname : String
+                       consultantname : String,
+                       type : String
 
     ) {
         val pushedRef = appointRef.push()
@@ -34,7 +35,8 @@ class AppointmentsDAO {
                 consultant,
                 timestampStart,
                 timestampStop,
-                place
+                place,
+                type
             )
         )
 

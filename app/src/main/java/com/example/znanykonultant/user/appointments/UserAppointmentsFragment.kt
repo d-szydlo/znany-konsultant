@@ -116,6 +116,7 @@ class UserAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemClickList
         sendData.putLong("dateStart", appointment.timestampStart)
         sendData.putLong("dateStop", appointment.timestampStop)
         sendData.putString("place", appointment.place)
+        sendData.putString("type", appointment.type)
         sendData.putBoolean("confirmed", appointment.confirmed)
         sendData.putSerializable("terms", calculateTerms(appointment))
 
@@ -132,9 +133,9 @@ class UserAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemClickList
             val dateStop = DateTimeConverter(app.timestampStop).splitConverted()
 
             if(output.containsKey(dateStart[0]))
-                output[dateStart[0]]?.add(WorkDays("",dateStart[1], dateStop[1]))
+                output[dateStart[0]]?.add(WorkDays("", "",dateStart[1], dateStop[1]))
             else
-                output[dateStart[0]] = mutableListOf(WorkDays("", dateStart[1], dateStop[1]))
+                output[dateStart[0]] = mutableListOf(WorkDays("", "", dateStart[1], dateStop[1]))
         }
 
         return output

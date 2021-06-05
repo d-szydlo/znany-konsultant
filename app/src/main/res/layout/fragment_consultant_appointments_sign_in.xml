@@ -36,13 +36,13 @@
                     android:id="@+id/textView18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Miejsce"
+                    android:text="@string/consult_type"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.091"
+                    app:layout_constraintHorizontal_bias="0.114"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/appointmentConsultantTimeStart"
-                    app:layout_constraintVertical_bias="0.178" />
+                    app:layout_constraintVertical_bias="0.179" />
 
                 <TextView
                     android:id="@+id/textView19"
@@ -77,10 +77,10 @@
                     android:text="Tu będzie imie"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.139"
+                    app:layout_constraintHorizontal_bias="0.144"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView15"
-                    app:layout_constraintVertical_bias="0.038" />
+                    app:layout_constraintVertical_bias="0.043" />
 
                 <EditText
                     android:id="@+id/appointmentsConsultantDate"
@@ -129,10 +129,10 @@
                     android:text="Tu będzie miejsce"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.148"
+                    app:layout_constraintHorizontal_bias="0.121"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView18"
-                    app:layout_constraintVertical_bias="0.16" />
+                    app:layout_constraintVertical_bias="0.22000003" />
 
                 <TextView
                     android:id="@+id/appointmentsConsultantConfirmed"
@@ -143,10 +143,10 @@
                     android:text="TextView"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.088"
+                    app:layout_constraintHorizontal_bias="0.077"
                     app:layout_constraintStart_toEndOf="@+id/textView6"
                     app:layout_constraintTop_toBottomOf="@+id/appointmentsConsultantPlace"
-                    app:layout_constraintVertical_bias="0.411" />
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <TextView
                     android:id="@+id/textView6"
@@ -197,7 +197,7 @@
                     </androidx.recyclerview.widget.RecyclerView>
 
                     <TextView
-                        android:id="@+id/textView27"
+                        android:id="@+id/termsConsultant"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/occupied_hours"
@@ -214,7 +214,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView27"
+                        app:layout_constraintTop_toBottomOf="@+id/termsConsultant"
                         app:layout_constraintVertical_bias="0.17000002" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
