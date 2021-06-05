@@ -11,9 +11,12 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
+import com.example.znanykonultant.appointments.CommonFunctions
 import com.example.znanykonultant.consultant.ConsultantMainPageActivity
 import com.example.znanykonultant.entity.Appointments
 import com.example.znanykonultant.entity.Consultant
+import com.example.znanykonultant.entity.WorkDays
+import com.example.znanykonultant.tools.DateTimeConverter
 import com.example.znanykonultant.user.UserMainPageActivity
 import com.example.znanykonultant.user.appointments.AppointmentsAdapter
 import com.example.znanykonultant.user.appointments.UserAppointmentsSignInFragment
@@ -41,7 +44,6 @@ class ConsultantAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemCli
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // TODO check if consultant needs other view
         val view = inflater.inflate(R.layout.fragment_user_appointments, container, false)
         listAdapter = AppointmentsAdapter(data, appointmentIds, this)
         setDatabaseListener()
@@ -61,7 +63,6 @@ class ConsultantAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemCli
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 data = mutableListOf()
-
                 dataSnapshot.child(userUID!!).child("appointments").children.mapNotNullTo(appointmentIds)
                 {
                     it.key
@@ -100,6 +101,7 @@ class ConsultantAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemCli
     override fun onItemClick(appointment: Appointments, id : String) {
 
         val sendData = Bundle()
+        val f = CommonFunctions()
 
         sendData.putString("id", id)
         sendData.putString("client", appointment.person)
@@ -109,6 +111,7 @@ class ConsultantAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemCli
         sendData.putLong("dateStop", appointment.timestampStop)
         sendData.putString("place", appointment.place)
         sendData.putBoolean("confirmed", appointment.confirmed)
+        sendData.putSerializable("terms", f.calculateTerms(data))
 
         setFragmentResult("data", sendData)
         (activity as ConsultantMainPageActivity).setFragment(ConsultantAppointmentsSignInFragment())

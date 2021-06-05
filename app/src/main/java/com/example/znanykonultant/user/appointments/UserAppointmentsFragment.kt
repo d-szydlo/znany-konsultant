@@ -117,15 +117,17 @@ class UserAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemClickList
         sendData.putLong("dateStop", appointment.timestampStop)
         sendData.putString("place", appointment.place)
         sendData.putBoolean("confirmed", appointment.confirmed)
-        sendData.putSerializable("terms", calculateTerms())
+        sendData.putSerializable("terms", calculateTerms(appointment))
 
         setFragmentResult("data", sendData)
         (activity as UserMainPageActivity).setFragment(UserAppointmentsSignInFragment())
     }
 
-    private fun calculateTerms() : HashMap<String, MutableList<WorkDays>> {
+    private fun calculateTerms(appointment: Appointments) : HashMap<String, MutableList<WorkDays>> {
         val output : HashMap<String, MutableList<WorkDays>> = hashMapOf()
-        for (app in data) {
+        val newData = data.toMutableList()
+        newData.remove(appointment)
+        for (app in newData) {
             val dateStart = DateTimeConverter(app.timestampStart).splitConverted()
             val dateStop = DateTimeConverter(app.timestampStop).splitConverted()
 

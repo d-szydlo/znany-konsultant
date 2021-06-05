@@ -3,16 +3,19 @@ package com.example.znanykonultant.tools
 class DayOfWeekConverter(private val dayOfWeek : Int) {
 
     private val dayMap : Map<Int, String> = mapOf(
-        1 to "sunday",
-        2 to "monday",
-        3 to "tuesday",
-        4 to "wednesday",
-        5 to "thursday",
-        6 to "friday",
-        7 to "saturday"
+        1 to "Niedziela",
+        2 to "Poniedziałek",
+        3 to "Wtorek",
+        4 to "Środa",
+        5 to "Czwartek",
+        6 to "Piątek",
+        7 to "Sobota"
+
     )
 
     fun convert(): String? {
         return dayMap[dayOfWeek]
     }
+
+
 }

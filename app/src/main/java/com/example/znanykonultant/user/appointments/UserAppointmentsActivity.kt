@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import com.example.znanykonultant.R
+import com.example.znanykonultant.appointments.CommonFunctions
 import com.example.znanykonultant.dao.AppointmentsDAO
 import com.example.znanykonultant.entity.Appointments
 import com.example.znanykonultant.entity.Consultant
@@ -42,10 +43,12 @@ class UserAppointmentsActivity : AppCompatActivity() {
 
     private var dayOfWeek : String = ""
     private var pickedDay : MutableList<WorkDays> = mutableListOf()
-    private var terms : MutableMap<String, MutableList<WorkDays>> = mutableMapOf()
+    private var terms : HashMap<String, MutableList<WorkDays>> = hashMapOf()
 
     lateinit var name: TextView
     lateinit var surname: TextView
+
+    private val f = CommonFunctions()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,7 +141,7 @@ class UserAppointmentsActivity : AppCompatActivity() {
         val date = findViewById<EditText>(R.id.editTextDate).text.toString()
         if (date != "") {
             val debug = findViewById<TextView>(R.id.debugTextView)
-            terms = calculateTerms()
+            terms = f.calculateTerms(appointments)
             val newDate = SimpleDateFormat("dd.MM.yyyy").parse(date).time
             val c = Calendar.getInstance()
             c.timeInMillis = newDate
@@ -153,19 +156,18 @@ class UserAppointmentsActivity : AppCompatActivity() {
                 days.forEach {pickedDay.add(it.value)}
                 debug.text = pickedDay.toString()
                 if (terms.containsKey(date)) {
-                    debug.text = " Godziny pracy: ${convertWorkHours()}\n" +
-                            "Zajęte terminy: ${printTermsHours(date)}"
+                    debug.text = " Godziny pracy: ${f.convertWorkHours(pickedDay)}\n" +
+                            "Zajęte terminy: ${f.printTermsHours(date, terms)}"
                 } else {
-                    debug.text = " Godziny pracy: ${convertWorkHours()}\n" +
+                    debug.text = " Godziny pracy: ${f.convertWorkHours(pickedDay)}\n" +
                             "Dzień wolny!"
                 }
             } else {
                 debug.text = "Nie pracujemy w ten dzień :("
             }
         }
-
-
     }
+
     fun signIn(view: View) {
         val dao =  AppointmentsDAO()
         val date = findViewById<EditText>(R.id.editTextDate).text.toString()
@@ -178,7 +180,7 @@ class UserAppointmentsActivity : AppCompatActivity() {
 
         if(days.isNotEmpty()) {
             if(timeStart <= timeStop) {
-                if (checkIfPossible(timeStart, timeStop, date)) {
+                if (f.checkIfPossible(timeStart, timeStop, date, terms, pickedDay)) {
                     dao.addAppointment(
                         userUID!!,
                         consultantUID,
@@ -197,61 +199,6 @@ class UserAppointmentsActivity : AppCompatActivity() {
         } else
             Toast.makeText(this, "W ten dzień nie pracujemy!", Toast.LENGTH_SHORT).show()
 
-    }
-
-    private fun calculateTerms() : MutableMap<String, MutableList<WorkDays>> {
-        val output : MutableMap<String, MutableList<WorkDays>> = mutableMapOf()
-        for (app in appointments) {
-            val dateStart = DateTimeConverter(app.timestampStart).splitConverted()
-            val dateStop = DateTimeConverter(app.timestampStop).splitConverted()
-
-            if(output.containsKey(dateStart[0]))
-                output[dateStart[0]]?.add(WorkDays("",dateStart[1], dateStop[1]))
-            else
-                output[dateStart[0]] = mutableListOf(WorkDays("", dateStart[1], dateStop[1]))
-        }
-
-        return output
-
-    }
-
-    private fun printTermsHours(date : String) : String {
-        var output = ""
-        for (value in terms[date]!!) {
-            output += "${value.start} - ${value.stop}\n"
-        }
-        return output
-    }
-
-    private fun convertWorkHours() : String {
-        var output = ""
-        for( value in pickedDay) {
-            output +=  "${value.start} - ${value.stop}\n"
-        }
-        return output
-    }
-
-    private fun checkIfPossible(timeStart : String, timeStop : String, date : String) : Boolean {
-        if(terms.containsKey(date)) {
-            for (value in terms[date]!!) {
-                /* IF:
-                    1 -> timestart, timestop in <value.start, value.stop>
-                    2 -> timestop in <value.start, value.stop> & timestart < value.start
-                    3 -> timestart in <value.start, value.stop> & timestop > value.stop
-                 */
-                if ((value.start <= timeStart && timeStop <= value.stop) ||
-                    (value.start > timeStart && timeStop >= value.start) ||
-                    (timeStart < value.stop && timeStop > value.stop)
-                ) { return false }
-
-            }
-        }
-
-        for (value in pickedDay) {
-            if (value.start <= timeStart && timeStop <= value.stop)
-                return true
-        }
-        return false
     }
 
 }
