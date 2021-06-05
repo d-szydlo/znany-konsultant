@@ -52,7 +52,7 @@ class UserAppointmentsSignInFragment : Fragment() {
 
     private var dayOfWeek : String = ""
     private var pickedDay : MutableList<WorkDays> = mutableListOf()
-    private lateinit var terms : HashMap<String, String>
+    private lateinit var terms : HashMap<String, MutableList<WorkDays>>
 
     var consultant : Consultant? = null
 
@@ -113,7 +113,7 @@ class UserAppointmentsSignInFragment : Fragment() {
             else {
                 if(days.isNotEmpty()) {
                     if(newStartTime <= newStopTime) {
-                        if (pickedDay[0].start <= newStartTime && newStopTime <= pickedDay[0].stop) {
+                        if (checkIfPossible(newStartTime, newStopTime, newDate)) {
                             update["confirmed"] = false
                             update["timestampStart"] = TimestampConverter("$newDate $newStartTime", pattern).convert()
                             update["timestampStop"] = TimestampConverter("$newDate $newStopTime", pattern).convert()
@@ -121,7 +121,7 @@ class UserAppointmentsSignInFragment : Fragment() {
                             (activity as UserMainPageActivity).setFragment(UserAppointmentsFragment())
                             Toast.makeText(view.context, "Zapis udany!", Toast.LENGTH_SHORT).show()
                         } else
-                            Toast.makeText(view.context, "Poza terminami!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(view.context, "Poza dostępnymi terminami!", Toast.LENGTH_SHORT).show()
                     } else
                         Toast.makeText(view.context, "Nieprawidłowe godziny!", Toast.LENGTH_SHORT).show()
                 } else
@@ -177,10 +177,11 @@ class UserAppointmentsSignInFragment : Fragment() {
             val days = timetable.filter {it.value.day == dayOfWeek}
 
             if(days.isNotEmpty()) {
+                pickedDay= mutableListOf()
                 days.forEach {pickedDay.add(it.value)}
                 if (terms.containsKey(dateText)) {
                     debug.text = " Godziny pracy: ${convertWorkHours()}\n" +
-                            "Zajęte terminy: ${terms[dateText]}"
+                            "Zajęte terminy: ${printTermsHours(dateText)}"
                     Log.i("app", "if1")
                 } else {
                     debug.text = " Godziny pracy: ${convertWorkHours()}\n" +
@@ -211,8 +212,7 @@ class UserAppointmentsSignInFragment : Fragment() {
             view.findViewById<Button>(R.id.usrChangeBtn).visibility = View.GONE
         }
         appointmentID = bundle.getString("id", "")
-        terms = bundle.getSerializable("terms") as HashMap<String, String>
-        Log.i("firebase", terms.toString())
+        terms = bundle.getSerializable("terms") as HashMap<String, MutableList<WorkDays>>
 
     }
 
@@ -240,6 +240,36 @@ class UserAppointmentsSignInFragment : Fragment() {
             output +=  "${value.start} - ${value.stop} \n"
         }
         return output
+    }
+
+    private fun printTermsHours(date : String) : String {
+        var output = ""
+        for (value in terms[date]!!) {
+            output += "${value.start} - ${value.stop}\n"
+        }
+        return output
+    }
+
+    private fun checkIfPossible(timeStart : String, timeStop : String, date : String) : Boolean {
+        if(terms.containsKey(date)) {
+            for (value in terms[date]!!) {
+                /* IF:
+                    1 -> timestart, timestop in <value.start, value.stop>
+                    2 -> timestop in <value.start, value.stop> & timestart < value.start
+                    3 -> timestart in <value.start, value.stop> & timestop > value.stop
+                 */
+                if ((value.start <= timeStart && timeStop <= value.stop) ||
+                    (value.start > timeStart && timeStop >= value.start) ||
+                    (timeStart < value.stop && timeStop > value.stop)
+                ) { return false }
+
+            }
+        }
+        for (value in pickedDay) {
+            if (value.start <= timeStart && timeStop <= value.stop)
+                return true
+        }
+        return false
     }
 
 

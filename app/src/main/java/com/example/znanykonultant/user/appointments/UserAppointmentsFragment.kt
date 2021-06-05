@@ -123,15 +123,16 @@ class UserAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemClickList
         (activity as UserMainPageActivity).setFragment(UserAppointmentsSignInFragment())
     }
 
-    private fun calculateTerms() : HashMap<String, String> {
-        val output :  HashMap<String, String> = hashMapOf()
+    private fun calculateTerms() : HashMap<String, MutableList<WorkDays>> {
+        val output : HashMap<String, MutableList<WorkDays>> = hashMapOf()
         for (app in data) {
             val dateStart = DateTimeConverter(app.timestampStart).splitConverted()
             val dateStop = DateTimeConverter(app.timestampStop).splitConverted()
+
             if(output.containsKey(dateStart[0]))
-                output[dateStart[0]] += "\n${dateStart[1]} ${dateStop[1]}"
+                output[dateStart[0]]?.add(WorkDays("",dateStart[1], dateStop[1]))
             else
-                output[dateStart[0]] = "${dateStart[1]} ${dateStop[1]}"
+                output[dateStart[0]] = mutableListOf(WorkDays("", dateStart[1], dateStop[1]))
         }
 
         return output
