@@ -78,4 +78,10 @@
     <string name="ask_for_new">Poproś o zmianę terminu</string>
     <string name="working_hours">Godziny pracy</string>
     <string name="add_working_hours">Dodaj godziny pracy</string>
+    <string name="add">Dodaj</string>
+    <string name="day_with_colon">Dzień :</string>
+    <string name="start_with_colon">Start :</string>
+    <string name="stop_with_colon">Koniec :</string>
+    <string name="choose_day">Wybierz dzień</string>
+    <string name="choose_hour">Wybierz godzinę</string>
 </resources>
