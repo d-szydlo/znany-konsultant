@@ -52,8 +52,7 @@ class  ConsultantServiceEdit : AppCompatActivity() {
                 consultantRef.child(id).updateChildren(new_data)
             }
 
-            val intent = Intent(this, ConsultantMainPageActivity::class.java)
-            startActivity(intent)
+            finish()
         }
 
     }
