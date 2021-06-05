@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".consultant.workingHours.ConsultantAddWorkingHoursActivity" />
+        <activity android:name=".consultant.workingHours.ConsultantEditWorkingHoursActivity" />
         <activity android:name=".user.appointments.UserAppointmentsActivity" />
         <activity android:name=".user.consultant.profile.opinion.OpinionActivity" />
         <activity android:name=".user.consultant.profile.UserConsultantProfileActivity" />

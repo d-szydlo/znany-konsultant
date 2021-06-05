@@ -49,8 +49,8 @@ class ConsultantWorkingHoursFragment : Fragment() {
         })
     }
 
-    private fun addNewHours(){
-        val intent = Intent(activity, ConsultantAddWorkingHoursActivity::class.java)
+    private fun addNewHours() {
+        val intent = Intent(activity, ConsultantEditWorkingHoursActivity::class.java)
         startActivity(intent)
     }
 }

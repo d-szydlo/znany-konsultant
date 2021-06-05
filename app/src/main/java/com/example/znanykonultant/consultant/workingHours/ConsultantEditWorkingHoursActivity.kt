@@ -6,14 +6,22 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.example.znanykonultant.R
-import com.example.znanykonultant.databinding.ActivityConsultantAddWorkingHoursBinding
+import com.example.znanykonultant.databinding.ActivityConsultantEditWorkingHoursBinding
 import com.example.znanykonultant.entity.WorkDays
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
-class ConsultantAddWorkingHoursActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityConsultantAddWorkingHoursBinding
+class ConsultantEditWorkingHoursActivity : AppCompatActivity() {
+    private lateinit var binding : ActivityConsultantEditWorkingHoursBinding
+
+    private val uid = FirebaseAuth.getInstance().uid
+    private val reference = FirebaseDatabase.getInstance().getReference("/consultants/$uid/worktime")
+
+    private var workDayId : String? = null
 
     private var startHour = "08:00"
     private var endHour = "16:00"
@@ -21,11 +29,42 @@ class ConsultantAddWorkingHoursActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityConsultantAddWorkingHoursBinding.inflate(layoutInflater)
+        binding = ActivityConsultantEditWorkingHoursBinding.inflate(layoutInflater)
         val view = binding.root
 
+        checkMode()
         showWorkingHourInfo()
         setContentView(view)
+    }
+
+    private fun checkMode() {
+        workDayId = intent.getStringExtra(ConsultantWorkingHoursAdapter.WORK_DAY_ID)
+        if (workDayId != null)
+            setEditMode(workDayId!!)
+        else
+            setAddTMode()
+    }
+
+    private fun setAddTMode() {
+        binding.edit.visibility = View.GONE
+        binding.delete.visibility = View.GONE
+    }
+
+    private fun setEditMode(workDaysId: String) {
+        binding.add.visibility = View.GONE
+
+        reference.child(workDaysId).addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val workDay = snapshot.getValue(WorkDays::class.java) ?: return
+                dayPosition = weekDays.indexOf(workDay.day)
+                startHour = workDay.start
+                endHour = workDay.stop
+                showWorkingHourInfo()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
     }
 
     private fun showWorkingHourInfo() {
@@ -77,10 +116,20 @@ class ConsultantAddWorkingHoursActivity : AppCompatActivity() {
     }
 
     fun save(view: View) {
-        val uid = FirebaseAuth.getInstance().uid
-        val reference = FirebaseDatabase.getInstance().getReference("/consultants/$uid/worktime").push()
-        val workDay = WorkDays(weekDays[dayPosition], startHour, endHour)
-        reference.setValue(workDay)
+        val newReference = reference.push()
+        val workDay = WorkDays(newReference.key!!, weekDays[dayPosition], startHour, endHour)
+        newReference.setValue(workDay)
+        finish()
+    }
+
+    fun edit(view: View) {
+        val workDay = WorkDays(workDayId!!, weekDays[dayPosition], startHour, endHour)
+        reference.child(workDayId!!).setValue(workDay)
+        finish()
+    }
+
+    fun delete(view: View) {
+        reference.child(workDayId!!).removeValue()
         finish()
     }
 
