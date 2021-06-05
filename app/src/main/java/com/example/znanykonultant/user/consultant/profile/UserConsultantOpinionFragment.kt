@@ -63,7 +63,8 @@ class UserConsultantOpinionFragment(consultantUid: String) : Fragment() {
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
-                TODO("Not yet implemented")
+                opinions.remove(snapshot.key)
+                refreshRecyclerView()
             }
 
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
