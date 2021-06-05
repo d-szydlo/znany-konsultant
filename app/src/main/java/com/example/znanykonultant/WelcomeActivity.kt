@@ -18,9 +18,7 @@ class WelcomeActivity : AppCompatActivity() {
         if (uid != null) {
             checkUserOrConsultant()
         } else {
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
+            startLogin()
         }
     }
 
@@ -33,6 +31,8 @@ class WelcomeActivity : AppCompatActivity() {
                 startActivity(myintent)
                 finish()
             }
+        }.addOnFailureListener {
+            startLogin()
         }
 
         Firebase.database.getReference("users").child(userId).get().addOnSuccessListener{
@@ -41,6 +41,14 @@ class WelcomeActivity : AppCompatActivity() {
                 startActivity(myintent)
                 finish()
             }
+        }.addOnFailureListener {
+            startLogin()
         }
+    }
+
+    fun startLogin(){
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 }
