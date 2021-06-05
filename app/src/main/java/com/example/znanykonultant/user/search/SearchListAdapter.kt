@@ -70,6 +70,8 @@ class SearchListAdapter(
         holder.consultantCategory.text = consultantCat.dropLast(2)
         if (data[position].consultantService.isNotEmpty()){
             holder.consultantPrice.text = getMinPrice(data[position]).toString() + " PLN - "+ getMaxPrice(data[position]).toString() + " PLN"
+        } else {
+            holder.consultantPrice.text = ""
         }
 
         holder.searchItem.setOnClickListener {
@@ -95,7 +97,12 @@ class SearchListAdapter(
                 data.sortWith { x, y -> (getMinPrice(x) - getMinPrice(y)).toInt() }
             }
             2 -> {
-                data.sortWith { x, y -> (getMinPrice(y) - getMinPrice(x)).toInt() }
+                data.sortWith { x, y ->
+                    when {
+                        x.consultantService.isEmpty() || y.consultantService.isEmpty() -> 0
+                        else ->  (getMinPrice(y) - getMinPrice(x)).toInt()
+                    }
+                }
             }
             3 -> {
                 data.sortByDescending { it.averageRating }
