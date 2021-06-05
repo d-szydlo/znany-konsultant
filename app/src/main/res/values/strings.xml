@@ -84,5 +84,7 @@
     <string name="stop_with_colon">Koniec :</string>
     <string name="choose_day">Wybierz dzień</string>
     <string name="choose_hour">Wybierz godzinę</string>
+    <string name="work_hours">Godziny pracy</string>
+    <string name="occupied_hours">Niedostępne terminy</string>
     <string name="dash">-</string>
 </resources>

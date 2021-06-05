@@ -9,15 +9,15 @@ class CommonFunctions {
      fun convertWorkHours(pickedDay : MutableList<WorkDays>) : String {
         var output = ""
         for( value in pickedDay) {
-            output +=  "${value.start} - ${value.stop} \n"
+            output +=  "\n${value.start} - ${value.stop} \n"
         }
         return output
     }
 
-     fun printTermsHours(date : String, terms : HashMap<String, MutableList<WorkDays>>) : String {
-        var output = ""
+     fun printTermsHours(date : String, terms : HashMap<String, MutableList<WorkDays>>) : MutableList<WorkDays>  {
+        var output : MutableList<WorkDays> = mutableListOf()
         for (value in terms[date]!!) {
-            output += "${value.start} - ${value.stop}\n"
+            output.add(WorkDays("", value.start, value.stop))
         }
         return output
     }

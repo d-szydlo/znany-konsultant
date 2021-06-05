@@ -15,69 +15,73 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:id="@+id/fragmentContainerProfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:paddingBottom="56dp" />
 
-            <FrameLayout
-                android:id="@+id/fragmentContainerProfil"
-                android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/buttonsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/setUpMeetingButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:onClick="makeAnAppointment"
+                android:text="Umów się" />
+
+            <Button
+                android:id="@+id/addOpinionButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:onClick="addOpinion"
+                android:text="OPINIA" />
+
+            <Button
+                android:id="@+id/startChat"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:onClick="startChatting"
+                android:text="Czat" />
+
+            <CheckBox
+                android:id="@+id/favorite"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="56dp" />
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:button="@android:drawable/btn_star"
+                android:onClick="checkFavorite" />
 
-            <LinearLayout
-                android:id="@+id/buttonsContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/setUpMeetingButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:onClick="makeAnAppointment"
-                    android:text="Umów się" />
-
-                <Button
-                    android:id="@+id/addOpinionButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:onClick="addOpinion"
-                    android:text="OPINIA" />
-
-                <Button
-                    android:id="@+id/startChat"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:onClick="startChatting"
-                    android:text="Czat" />
-
-                <CheckBox
-                    android:id="@+id/favorite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@android:color/transparent"
-                    android:button="@android:drawable/btn_star"
-                    android:onClick="checkFavorite" />
-
-            </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/fragmentContainerOpinions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="56dp" />
         </LinearLayout>
-    </ScrollView>
+
+        <FrameLayout
+            android:id="@+id/fragmentContainerOpinions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="56dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

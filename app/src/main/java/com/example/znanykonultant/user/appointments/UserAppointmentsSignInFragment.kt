@@ -15,8 +15,12 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
 import com.example.znanykonultant.appointments.CommonFunctions
+import com.example.znanykonultant.appointments.OccupiedTermsAdapter
 import com.example.znanykonultant.consultant.ConsultantMainPageActivity
 import com.example.znanykonultant.consultant.appointments.ConsultantAppointmentsFragment
 import com.example.znanykonultant.dao.AppointmentsDAO
@@ -35,6 +39,10 @@ import java.util.*
 import kotlin.collections.HashMap
 
 class UserAppointmentsSignInFragment : Fragment() {
+
+
+    private lateinit var listAdapter: OccupiedTermsAdapter
+    private lateinit var listAdapter2: OccupiedTermsAdapter
 
     private lateinit var appointment : Appointments
     private var appointmentID : String = ""
@@ -65,6 +73,9 @@ class UserAppointmentsSignInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_user_appointments_sign_in, container, false)
+        listAdapter = OccupiedTermsAdapter(mutableListOf())
+        listAdapter2 = OccupiedTermsAdapter(mutableListOf())
+        initRecycler(view)
 
         val info = FormDialogs()
         val infoBuilder = info.createDialog(view, 0)
@@ -99,6 +110,18 @@ class UserAppointmentsSignInFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun initRecycler(view: View){
+        val recyclerView = view.findViewById<RecyclerView>(R.id.consultantDatesRecycler)
+        recyclerView.layoutManager = LinearLayoutManager(view.context)
+        recyclerView.adapter = listAdapter
+        recyclerView.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
+
+        val recyclerView2 = view.findViewById<RecyclerView>(R.id.workHoursRecycler)
+        recyclerView2.layoutManager = LinearLayoutManager(view.context)
+        recyclerView2.adapter = listAdapter2
+        recyclerView2.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
     }
 
     private fun initDatabaseListener(view: View) {
@@ -150,7 +173,6 @@ class UserAppointmentsSignInFragment : Fragment() {
         timeStop = view.findViewById(R.id.appointmentUserTimeStop)
         place = view.findViewById(R.id.appointmentsUserPlace)
         confirmed = view.findViewById(R.id.appointmentsUserConfirmed)
-        debug = view.findViewById(R.id.debugTextConsultantView)
     }
 
     private fun initDialog(view: View) {
@@ -172,6 +194,7 @@ class UserAppointmentsSignInFragment : Fragment() {
 
     fun checkDate(view: View) {
         val dateText = date.text.toString()
+        val noWork = view.findViewById<TextView>(R.id.workHoursUsr)
         if (dateText.isNotEmpty()) {
 
             val newDate = SimpleDateFormat("dd.MM.yyyy").parse(dateText).time
@@ -183,19 +206,19 @@ class UserAppointmentsSignInFragment : Fragment() {
             val timetable : Map<String, WorkDays> = consultant!!.worktime
             val days = timetable.filter {it.value.day == dayOfWeek}
 
+            noWork.text = getString(R.string.work_hours)
             if(days.isNotEmpty()) {
                 pickedDay= mutableListOf()
                 days.forEach {pickedDay.add(it.value)}
                 if (terms.containsKey(dateText)) {
-                    debug.text = " Godziny pracy: ${f.convertWorkHours(pickedDay)}\n" +
-                            "Zajęte terminy: ${f.printTermsHours(dateText, terms)}"
+                    listAdapter.updateData(f.printTermsHours(dateText, terms))
+                    listAdapter2.updateData(pickedDay)
                 } else {
-                    debug.text = " Godziny pracy: ${f.convertWorkHours(pickedDay)}\n" +
-                            "Dzień wolny!"
+                    listAdapter2.updateData(pickedDay)
                 }
             }
             else {
-                debug.text = "Nie pracujemy w ten dzień :("
+                noWork.text = "Nie pracujemy w ten dzień :("
             }
         }
     }
