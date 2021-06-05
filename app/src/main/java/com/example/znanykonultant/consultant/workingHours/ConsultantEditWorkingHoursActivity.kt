@@ -5,6 +5,7 @@ import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.example.znanykonultant.R
 import com.example.znanykonultant.databinding.ActivityConsultantEditWorkingHoursBinding
 import com.example.znanykonultant.entity.WorkDays
@@ -116,16 +117,37 @@ class ConsultantEditWorkingHoursActivity : AppCompatActivity() {
     }
 
     fun save(view: View) {
-        val newReference = reference.push()
-        val workDay = WorkDays(newReference.key!!, weekDays[dayPosition], startHour, endHour)
-        newReference.setValue(workDay)
-        finish()
+        if (areHoursCorrect()) {
+            val newReference = reference.push()
+            val workDay = WorkDays(newReference.key!!, weekDays[dayPosition], startHour, endHour)
+            newReference.setValue(workDay)
+            finish()
+        } else {
+            showToastWithHourError()
+        }
+    }
+
+    private fun areHoursCorrect(): Boolean {
+        val firstHour = startHour.substringBefore(":").toInt()
+        val firstMinute = startHour.substringAfter(":").toInt()
+        val secondHour = endHour.substringBefore(":").toInt()
+        val secondMinute = endHour.substringAfter(":").toInt()
+
+        return firstHour < secondHour || (firstHour == secondHour && firstMinute < secondMinute)
+    }
+
+    private fun showToastWithHourError() {
+        Toast.makeText(this, "Wrong time!", Toast.LENGTH_SHORT).show()
     }
 
     fun edit(view: View) {
-        val workDay = WorkDays(workDayId!!, weekDays[dayPosition], startHour, endHour)
-        reference.child(workDayId!!).setValue(workDay)
-        finish()
+        if (areHoursCorrect()) {
+            val workDay = WorkDays(workDayId!!, weekDays[dayPosition], startHour, endHour)
+            reference.child(workDayId!!).setValue(workDay)
+            finish()
+        } else {
+            showToastWithHourError()
+        }
     }
 
     fun delete(view: View) {
