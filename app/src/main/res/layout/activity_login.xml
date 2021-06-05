@@ -14,7 +14,7 @@
         android:backgroundTint="@color/primary_variant_color"
         android:fontFamily="@font/baloo_tamma"
         android:onClick="onForgotClick"
-        android:text="Zapomniałem hasła"
+        android:text="@string/log_in_forgot_pass"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

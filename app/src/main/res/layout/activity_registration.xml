@@ -18,7 +18,7 @@
             android:layout_weight="1"
             android:background="@color/primary_color"
             android:gravity="center"
-            android:text="Załóż konto"
+            android:text="@string/create_account"
             android:textSize="24sp" />
 
         <fragment
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="showUserFragment"
-                android:text="  Użytkownik  " />
+                android:text="@string/user" />
 
             <RadioButton
                 android:id="@+id/consultantView"
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="showConsultantFragment"
-                android:text="  Konsultant  " />
+                android:text="@string/consultant" />
         </info.hoang8f.android.segmented.SegmentedGroup>
     </LinearLayout>
 

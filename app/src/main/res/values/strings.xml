@@ -35,7 +35,6 @@
         <item>Kategoria 2</item>
         <item>Kategoria 3</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="app_label">app label</string>
     <string name="search_hint">Szukaj...</string>
     <string name="filter">filtruj</string>
@@ -88,4 +87,67 @@
     <string name="delete">Usuń</string>
     <string name="hours">Godziny</string>
     <string name="edit">Edytuj</string>
+    <string name="add_service">Dodaj usługę</string>
+    <string name="add_service_type">typ</string>
+    <string name="add_service_description">opis</string>
+    <string name="add_service_add">dodaj</string>
+    <string name="add_service_price">cena</string>
+    <string name="consultant_profile_name">imię</string>
+    <string name="consultant_profile_surname">nazwisko</string>
+    <string name="consultant_profile_email">email</string>
+    <string name="consultant_profile_phone">nr telefonu</string>
+    <string name="consultant_profile_desc">opis</string>
+    <string name="consultant_profile_website">strona internetowa</string>
+    <string name="service_edit">Edycja usługi</string>
+    <string name="service_edit_type">typ</string>
+    <string name="service_edit_desc">opis</string>
+    <string name="service_edit_save">Zapisz</string>
+    <string name="service_edit_price">cena</string>
+    <string name="forgot_password">Zapomniałem hasła</string>
+    <string name="log_in_forgot_pass">Zapomniałem hasła</string>
+    <string name="opinion_title">Tytuł</string>
+    <string name="Your_opinion">Twoja opinia!</string>
+    <string name="opinion_delete">Usuń</string>
+    <string name="opinion_save">Zapisz</string>
+    <string name="create_account">Załóż konto</string>
+    <string name="user">Użytkownik</string>
+    <string name="consultant">Konsultant</string>
+    <string name="appointment_come_back">Wróć</string>
+    <string name="appointment_consultant">Konsultant</string>
+    <string name="appointment_date">Data</string>
+    <string name="appointment_title">Twoja wizyta</string>
+    <string name="appointment_name">Tu będzie imie</string>
+    <string name="appointment_surname">Tu będzie nazwisko</string>
+    <string name="appointment_type">Typ konsultacji</string>
+    <string name="appointment_text">TextView</string>
+    <string name="consultant_view_make_app">Umów się</string>
+    <string name="consultant_view_opinion">OPINIA</string>
+    <string name="consultant_view_chat">Czat</string>
+    <string name="appointment_consultant_come_back">Wróć</string>
+    <string name="appointment_consultant_delete">Anuluj wizytę</string>
+    <string name="appointment_consultant_client">Klient</string>
+    <string name="appointment_consultant_place">Miejsce</string>
+    <string name="appointment_consultant_date">Data</string>
+    <string name="appointment_consultant_your_visit">Twoja wizyta</string>
+    <string name="appointment_consultant_city">Tu będzie miejsce</string>
+    <string name="appointment_consultant_modify">Modyfikuj</string>
+    <string name="appointment_consultant_confirm">Zatwierdź</string>
+    <string name="appointment_consultant_confirmed">Potwiedzono</string>
+    <string name="cons_name">imię</string>
+    <string name="cons_surname">nazwisko</string>
+    <string name="cons_phone">nr telefonu</string>
+    <string name="cons_page">strona</string>
+    <string name="cons_email">email</string>
+    <string name="cons_desc">opis</string>
+    <string name="cons_save">Zapisz zmiany</string>
+    <string name="cons_register_name">imię</string>
+    <string name="cons_register_surname">nazwisko</string>
+    <string name="cons_register_email">email</string>
+    <string name="cons_register_phone">numer telefonu</string>
+    <string name="cons_register_pass">hasło</string>
+    <string name="cons_register_repeat">powtórz hasło</string>
+    <string name="cons_register_city">miasto</string>
+    <string name="cons_register_sign">Zarejestruj</string>
+    <string name="your_services">Twoje usługi</string>
+    <string name="search_fragment">search fragment</string>
 </resources>

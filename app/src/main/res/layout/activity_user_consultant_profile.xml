@@ -41,7 +41,7 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:onClick="makeAnAppointment"
-                    android:text="Umów się" />
+                    android:text="@string/consultant_view_make_app" />
 
                 <Button
                     android:id="@+id/addOpinionButton"
@@ -50,7 +50,7 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:onClick="addOpinion"
-                    android:text="OPINIA" />
+                    android:text="@string/consultant_view_opinion" />
 
                 <Button
                     android:id="@+id/startChat"
@@ -59,7 +59,7 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:onClick="startChatting"
-                    android:text="Czat" />
+                    android:text="@string/consultant_view_chat" />
 
                 <CheckBox
                     android:id="@+id/favorite"
