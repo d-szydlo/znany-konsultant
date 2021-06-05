@@ -32,23 +32,7 @@ class LoginActivity : AppCompatActivity(){
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             mAuth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
-                    val userId = FirebaseAuth.getInstance().uid.toString()
-                    //every user must have an email
-                    Firebase.database.getReference("consultants").child(userId).get().addOnSuccessListener{
-                        if(it.value != null){
-                            val myintent = Intent(this, ConsultantMainPageActivity::class.java)
-                            startActivity(myintent)
-                            finish()
-                        }
-                    }
-
-                    Firebase.database.getReference("users").child(userId).get().addOnSuccessListener{
-                        if(it.value != null){
-                            val myintent = Intent(this, UserMainPageActivity::class.java)
-                            startActivity(myintent)
-                            finish()
-                        }
-                    }
+                    checkUserOrConsultant()
                 }.addOnFailureListener {  e ->
                     Toast.makeText(
                         this, e.message.toString(),
@@ -57,6 +41,26 @@ class LoginActivity : AppCompatActivity(){
                 }
         } else {
             Toast.makeText(this, "Podaj email i hasło!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun checkUserOrConsultant(){
+        val userId = FirebaseAuth.getInstance().uid.toString()
+        //every user must have an email
+        Firebase.database.getReference("consultants").child(userId).get().addOnSuccessListener{
+            if(it.value != null){
+                val myintent = Intent(this, ConsultantMainPageActivity::class.java)
+                startActivity(myintent)
+                finish()
+            }
+        }
+
+        Firebase.database.getReference("users").child(userId).get().addOnSuccessListener{
+            if(it.value != null){
+                val myintent = Intent(this, UserMainPageActivity::class.java)
+                startActivity(myintent)
+                finish()
+            }
         }
     }
 

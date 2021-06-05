@@ -84,4 +84,5 @@
     <string name="stop_with_colon">Koniec :</string>
     <string name="choose_day">Wybierz dzień</string>
     <string name="choose_hour">Wybierz godzinę</string>
+    <string name="dash">-</string>
 </resources>

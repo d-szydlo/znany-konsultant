@@ -55,7 +55,7 @@ class ConsultantAddWorkingHoursActivity : AppCompatActivity() {
         val minute = startHour.substringAfter(":").toInt()
 
         TimePickerDialog(this, { _, newHour, newMinute ->
-            val newHourString = if (newHour < 10)  "0${newHour}" else "$newMinute"
+            val newHourString = if (newHour < 10)  "0${newHour}" else "$newHour"
             val newMinuteString = if (newMinute < 10)  "0${newMinute}" else "$newMinute"
 
             startHour = "${newHourString}:${newMinuteString}"
@@ -68,7 +68,7 @@ class ConsultantAddWorkingHoursActivity : AppCompatActivity() {
         val minute = endHour.substringAfter(":").toInt()
 
         TimePickerDialog(this, { _, newHour, newMinute ->
-            val newHourString = if (newHour < 10)  "0${newHour}" else "$newMinute"
+            val newHourString = if (newHour < 10)  "0${newHour}" else "$newHour"
             val newMinuteString = if (newMinute < 10)  "0${newMinute}" else "$newMinute"
 
             endHour = "${newHourString}:${newMinuteString}"
