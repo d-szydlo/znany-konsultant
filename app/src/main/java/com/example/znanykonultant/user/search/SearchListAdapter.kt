@@ -80,6 +80,8 @@ class SearchListAdapter(
             try {
                 Picasso.get().load(data[position].picture).into(holder.consultantPhoto)
             }catch(e: IllegalArgumentException){}
+        } else {
+            holder.consultantPhoto.setImageResource(R.drawable.blank_face)
         }
     }
 

@@ -187,6 +187,7 @@ class UserAppointmentsActivity : AppCompatActivity() {
 
             noWork.text = getString(R.string.work_hours)
             noTerms.text = getString(R.string.occupied_hours)
+
             if (days.isNotEmpty()) {
                 pickedDay= mutableListOf()
                 days.forEach {pickedDay.add(it.value)}
