@@ -8,17 +8,20 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="409dp"
-        android:layout_height="543dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:weightSum="10">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0sp"
             android:orientation="horizontal"
+            android:layout_weight="1"
             android:weightSum="3">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -54,24 +57,38 @@
         <EditText
             android:id="@+id/descriptiveOpinion"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="8"
             android:layout_margin="10dp"
             android:ems="10"
-            android:hint="Twoja opinia!"
             android:gravity="start|top"
+            android:hint="Twoja opinia!"
             android:inputType="textMultiLine" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_weight="1">
 
-    <Button
-        android:id="@+id/saveOpinionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="saveOpinion"
-        android:text="Zapisz"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+            <Button
+                android:id="@+id/deleteOpinionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10sp"
+                android:onClick="deleteOpinion"
+                android:text="Usuń" />
+
+            <Button
+                android:id="@+id/saveOpinionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10sp"
+                android:onClick="saveOpinion"
+                android:text="Zapisz" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
