@@ -25,6 +25,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 
 class UserAppointmentsActivity : AppCompatActivity() {
 
@@ -40,7 +41,7 @@ class UserAppointmentsActivity : AppCompatActivity() {
     private var consultantUID : String = ""
 
     private var dayOfWeek : String = ""
-    private lateinit var pickedDay : WorkDays
+    private var pickedDay : MutableList<WorkDays> = mutableListOf()
 
     lateinit var name: TextView
     lateinit var surname: TextView
@@ -144,15 +145,16 @@ class UserAppointmentsActivity : AppCompatActivity() {
             dayOfWeek = DayOfWeekConverter(c.get(Calendar.DAY_OF_WEEK)).convert()!!
 
             val timetable: Map<String, WorkDays> = consultant!!.worktime
+            val days = timetable.filter {it.value.day == dayOfWeek}
 
-            if (timetable.containsKey(dayOfWeek)) {
-                pickedDay = timetable[dayOfWeek]!!
-
+            if (days.isNotEmpty()) {
+                days.forEach {pickedDay.add(it.value)}
+                debug.text = pickedDay.toString()
                 if (output.containsKey(date)) {
-                    debug.text = " Godziny pracy: ${pickedDay.start} - ${pickedDay.stop}\n" +
+                    debug.text = " Godziny pracy: ${convertWorkHours()}\n" +
                             "Zajęte terminy: ${output[date]}"
                 } else {
-                    debug.text = " Godziny pracy: ${pickedDay.start} - ${pickedDay.stop}\n" +
+                    debug.text = " Godziny pracy: ${convertWorkHours()}\n" +
                             "Dzień wolny!"
                 }
             } else {
@@ -169,11 +171,14 @@ class UserAppointmentsActivity : AppCompatActivity() {
         val timeStart = findViewById<EditText>(R.id.appointmentTimeStart).text.toString()
         val timeStop = findViewById<EditText>(R.id.appointmentTimeStop).text.toString()
 
-        val timetable : Map<String, WorkDays> = consultant!!.worktime
+        val timetable: Map<String, WorkDays> = consultant!!.worktime
+        val days = timetable.filter {it.value.day == dayOfWeek}
 
-        if(timetable.containsKey(dayOfWeek)) {
+
+        if(days.isNotEmpty()) {
             if(timeStart <= timeStop) {
-                if (pickedDay.start <= timeStart && timeStop <= pickedDay.stop) {
+                //TODO repair it!
+                if (pickedDay[0].start <= timeStart && timeStop <= pickedDay[0].stop) {
                     dao.addAppointment(
                         userUID!!,
                         consultantUID,
@@ -207,6 +212,14 @@ class UserAppointmentsActivity : AppCompatActivity() {
 
         return output
 
+    }
+
+    private fun convertWorkHours() : String {
+        var output = ""
+        for( value in pickedDay) {
+            output +=  "${value.start} - ${value.stop}"
+        }
+        return output
     }
 
 }

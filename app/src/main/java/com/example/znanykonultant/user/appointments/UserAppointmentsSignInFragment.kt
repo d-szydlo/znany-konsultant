@@ -51,7 +51,7 @@ class UserAppointmentsSignInFragment : Fragment() {
     private val consultantRef = database.getReference("consultants")
 
     private var dayOfWeek : String = ""
-    private lateinit var pickedDay : WorkDays
+    private var pickedDay : MutableList<WorkDays> = mutableListOf()
     private lateinit var terms : HashMap<String, String>
 
     var consultant : Consultant? = null
@@ -106,13 +106,14 @@ class UserAppointmentsSignInFragment : Fragment() {
             val newStopTime = timeStop.text.toString()
 
             val timetable : Map<String, WorkDays> = consultant!!.worktime
+            val days = timetable.filter {it.value.day == dayOfWeek}
 
             if(!info.confirmedAction)
                 infoBuilder.show()
             else {
-                if(timetable.containsKey(dayOfWeek)) {
+                if(days.isNotEmpty()) {
                     if(newStartTime <= newStopTime) {
-                        if (pickedDay.start <= newStartTime && newStopTime <= pickedDay.stop) {
+                        if (pickedDay[0].start <= newStartTime && newStopTime <= pickedDay[0].stop) {
                             update["confirmed"] = false
                             update["timestampStart"] = TimestampConverter("$newDate $newStartTime", pattern).convert()
                             update["timestampStop"] = TimestampConverter("$newDate $newStopTime", pattern).convert()
@@ -173,16 +174,16 @@ class UserAppointmentsSignInFragment : Fragment() {
             dayOfWeek = DayOfWeekConverter(c.get(Calendar.DAY_OF_WEEK)).convert()!!
 
             val timetable : Map<String, WorkDays> = consultant!!.worktime
+            val days = timetable.filter {it.value.day == dayOfWeek}
 
-            if(timetable.containsKey(dayOfWeek)) {
-                pickedDay = timetable[dayOfWeek]!!
-
+            if(days.isNotEmpty()) {
+                days.forEach {pickedDay.add(it.value)}
                 if (terms.containsKey(dateText)) {
-                    debug.text = " Godziny pracy: ${pickedDay.start} - ${pickedDay.stop}\n" +
+                    debug.text = " Godziny pracy: ${convertWorkHours()}\n" +
                             "Zajęte terminy: ${terms[dateText]}"
                     Log.i("app", "if1")
                 } else {
-                    debug.text = " Godziny pracy: ${pickedDay.start} - ${pickedDay.stop}\n" +
+                    debug.text = " Godziny pracy: ${convertWorkHours()}\n" +
                             "Dzień wolny!"
                     Log.i("app", "if2")
                 }
@@ -231,6 +232,14 @@ class UserAppointmentsSignInFragment : Fragment() {
         date.setText(dateStart[0])
         timeStart.setText(dateStart[1])
         timeStop.setText(dateStop[1])
+    }
+
+    private fun convertWorkHours() : String {
+        var output = ""
+        for( value in pickedDay) {
+            output +=  "${value.start} - ${value.stop} \n"
+        }
+        return output
     }
 
 
