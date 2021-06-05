@@ -50,7 +50,7 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:onClick="addOpinion"
-                    android:text="Dodaj opinię" />
+                    android:text="OPINIA" />
 
                 <Button
                     android:id="@+id/startChat"
