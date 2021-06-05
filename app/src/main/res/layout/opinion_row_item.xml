@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -21,7 +20,7 @@
             android:id="@+id/opinionName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text="@string/appointment_text"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -35,13 +34,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10sp"
-                android:text="TextView" />
+                android:text="@string/appointment_text" />
 
             <TextView
                 android:id="@+id/opinionRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="@string/appointment_text"
                 android:textColor="#0077C6"
                 android:textStyle="bold" />
 
@@ -52,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="240dp"
-            android:text="TextView"
+            android:text="@string/appointment_text"
             android:textAlignment="textStart" />
     </LinearLayout>
 

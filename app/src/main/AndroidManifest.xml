@@ -35,6 +35,12 @@
         <activity android:name=".registration.RegistrationActivity" />
         <activity android:name=".login.LoginActivity"></activity>
 
+        <receiver
+            android:name=".user.appointments.NotificationContent"
+            android:enabled="true"
+            android:exported="false" >
+        </receiver>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

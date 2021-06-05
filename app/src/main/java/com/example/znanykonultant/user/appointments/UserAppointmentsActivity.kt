@@ -7,6 +7,12 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Intent
+import android.os.Build
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +40,7 @@ import kotlin.collections.HashMap
 
 class UserAppointmentsActivity : AppCompatActivity() {
 
+    var NOTIFICATION_ID = 100
     var consultant : Consultant? = null
     var user : User? = null
     var appointments : MutableList<Appointments> = mutableListOf()
@@ -61,6 +68,9 @@ class UserAppointmentsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        createNotificationChannel()
+
         setContentView(R.layout.activity_user_appointments)
         name = findViewById(R.id.appointmentsUserName)
         surname = findViewById(R.id.appointmentsUserSurname)
@@ -198,6 +208,17 @@ class UserAppointmentsActivity : AppCompatActivity() {
         val date = findViewById<EditText>(R.id.editTextDate).text.toString()
 
         val timeStart = findViewById<EditText>(R.id.appointmentTimeStart).text.toString()
+
+        val timeStartSplited = timeStart.split(":")
+        val timeStartMinusOneHour: Int
+        timeStartMinusOneHour = if (timeStartSplited[0] == "00"){
+            23
+        }
+        else{
+            timeStartSplited[0].toInt() - 1
+        }
+        val timeStartForAlarm = timeStartMinusOneHour.toString() + ":" + timeStartSplited[1]
+
         val timeStop = findViewById<EditText>(R.id.appointmentTimeStop).text.toString()
 
         val timetable: Map<String, WorkDays> = consultant!!.worktime
@@ -225,6 +246,30 @@ class UserAppointmentsActivity : AppCompatActivity() {
         } else
             Toast.makeText(this, "W ten dzień nie pracujemy!", Toast.LENGTH_SHORT).show()
 
+        val desc = "Konsultacja z " + name.text.toString() + " " + surname.text.toString()
+        setAlarm(TimestampConverter("$date $timeStartForAlarm", pattern).convert(), "Konsultacja", desc)
+    }
+
+    private fun setAlarm(time: Long, name: String, description: String){
+        val intent = Intent(this, NotificationContent::class.java)
+        intent.putExtra("name", name)
+        intent.putExtra("description", description)
+        val pendingIntent = PendingIntent.getBroadcast(this, NOTIFICATION_ID, intent, 0)
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent)
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            var name: String = "reminderChannel"
+            var description: String = "Channel for reminders"
+            var importance: Int = NotificationManager.IMPORTANCE_DEFAULT
+            var channel: NotificationChannel = NotificationChannel("reminder", name, importance)
+            channel.description = description
+
+            var notificationManager: NotificationManager = getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
 }

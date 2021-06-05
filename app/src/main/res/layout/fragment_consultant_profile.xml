@@ -53,7 +53,7 @@
                 android:ems="10"
                 android:fontFamily="cursive"
                 android:gravity="left"
-                android:hint="imię"
+                android:hint="@string/cons_name"
                 android:inputType="textPersonName"
                 android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/photo" />
@@ -78,7 +78,7 @@
                 android:ems="10"
                 android:fontFamily="cursive"
                 android:gravity="left"
-                android:hint="nazwisko"
+                android:hint="@string/cons_surname"
                 android:inputType="textPersonName"
                 android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/photo" />
@@ -104,7 +104,7 @@
                 android:ems="10"
                 android:fontFamily="cursive"
                 android:gravity="left"
-                android:hint="nr telefonu"
+                android:hint="@string/cons_phone"
                 android:inputType="phone"
                 android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/photo" />
@@ -131,7 +131,7 @@
                 android:ems="10"
                 android:fontFamily="cursive"
                 android:gravity="left"
-                android:hint="strona"
+                android:hint="@string/cons_page"
                 android:inputType="textPersonName"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -155,7 +155,7 @@
                 android:ems="10"
                 android:fontFamily="cursive"
                 android:gravity="left"
-                android:hint="email"
+                android:hint="@string/cons_email"
                 android:inputType="textEmailAddress"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -179,7 +179,7 @@
                 android:ems="10"
                 android:fontFamily="cursive"
                 android:gravity="left"
-                android:hint="opis"
+                android:hint="@string/cons_desc"
                 android:inputType="textMultiLine"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -189,7 +189,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:text="Zapisz zmiany"
+            android:text="@string/cons_save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.49"

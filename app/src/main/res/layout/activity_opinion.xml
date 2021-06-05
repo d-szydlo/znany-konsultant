@@ -38,7 +38,7 @@
                     android:ems="10"
                     android:fontFamily="cursive"
                     android:gravity="center"
-                    android:hint="Tytuł"
+                    android:hint="@string/opinion_title"
                     android:inputType="text"
                     app:layout_constraintHorizontal_bias="0.516"
                     app:layout_constraintStart_toEndOf="@+id/photo" />
@@ -62,7 +62,7 @@
             android:layout_margin="10dp"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="Twoja opinia!"
+            android:hint="@string/Your_opinion"
             android:inputType="textMultiLine" />
 
         <LinearLayout
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10sp"
                 android:onClick="deleteOpinion"
-                android:text="Usuń" />
+                android:text="@string/opinion_delete" />
 
             <Button
                 android:id="@+id/saveOpinionButton"
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10sp"
                 android:onClick="saveOpinion"
-                android:text="Zapisz" />
+                android:text="@string/opinion_save" />
         </LinearLayout>
 
     </LinearLayout>
