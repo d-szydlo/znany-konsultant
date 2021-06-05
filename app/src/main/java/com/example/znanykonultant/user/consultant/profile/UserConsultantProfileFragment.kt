@@ -1,10 +1,7 @@
 package com.example.znanykonultant.user.consultant.profile
 
-import android.app.Activity.RESULT_OK
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,14 +13,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
-import com.example.znanykonultant.consultant.profile.ConsultantServicesAdapter
 import com.example.znanykonultant.entity.Consultant
-import com.example.znanykonultant.entity.ConsultantService
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -32,7 +23,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import com.squareup.picasso.Picasso
-import java.io.FileNotFoundException
 
 
 class UserConsultantProfileFragment(uid: String?) : Fragment() {

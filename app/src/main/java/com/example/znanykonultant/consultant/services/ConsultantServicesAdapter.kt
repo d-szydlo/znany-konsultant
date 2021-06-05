@@ -1,4 +1,4 @@
-package com.example.znanykonultant.consultant.profile
+package com.example.znanykonultant.consultant.services
 
 import android.content.Context
 import android.content.DialogInterface

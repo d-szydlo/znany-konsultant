@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
-import com.example.znanykonultant.consultant.profile.ConsultantServicesAdapter
 import com.example.znanykonultant.entity.ConsultantService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -39,6 +38,7 @@ class ConsultantServicesFragment : Fragment() {
 
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                consultantServices.clear()
 
                 dataSnapshot.children.mapNotNullTo(consultantServices) {
                     it.getValue(ConsultantService::class.java)

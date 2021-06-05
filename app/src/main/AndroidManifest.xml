@@ -27,7 +27,7 @@
         <activity android:name=".user.consultant.profile.UserConsultantProfileActivity" />
         <activity android:name=".consultant.services.ConsultantAddServiceActivity" />
         <activity android:name=".chat.SingleChatActivity" />
-        <activity android:name=".consultant.profile.ConsultantServiceEdit" />
+        <activity android:name=".consultant.services.ConsultantServiceEdit" />
         <activity android:name=".consultant.profile.ConsultantPage" />
         <activity android:name=".consultant.ConsultantMainPageActivity" />
         <activity android:name=".login.ForgotPasswordActivity" />

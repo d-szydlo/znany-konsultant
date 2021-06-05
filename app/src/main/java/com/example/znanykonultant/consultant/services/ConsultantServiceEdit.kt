@@ -1,17 +1,14 @@
-package com.example.znanykonultant.consultant.profile
+package com.example.znanykonultant.consultant.services
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.znanykonultant.R
-import com.example.znanykonultant.consultant.ConsultantMainPageActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import kotlin.properties.Delegates
 
 class  ConsultantServiceEdit : AppCompatActivity() {
 
