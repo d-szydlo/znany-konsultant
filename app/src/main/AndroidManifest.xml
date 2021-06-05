@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ZnanyKonultant">
-        <activity android:name=".user.appointments.UserAppointmentsActivity"></activity>
+        <activity android:name=".consultant.workingHours.ConsultantAddWorkingHoursActivity"></activity>
+        <activity android:name=".user.appointments.UserAppointmentsActivity" />
         <activity android:name=".user.consultant.profile.opinion.OpinionActivity" />
         <activity android:name=".user.consultant.profile.UserConsultantProfileActivity" />
         <activity android:name=".consultant.services.ConsultantAddServiceActivity" />

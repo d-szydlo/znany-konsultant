@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    tools:context=".consultant.workingHours.ConsultantAddWorkingHoursActivity">
+
+    <TextView
+        android:id="@+id/new_working_hours_header"
+        android:layout_width="197dp"
+        android:layout_height="62dp"
+        android:gravity="center"
+        android:text="@string/add_working_hours"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/day_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/day_with_colon"
+        app:layout_constraintBottom_toTopOf="@+id/add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_working_hours_header"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <TextView
+        android:id="@+id/day_chooser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showDayPickerDialog"
+        android:text="@string/choose_day"
+        app:layout_constraintBottom_toTopOf="@+id/add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_working_hours_header"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <TextView
+        android:id="@+id/start_hour_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_with_colon"
+        app:layout_constraintBottom_toTopOf="@+id/add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_working_hours_header"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/start_hour_chooser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showBeginHourPickerDialog"
+        android:text="@string/choose_hour"
+        app:layout_constraintBottom_toTopOf="@+id/add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_working_hours_header"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/end_hour_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stop_with_colon"
+        app:layout_constraintBottom_toTopOf="@+id/add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_working_hours_header"
+        app:layout_constraintVertical_bias="0.8" />
+
+    <TextView
+        android:id="@+id/end_hour_chooser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showEndHourPickerDialog"
+        android:text="@string/choose_hour"
+        app:layout_constraintBottom_toTopOf="@+id/add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_working_hours_header"
+        app:layout_constraintVertical_bias="0.8" />
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="save"
+        android:text="@string/add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
