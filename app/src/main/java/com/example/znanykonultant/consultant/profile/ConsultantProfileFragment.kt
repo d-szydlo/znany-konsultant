@@ -13,18 +13,10 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
 import com.example.znanykonultant.consultant.ConsultantMainPageActivity
 import com.example.znanykonultant.entity.Consultant
-import com.example.znanykonultant.entity.ConsultantService
-import com.example.znanykonultant.user.UserMainPageActivity
-import com.example.znanykonultant.user.search.FilterFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -34,7 +26,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import com.squareup.picasso.Picasso
-import java.io.File
 import java.io.FileNotFoundException
 
 
@@ -94,7 +85,7 @@ class ConsultantProfileFragment : Fragment() {
         storage = Firebase.storage
 
         view.findViewById<Button>(R.id.visitorsButton).setOnClickListener {
-            (activity as ConsultantMainPageActivity).setFragment(VisitorsChartFragment())
+            (activity as ConsultantMainPageActivity).setFragment(ConsultantVisitorsChartFragment())
         }
         return view
     }

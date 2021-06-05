@@ -21,4 +21,9 @@
         android:title="@string/services"
         android:icon="@drawable/ic_baseline_service_24"/>
 
+    <item
+        android:id="@+id/consultant_nav_working_hours"
+        android:title="@string/working_hours"
+        android:icon="@drawable/ic_baseline_time_24"/>
+
 </menu>

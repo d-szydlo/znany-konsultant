@@ -1,18 +1,35 @@
 package com.example.znanykonultant.consultant.profile
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
 import com.example.znanykonultant.entity.ConsultantService
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 
 class ConsultantServicesAdapter(var context: Context, var ServicesList: MutableList<ConsultantService>): RecyclerView.Adapter<ConsultantServicesAdapter.ConsultantServicesViewHolder>(){
+
+    val consultantUid = FirebaseAuth.getInstance().uid
+    val consultantRef = Firebase.database.getReference("consultants/$consultantUid/consultantService")
+    lateinit var currentService : ConsultantService
+    var dialogClickListener = DialogInterface.OnClickListener { _, which ->
+        when (which) {
+            DialogInterface.BUTTON_POSITIVE -> {
+                delete()
+            }
+            DialogInterface.BUTTON_NEGATIVE -> {
+            }
+        }
+    }
 
     class ConsultantServicesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var consultant_service_name: TextView
@@ -38,7 +55,7 @@ class ConsultantServicesAdapter(var context: Context, var ServicesList: MutableL
     }
 
     override fun onBindViewHolder(holder: ConsultantServicesViewHolder, position: Int) {
-        val currentService = ServicesList[position]
+        currentService = ServicesList[position]
 
         holder.consultant_service_name.text = currentService.type
         holder.consultant_service_desc.text = currentService.description
@@ -53,5 +70,17 @@ class ConsultantServicesAdapter(var context: Context, var ServicesList: MutableL
             holder.view.context.startActivity(intent)
             true
         }
+
+        holder.itemView.setOnLongClickListener{
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+            builder.setMessage("Na pewno chcesz usunąć tą usługę?").setPositiveButton("Tak", dialogClickListener)
+                    .setNegativeButton("Nie", dialogClickListener).show()
+            true
+        }
+    }
+
+    fun delete(){
+        consultantRef.child(currentService.id).removeValue()
+        notifyDataSetChanged()
     }
 }

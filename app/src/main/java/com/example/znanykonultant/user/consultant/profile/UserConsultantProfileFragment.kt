@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -43,7 +44,6 @@ class UserConsultantProfileFragment(uid: String?) : Fragment() {
     lateinit var desc: EditText
     lateinit var url: EditText
     lateinit var photo: ImageView
-    lateinit var servicesRecycler: RecyclerView
     private var imageUri: Uri? = null
     val consultantUid = uid
     var data : Consultant? = null
@@ -75,26 +75,6 @@ class UserConsultantProfileFragment(uid: String?) : Fragment() {
         }
         consultantRef.addValueEventListener(postListener)
 
-        var consultant: ConsultantService = ConsultantService("x",120.0, "bardzo dlugie konsultacje", "dlugie")
-        var consultant2: ConsultantService = ConsultantService("y", 150.0, "kons", "rozmowa")
-        var servicesList = arrayListOf(consultant)
-        servicesList.add(consultant2)
-
-        servicesRecycler = view.findViewById<RecyclerView>(R.id.consultant_services)
-        servicesRecycler.layoutManager = LinearLayoutManager(view.context)
-        servicesRecycler.adapter = ConsultantServicesAdapter(view.context, servicesList)
-        servicesRecycler.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
-
-        servicesRecycler.addOnLayoutChangeListener(View.OnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
-            if (bottom < oldBottom) {
-                servicesRecycler.postDelayed(Runnable {
-                    servicesRecycler.smoothScrollToPosition(
-                        (servicesRecycler.adapter as ConsultantServicesAdapter).itemCount - 1
-                    )
-                }, 100)
-            }
-        })
-
         name = view.findViewById(R.id.consultant_name)
         surname = view.findViewById(R.id.consultant_surname)
         email = view.findViewById(R.id.consultant_email)
@@ -105,16 +85,18 @@ class UserConsultantProfileFragment(uid: String?) : Fragment() {
 
         storage = Firebase.storage
 
-        name.inputType = 0
-        surname.inputType = 0
-        email.inputType = 0
-        phone.inputType = 0
-        desc.inputType = 0
-        url.inputType = 0
+        name.setReadOnly(true)
+        surname.setReadOnly(true)
+        email.setReadOnly(true)
+        phone.setReadOnly(true)
+        desc.setReadOnly(true)
+        url.setReadOnly(true)
 
         var saveButton : Button = view.findViewById(R.id.save)
+        var visitorsButton : Button = view.findViewById(R.id.visitorsButton)
         var userConsultantProfileLayout : ConstraintLayout = view.findViewById(R.id.userConsultantProfileLayout)
         userConsultantProfileLayout.removeView(saveButton);
+        userConsultantProfileLayout.removeView(visitorsButton);
 
         return view
     }
@@ -137,4 +119,10 @@ class UserConsultantProfileFragment(uid: String?) : Fragment() {
             consultantRef.child(consultantUid).updateChildren(consultantUpdate)
         }
     }
+}
+
+fun EditText.setReadOnly(value: Boolean, inputType: Int = InputType.TYPE_NULL) {
+    isFocusable = !value
+    isFocusableInTouchMode = !value
+    this.inputType = inputType
 }

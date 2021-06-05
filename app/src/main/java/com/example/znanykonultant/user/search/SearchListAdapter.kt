@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
 import com.example.znanykonultant.entity.Consultant
+import com.squareup.picasso.Picasso
 import java.util.*
 import kotlin.Double.Companion.MAX_VALUE
 import kotlin.Double.Companion.MIN_VALUE
@@ -73,6 +74,12 @@ class SearchListAdapter(
 
         holder.searchItem.setOnClickListener {
             listener.onSearchResultClick(position)
+        }
+
+        if (data[position].picture != ""){
+            try {
+                Picasso.get().load(data[position].picture).into(holder.consultantPhoto)
+            }catch(e: IllegalArgumentException){}
         }
     }
 
