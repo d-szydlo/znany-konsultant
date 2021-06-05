@@ -77,4 +77,5 @@
     <string name="delete_visit">Anuluj wizytę</string>
     <string name="ask_for_new">Poproś o zmianę terminu</string>
     <string name="working_hours">Godziny pracy</string>
+    <string name="add_working_hours">Dodaj godziny pracy</string>
 </resources>
