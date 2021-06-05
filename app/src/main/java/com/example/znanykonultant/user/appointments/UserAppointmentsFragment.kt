@@ -16,6 +16,7 @@ import com.example.znanykonultant.R
 import com.example.znanykonultant.entity.Appointments
 import com.example.znanykonultant.entity.Consultant
 import com.example.znanykonultant.entity.User
+import com.example.znanykonultant.entity.WorkDays
 import com.example.znanykonultant.tools.DateTimeConverter
 import com.example.znanykonultant.user.UserMainPageActivity
 import com.example.znanykonultant.user.search.SearchFragment
@@ -25,6 +26,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.io.Serializable
 
 class UserAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemClickListener {
 
@@ -34,6 +36,7 @@ class UserAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemClickList
     private val database = Firebase.database
     private val userRef = database.getReference("users")
     private val appointmentsRef = database.getReference("appointments")
+
 
     private val userUID = FirebaseAuth.getInstance().uid
 
@@ -75,6 +78,8 @@ class UserAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemClickList
             }
         }
 
+
+
         val appointmentListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 data = mutableListOf()
@@ -112,8 +117,24 @@ class UserAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemClickList
         sendData.putLong("dateStop", appointment.timestampStop)
         sendData.putString("place", appointment.place)
         sendData.putBoolean("confirmed", appointment.confirmed)
+        sendData.putSerializable("terms", calculateTerms())
 
         setFragmentResult("data", sendData)
         (activity as UserMainPageActivity).setFragment(UserAppointmentsSignInFragment())
+    }
+
+    private fun calculateTerms() : HashMap<String, String> {
+        val output :  HashMap<String, String> = hashMapOf()
+        for (app in data) {
+            val dateStart = DateTimeConverter(app.timestampStart).splitConverted()
+            val dateStop = DateTimeConverter(app.timestampStop).splitConverted()
+            if(output.containsKey(dateStart[0]))
+                output[dateStart[0]] += "\n${dateStart[1]} ${dateStop[1]}"
+            else
+                output[dateStart[0]] = "${dateStart[1]} ${dateStop[1]}"
+        }
+
+        return output
+
     }
 }

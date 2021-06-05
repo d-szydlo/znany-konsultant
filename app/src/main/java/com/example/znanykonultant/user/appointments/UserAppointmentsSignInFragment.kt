@@ -3,6 +3,9 @@ package com.example.znanykonultant.user.appointments
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,18 +13,25 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
 import com.example.znanykonultant.R
 import com.example.znanykonultant.consultant.ConsultantMainPageActivity
 import com.example.znanykonultant.consultant.appointments.ConsultantAppointmentsFragment
 import com.example.znanykonultant.dao.AppointmentsDAO
 import com.example.znanykonultant.entity.Appointments
-import com.example.znanykonultant.tools.DateTimeConverter
-import com.example.znanykonultant.tools.DateTimeWidgets
-import com.example.znanykonultant.tools.FormDialogs
-import com.example.znanykonultant.tools.TimestampConverter
+import com.example.znanykonultant.entity.Consultant
+import com.example.znanykonultant.entity.WorkDays
+import com.example.znanykonultant.tools.*
 import com.example.znanykonultant.user.UserMainPageActivity
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 
 class UserAppointmentsSignInFragment : Fragment() {
 
@@ -35,6 +45,17 @@ class UserAppointmentsSignInFragment : Fragment() {
     private lateinit var timeStop : EditText
     private lateinit var place : TextView
     private lateinit var confirmed : TextView
+    private lateinit var debug : TextView
+
+    private val database = Firebase.database
+    private val consultantRef = database.getReference("consultants")
+
+    private var dayOfWeek : String = ""
+    private var pickedDay : MutableList<WorkDays> = mutableListOf()
+    private lateinit var terms : HashMap<String, String>
+
+    var consultant : Consultant? = null
+
 
 
     override fun onCreateView(
@@ -42,8 +63,7 @@ class UserAppointmentsSignInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_user_appointments_sign_in, container, false)
-        initFields(view)
-        initDialog(view)
+
         val info = FormDialogs()
         val infoBuilder = info.createDialog(view, 0)
 
@@ -54,11 +74,25 @@ class UserAppointmentsSignInFragment : Fragment() {
         }
 
         val delete = FormDialogs()
-        val deleteBuilder = info.createYesNoDialog(view, 0, positiveButtonClick)
+        val deleteBuilder = delete.createYesNoDialog(view, 0, positiveButtonClick)
 
         setFragmentResultListener("data") { _, bundle ->
             getData(bundle, view)
         }
+
+        val consultantListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                consultant = dataSnapshot.child(appointment.consultantID).getValue(Consultant::class.java)
+                initFields(view)
+                initDialog(view)
+                setData()
+                Log.e("firebase", consultant.toString())
+            }
+            override fun onCancelled(databaseError: DatabaseError) {}
+        }
+        consultantRef.addValueEventListener(consultantListener)
+
+
 
         view.findViewById<Button>(R.id.userBackBtn).setOnClickListener {
             (activity as UserMainPageActivity).setFragment(UserAppointmentsFragment())
@@ -71,15 +105,27 @@ class UserAppointmentsSignInFragment : Fragment() {
             val newStartTime = timeStart.text.toString()
             val newStopTime = timeStop.text.toString()
 
+            val timetable : Map<String, WorkDays> = consultant!!.worktime
+            val days = timetable.filter {it.value.day == dayOfWeek}
 
             if(!info.confirmedAction)
                 infoBuilder.show()
             else {
-                update["confirmed"] = false
-                update["timestampStart"] = TimestampConverter("$newDate $newStartTime", pattern).convert()
-                update["timestampStop"] = TimestampConverter("$newDate $newStopTime", pattern).convert()
-                dao.modifyAppointment(update, appointmentID)
-                (activity as UserMainPageActivity).setFragment(UserAppointmentsFragment())
+                if(days.isNotEmpty()) {
+                    if(newStartTime <= newStopTime) {
+                        if (pickedDay[0].start <= newStartTime && newStopTime <= pickedDay[0].stop) {
+                            update["confirmed"] = false
+                            update["timestampStart"] = TimestampConverter("$newDate $newStartTime", pattern).convert()
+                            update["timestampStop"] = TimestampConverter("$newDate $newStopTime", pattern).convert()
+                            dao.modifyAppointment(update, appointmentID)
+                            (activity as UserMainPageActivity).setFragment(UserAppointmentsFragment())
+                            Toast.makeText(view.context, "Zapis udany!", Toast.LENGTH_SHORT).show()
+                        } else
+                            Toast.makeText(view.context, "Poza terminami!", Toast.LENGTH_SHORT).show()
+                    } else
+                        Toast.makeText(view.context, "Nieprawidłowe godziny!", Toast.LENGTH_SHORT).show()
+                } else
+                    Toast.makeText(view.context, "W ten dzień nie pracujemy!", Toast.LENGTH_SHORT).show()
             }
 
         }
@@ -97,12 +143,58 @@ class UserAppointmentsSignInFragment : Fragment() {
         timeStop = view.findViewById(R.id.appointmentUserTimeStop)
         place = view.findViewById(R.id.appointmentsUserPlace)
         confirmed = view.findViewById(R.id.appointmentsUserConfirmed)
+        debug = view.findViewById(R.id.debugTextConsultantView)
     }
 
     private fun initDialog(view: View) {
         DateTimeWidgets(view.context, date).initDate()
         DateTimeWidgets(view.context, timeStart).initTime()
         DateTimeWidgets(view.context, timeStop).initTime()
+
+        date.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence, start: Int,
+                                       before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                checkDate(view)
+            }
+        })
+    }
+
+    fun checkDate(view: View) {
+        val dateText = date.text.toString()
+        if (dateText.isNotEmpty()) {
+
+            val newDate = SimpleDateFormat("dd.MM.yyyy").parse(dateText).time
+            val c = Calendar.getInstance()
+            c.timeInMillis = newDate
+
+            dayOfWeek = DayOfWeekConverter(c.get(Calendar.DAY_OF_WEEK)).convert()!!
+
+            val timetable : Map<String, WorkDays> = consultant!!.worktime
+            val days = timetable.filter {it.value.day == dayOfWeek}
+
+            if(days.isNotEmpty()) {
+                days.forEach {pickedDay.add(it.value)}
+                if (terms.containsKey(dateText)) {
+                    debug.text = " Godziny pracy: ${convertWorkHours()}\n" +
+                            "Zajęte terminy: ${terms[dateText]}"
+                    Log.i("app", "if1")
+                } else {
+                    debug.text = " Godziny pracy: ${convertWorkHours()}\n" +
+                            "Dzień wolny!"
+                    Log.i("app", "if2")
+                }
+            }
+            else {
+                debug.text = "Nie pracujemy w ten dzień :("
+                Log.i("app", "else3")
+            }
+        }
+
+
     }
 
     private fun getData(bundle: Bundle, view: View) {
@@ -119,7 +211,9 @@ class UserAppointmentsSignInFragment : Fragment() {
             view.findViewById<Button>(R.id.usrChangeBtn).visibility = View.GONE
         }
         appointmentID = bundle.getString("id", "")
-        setData()
+        terms = bundle.getSerializable("terms") as HashMap<String, String>
+        Log.i("firebase", terms.toString())
+
     }
 
 
@@ -139,5 +233,15 @@ class UserAppointmentsSignInFragment : Fragment() {
         timeStart.setText(dateStart[1])
         timeStop.setText(dateStop[1])
     }
+
+    private fun convertWorkHours() : String {
+        var output = ""
+        for( value in pickedDay) {
+            output +=  "${value.start} - ${value.stop} \n"
+        }
+        return output
+    }
+
+
 
 }

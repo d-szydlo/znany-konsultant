@@ -16,10 +16,11 @@ class Consultant(
                 var description : String = "",
                 var page : String = "",
                 var averageRating : Float = 0f,
+                var worktime : Map<String, WorkDays> = mapOf(),
                 var category: Map<String, Boolean> = mapOf(),
                 var rating : Map<Int, Boolean> = mapOf(),
                 var consultantService : Map<String, ConsultantService> = mapOf(),
-                var appointments: Appointments? = null,
+                var appointments: Map<String, Boolean> = mapOf(),
                 var favourites:  Map<String, Favourite> = mapOf(),
 ) : Human() {
     override fun getFullName() = "$name $surname"
