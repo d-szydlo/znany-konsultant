@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
 import com.example.znanykonultant.R
+import com.example.znanykonultant.appointments.CommonFunctions
 import com.example.znanykonultant.consultant.ConsultantMainPageActivity
 import com.example.znanykonultant.consultant.appointments.ConsultantAppointmentsFragment
 import com.example.znanykonultant.dao.AppointmentsDAO
@@ -52,9 +53,10 @@ class UserAppointmentsSignInFragment : Fragment() {
 
     private var dayOfWeek : String = ""
     private var pickedDay : MutableList<WorkDays> = mutableListOf()
-    private lateinit var terms : HashMap<String, String>
+    private lateinit var terms : HashMap<String, MutableList<WorkDays>>
 
     var consultant : Consultant? = null
+    private val f = CommonFunctions()
 
 
 
@@ -73,13 +75,33 @@ class UserAppointmentsSignInFragment : Fragment() {
             (activity as UserMainPageActivity).setFragment(UserAppointmentsFragment())
         }
 
-        val delete = FormDialogs()
-        val deleteBuilder = delete.createYesNoDialog(view, 0, positiveButtonClick)
+        val deleteBuilder = FormDialogs().createYesNoDialog(view, 0, positiveButtonClick)
 
         setFragmentResultListener("data") { _, bundle ->
             getData(bundle, view)
         }
 
+        initDatabaseListener(view)
+
+
+        view.findViewById<Button>(R.id.userBackBtn).setOnClickListener {
+            (activity as UserMainPageActivity).setFragment(UserAppointmentsFragment())
+        }
+        view.findViewById<Button>(R.id.usrChangeBtn).setOnClickListener {
+            if(!info.confirmedAction)
+                infoBuilder.show()
+            else {
+                modifyAppointment(view)
+            }
+        }
+        view.findViewById<Button>(R.id.usrCancelBtn).setOnClickListener {
+            deleteBuilder.show()
+        }
+
+        return view
+    }
+
+    private fun initDatabaseListener(view: View) {
         val consultantListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 consultant = dataSnapshot.child(appointment.consultantID).getValue(Consultant::class.java)
@@ -91,49 +113,34 @@ class UserAppointmentsSignInFragment : Fragment() {
             override fun onCancelled(databaseError: DatabaseError) {}
         }
         consultantRef.addValueEventListener(consultantListener)
+    }
 
+    private fun modifyAppointment(view: View) {
+        val dao = AppointmentsDAO()
+        val update: MutableMap<String, Any> = HashMap()
 
+        val newDate = date.text.toString()
+        val newStartTime = timeStart.text.toString()
+        val newStopTime = timeStop.text.toString()
 
-        view.findViewById<Button>(R.id.userBackBtn).setOnClickListener {
-            (activity as UserMainPageActivity).setFragment(UserAppointmentsFragment())
-        }
-        view.findViewById<Button>(R.id.usrChangeBtn).setOnClickListener {
-            val dao = AppointmentsDAO()
-            val update: MutableMap<String, Any> = HashMap()
+        val timetable : Map<String, WorkDays> = consultant!!.worktime
+        val days = timetable.filter {it.value.day == dayOfWeek}
 
-            val newDate = date.text.toString()
-            val newStartTime = timeStart.text.toString()
-            val newStopTime = timeStop.text.toString()
-
-            val timetable : Map<String, WorkDays> = consultant!!.worktime
-            val days = timetable.filter {it.value.day == dayOfWeek}
-
-            if(!info.confirmedAction)
-                infoBuilder.show()
-            else {
-                if(days.isNotEmpty()) {
-                    if(newStartTime <= newStopTime) {
-                        if (pickedDay[0].start <= newStartTime && newStopTime <= pickedDay[0].stop) {
-                            update["confirmed"] = false
-                            update["timestampStart"] = TimestampConverter("$newDate $newStartTime", pattern).convert()
-                            update["timestampStop"] = TimestampConverter("$newDate $newStopTime", pattern).convert()
-                            dao.modifyAppointment(update, appointmentID)
-                            (activity as UserMainPageActivity).setFragment(UserAppointmentsFragment())
-                            Toast.makeText(view.context, "Zapis udany!", Toast.LENGTH_SHORT).show()
-                        } else
-                            Toast.makeText(view.context, "Poza terminami!", Toast.LENGTH_SHORT).show()
-                    } else
-                        Toast.makeText(view.context, "Nieprawidłowe godziny!", Toast.LENGTH_SHORT).show()
+        if(days.isNotEmpty()) {
+            if(newStartTime <= newStopTime) {
+                if (f.checkIfPossible(newStartTime, newStopTime, newDate, terms, pickedDay)) {
+                    update["confirmed"] = false
+                    update["timestampStart"] = TimestampConverter("$newDate $newStartTime", pattern).convert()
+                    update["timestampStop"] = TimestampConverter("$newDate $newStopTime", pattern).convert()
+                    dao.modifyAppointment(update, appointmentID)
+                    (activity as UserMainPageActivity).setFragment(UserAppointmentsFragment())
+                    Toast.makeText(view.context, "Zapis udany!", Toast.LENGTH_SHORT).show()
                 } else
-                    Toast.makeText(view.context, "W ten dzień nie pracujemy!", Toast.LENGTH_SHORT).show()
-            }
-
-        }
-        view.findViewById<Button>(R.id.usrCancelBtn).setOnClickListener {
-            deleteBuilder.show()
-        }
-
-        return view
+                    Toast.makeText(view.context, "Poza dostępnymi terminami!", Toast.LENGTH_SHORT).show()
+            } else
+                Toast.makeText(view.context, "Nieprawidłowe godziny!", Toast.LENGTH_SHORT).show()
+        } else
+            Toast.makeText(view.context, "W ten dzień nie pracujemy!", Toast.LENGTH_SHORT).show()
     }
 
     private fun initFields(view: View) {
@@ -177,24 +184,20 @@ class UserAppointmentsSignInFragment : Fragment() {
             val days = timetable.filter {it.value.day == dayOfWeek}
 
             if(days.isNotEmpty()) {
+                pickedDay= mutableListOf()
                 days.forEach {pickedDay.add(it.value)}
                 if (terms.containsKey(dateText)) {
-                    debug.text = " Godziny pracy: ${convertWorkHours()}\n" +
-                            "Zajęte terminy: ${terms[dateText]}"
-                    Log.i("app", "if1")
+                    debug.text = " Godziny pracy: ${f.convertWorkHours(pickedDay)}\n" +
+                            "Zajęte terminy: ${f.printTermsHours(dateText, terms)}"
                 } else {
-                    debug.text = " Godziny pracy: ${convertWorkHours()}\n" +
+                    debug.text = " Godziny pracy: ${f.convertWorkHours(pickedDay)}\n" +
                             "Dzień wolny!"
-                    Log.i("app", "if2")
                 }
             }
             else {
                 debug.text = "Nie pracujemy w ten dzień :("
-                Log.i("app", "else3")
             }
         }
-
-
     }
 
     private fun getData(bundle: Bundle, view: View) {
@@ -211,11 +214,10 @@ class UserAppointmentsSignInFragment : Fragment() {
             view.findViewById<Button>(R.id.usrChangeBtn).visibility = View.GONE
         }
         appointmentID = bundle.getString("id", "")
-        terms = bundle.getSerializable("terms") as HashMap<String, String>
-        Log.i("firebase", terms.toString())
+        terms = bundle.getSerializable("terms") as HashMap<String, MutableList<WorkDays>>
+
 
     }
-
 
     private fun setData() {
         name.text = appointment.consultant
@@ -233,15 +235,4 @@ class UserAppointmentsSignInFragment : Fragment() {
         timeStart.setText(dateStart[1])
         timeStop.setText(dateStop[1])
     }
-
-    private fun convertWorkHours() : String {
-        var output = ""
-        for( value in pickedDay) {
-            output +=  "${value.start} - ${value.stop} \n"
-        }
-        return output
-    }
-
-
-
 }

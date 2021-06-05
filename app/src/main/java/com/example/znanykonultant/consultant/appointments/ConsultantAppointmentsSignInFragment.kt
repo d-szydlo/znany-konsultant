@@ -2,6 +2,8 @@ package com.example.znanykonultant.consultant.appointments
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,13 +15,21 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.setFragmentResultListener
 import com.example.znanykonultant.R
+import com.example.znanykonultant.appointments.CommonFunctions
 import com.example.znanykonultant.consultant.ConsultantMainPageActivity
 import com.example.znanykonultant.dao.AppointmentsDAO
 import com.example.znanykonultant.entity.Appointments
-import com.example.znanykonultant.tools.DateTimeConverter
-import com.example.znanykonultant.tools.DateTimeWidgets
-import com.example.znanykonultant.tools.FormDialogs
-import com.example.znanykonultant.tools.TimestampConverter
+import com.example.znanykonultant.entity.Consultant
+import com.example.znanykonultant.entity.WorkDays
+import com.example.znanykonultant.tools.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.HashMap
 
 class ConsultantAppointmentsSignInFragment : Fragment() {
 
@@ -34,7 +44,12 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
     private lateinit var confirmed : TextView
 
     private val pattern : String = "dd.MM.yyyy HH:mm"
+    private lateinit var terms : HashMap<String, MutableList<WorkDays>>
 
+    private val database = Firebase.database
+    private val consultantRef = database.getReference("consultants")
+
+    var consultant : Consultant? = null
 
 
     override fun onCreateView(
@@ -43,9 +58,6 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_consultant_appointments_sign_in, container, false)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
-        initFields(view)
-        initDialog(view)
         val info = FormDialogs()
         val infoBuilder = info.createDialog(view, 0)
 
@@ -63,6 +75,8 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
         setFragmentResultListener("data") { _, bundle ->
             getData(bundle, view)
         }
+
+        initDatabaseListener(view)
 
         view.findViewById<Button>(R.id.consultantBackBtn).setOnClickListener {
             (activity as ConsultantMainPageActivity).setFragment(ConsultantAppointmentsFragment())
@@ -103,6 +117,19 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
         return view
     }
 
+    private fun initDatabaseListener(view: View) {
+        val consultantListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                consultant = dataSnapshot.child(appointment.consultantID).getValue(Consultant::class.java)
+                initFields(view)
+                initDialog(view)
+                setData()
+            }
+            override fun onCancelled(databaseError: DatabaseError) {}
+        }
+        consultantRef.addValueEventListener(consultantListener)
+    }
+
 
     private fun initFields(view: View) {
         name = view.findViewById(R.id.appointmentsConsultantName)
@@ -117,6 +144,16 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
         DateTimeWidgets(view.context, date).initDate()
         DateTimeWidgets(view.context, timeStart).initTime()
         DateTimeWidgets(view.context, timeStop).initTime()
+        date.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence, start: Int,
+                                       before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                checkDate(view)
+            }
+        })
     }
 
     private fun getData(bundle: Bundle, view: View) {
@@ -135,8 +172,7 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
         }
 
         appointmentID = bundle.getString("id", "")
-
-        setData()
+        terms = bundle.getSerializable("terms") as HashMap<String, MutableList<WorkDays>>
     }
 
     private fun setData() {
@@ -154,4 +190,38 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
         timeStart.setText(dateStart[1])
         timeStop.setText(dateStop[1])
     }
+
+    fun checkDate(view: View) {
+        val debug = view.findViewById<TextView>(R.id.consultantDebug)
+        val f = CommonFunctions()
+        val dateText = date.text.toString()
+        if (dateText.isNotEmpty()) {
+
+            val newDate = SimpleDateFormat("dd.MM.yyyy").parse(dateText).time
+            val c = Calendar.getInstance()
+            c.timeInMillis = newDate
+
+            val dayOfWeek = DayOfWeekConverter(c.get(Calendar.DAY_OF_WEEK)).convert()!!
+
+            val timetable : Map<String, WorkDays> = consultant!!.worktime
+            val days = timetable.filter {it.value.day == dayOfWeek}
+
+            if(days.isNotEmpty()) {
+                val pickedDay : MutableList<WorkDays> = mutableListOf()
+                days.forEach {pickedDay.add(it.value)}
+                if (terms.containsKey(dateText)) {
+                    debug.text = " Godziny pracy: ${f.convertWorkHours(pickedDay)}\n" +
+                            "Zajęte terminy: ${f.printTermsHours(dateText, terms)}"
+                } else {
+                    debug.text = " Godziny pracy: ${f.convertWorkHours(pickedDay)}\n" +
+                            "Dzień wolny!"
+                }
+            }
+            else {
+                debug.text = "Nie pracujemy w ten dzień :("
+            }
+        }
+    }
+
+
 }
