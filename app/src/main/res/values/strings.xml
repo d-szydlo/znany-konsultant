@@ -87,4 +87,7 @@
     <string name="work_hours">Godziny pracy</string>
     <string name="occupied_hours">Niedostępne terminy</string>
     <string name="dash">-</string>
+    <string name="delete">Usuń</string>
+    <string name="hours">Godziny</string>
+    <string name="edit">Edytuj</string>
 </resources>

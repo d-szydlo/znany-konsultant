@@ -21,13 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".consultant.workingHours.ConsultantAddWorkingHoursActivity" />
+        <activity android:name=".consultant.workingHours.ConsultantEditWorkingHoursActivity" />
         <activity android:name=".user.appointments.UserAppointmentsActivity" />
         <activity android:name=".user.consultant.profile.opinion.OpinionActivity" />
         <activity android:name=".user.consultant.profile.UserConsultantProfileActivity" />
         <activity android:name=".consultant.services.ConsultantAddServiceActivity" />
         <activity android:name=".chat.SingleChatActivity" />
-        <activity android:name=".consultant.profile.ConsultantServiceEdit" />
+        <activity android:name=".consultant.services.ConsultantServiceEdit" />
         <activity android:name=".consultant.profile.ConsultantPage" />
         <activity android:name=".consultant.ConsultantMainPageActivity" />
         <activity android:name=".login.ForgotPasswordActivity" />

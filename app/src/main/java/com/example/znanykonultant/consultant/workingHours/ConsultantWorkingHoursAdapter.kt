@@ -1,6 +1,7 @@
 package com.example.znanykonultant.consultant.workingHours
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,17 @@ class ConsultantWorkingHoursAdapter(var context: Context, var workDaysList: Muta
         holder.day.text = workDaysList[position].day
         holder.startHour.text = workDaysList[position].start
         holder.endHour.text = workDaysList[position].stop
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, ConsultantEditWorkingHoursActivity::class.java)
+            intent.putExtra(WORK_DAY_ID, workDaysList[position].id)
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
     override fun getItemCount() = workDaysList.size
+
+    companion object {
+        const val WORK_DAY_ID = "WORK_DAY_ID"
+    }
 }

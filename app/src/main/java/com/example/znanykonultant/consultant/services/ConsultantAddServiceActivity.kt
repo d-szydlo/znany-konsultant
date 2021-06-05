@@ -69,8 +69,7 @@ class ConsultantAddServiceActivity : AppCompatActivity() {
             val service = ConsultantService(reference.key!!, new_price.toDouble(), new_desc.toString(), new_type.toString())
             reference.setValue(service)
 
-            val intent = Intent(this, ConsultantMainPageActivity::class.java)
-            startActivity(intent)
+            finish()
         }
 
         storage = Firebase.storage
