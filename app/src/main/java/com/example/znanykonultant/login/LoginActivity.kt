@@ -22,10 +22,6 @@ class LoginActivity : AppCompatActivity(){
         binding = ActivityLoginBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        val uid = FirebaseAuth.getInstance().uid
-        if (uid != null) {
-            checkUserOrConsultant()
-        }
     }
 
     fun onLoginClick(v : View){
