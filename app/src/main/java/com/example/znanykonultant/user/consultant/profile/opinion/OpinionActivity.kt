@@ -64,7 +64,20 @@ class OpinionActivity : AppCompatActivity() {
 
 
     fun deleteOpinion(view: View) {
+        updateConsultantAverage()
+        val reference = FirebaseDatabase.getInstance().getReference(
+            "opinions/$userId/$consultantUid"
+        )
+        val consultantReference = FirebaseDatabase.getInstance().getReference(
+            "opinions/$consultantUid/$userId"
+        )
+        consultantReference.removeValue()
+        reference.removeValue()
 
+        val resultIntent = Intent()
+        resultIntent.putExtra("consultant_uid", consultantUid)
+        setResult(RESULT_OK, resultIntent)
+        finish()
     }
 
     fun updateConsultantAverage(){
@@ -85,6 +98,8 @@ class OpinionActivity : AppCompatActivity() {
                     avg /= count
                     avg = (avg * 100.0f).roundToInt().toFloat() / 100f
                     ratingReference.setValue(avg)
+                } else {
+                    ratingReference.setValue(0f)
                 }
             }
 
