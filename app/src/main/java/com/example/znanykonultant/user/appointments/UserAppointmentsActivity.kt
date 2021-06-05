@@ -13,8 +13,12 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
 import com.example.znanykonultant.appointments.CommonFunctions
+import com.example.znanykonultant.appointments.OccupiedTermsAdapter
 import com.example.znanykonultant.dao.AppointmentsDAO
 import com.example.znanykonultant.entity.Appointments
 import com.example.znanykonultant.entity.Consultant
@@ -55,6 +59,11 @@ class UserAppointmentsActivity : AppCompatActivity() {
     lateinit var name: TextView
     lateinit var surname: TextView
 
+    private lateinit var dropdown : Spinner
+    private lateinit var listAdapter: OccupiedTermsAdapter // terms
+    private lateinit var listAdapter2: OccupiedTermsAdapter // work hours
+
+
     private val f = CommonFunctions()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,9 +74,24 @@ class UserAppointmentsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_user_appointments)
         name = findViewById(R.id.appointmentsUserName)
         surname = findViewById(R.id.appointmentsUserSurname)
+        listAdapter = OccupiedTermsAdapter(mutableListOf())
+        listAdapter2 = OccupiedTermsAdapter(mutableListOf())
+        initRecycler()
 
         getData()
         initDialog()
+    }
+
+    private fun initRecycler(){
+        val recyclerView = findViewById<RecyclerView>(R.id.consultantDatesRecycler)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = listAdapter
+        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+
+        val recyclerView2 = findViewById<RecyclerView>(R.id.workHoursRecycler)
+        recyclerView2.layoutManager = LinearLayoutManager(this)
+        recyclerView2.adapter = listAdapter2
+        recyclerView2.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
     }
 
     private fun getData() {
@@ -131,8 +155,7 @@ class UserAppointmentsActivity : AppCompatActivity() {
     }
 
     private fun initDropDown() {
-        val dropdown = findViewById<Spinner>(R.id.typeSpinner)
-        consultant?.consultantService
+        dropdown = findViewById(R.id.typeSpinner)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, consultant!!.getAllServiceNames())
         dropdown.adapter = adapter
     }
@@ -148,9 +171,10 @@ class UserAppointmentsActivity : AppCompatActivity() {
 
     private fun checkDate() {
 
+        val noWork = findViewById<TextView>(R.id.workHoursUsr)
+        val noTerms = findViewById<TextView>(R.id.termsUser)
         val date = findViewById<EditText>(R.id.editTextDate).text.toString()
         if (date != "") {
-            val debug = findViewById<TextView>(R.id.debugTextView)
             terms = f.calculateTerms(appointments)
             val newDate = SimpleDateFormat("dd.MM.yyyy").parse(date).time
             val c = Calendar.getInstance()
@@ -161,19 +185,20 @@ class UserAppointmentsActivity : AppCompatActivity() {
             val timetable: Map<String, WorkDays> = consultant!!.worktime
             val days = timetable.filter {it.value.day == dayOfWeek}
 
+            noWork.text = getString(R.string.work_hours)
+            noTerms.text = getString(R.string.occupied_hours)
             if (days.isNotEmpty()) {
                 pickedDay= mutableListOf()
                 days.forEach {pickedDay.add(it.value)}
-                debug.text = pickedDay.toString()
                 if (terms.containsKey(date)) {
-                    debug.text = " Godziny pracy: ${f.convertWorkHours(pickedDay)}\n" +
-                            "Zajęte terminy: ${f.printTermsHours(date, terms)}"
+                    listAdapter.updateData(f.printTermsHours(date, terms))
+                    listAdapter2.updateData(pickedDay)
                 } else {
-                    debug.text = " Godziny pracy: ${f.convertWorkHours(pickedDay)}\n" +
-                            "Dzień wolny!"
+                    listAdapter2.updateData(pickedDay)
+                    noTerms.text = ""
                 }
             } else {
-                debug.text = "Nie pracujemy w ten dzień :("
+                noWork.text = "Nie pracujemy w ten dzień :("
             }
         }
     }
@@ -209,7 +234,8 @@ class UserAppointmentsActivity : AppCompatActivity() {
                         TimestampConverter("$date $timeStop", pattern).convert(),
                         "",
                         user!!.getFullName(),
-                        consultant!!.getFullName()
+                        consultant!!.getFullName(),
+                        dropdown.selectedItem.toString()
                     )
                     finish()
                     Toast.makeText(this, "Zapis udany!", Toast.LENGTH_SHORT).show()

@@ -35,6 +35,7 @@
         <item>Kategoria 2</item>
         <item>Kategoria 3</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="app_label">app label</string>
     <string name="search_hint">Szukaj...</string>
     <string name="filter">filtruj</string>
@@ -70,8 +71,8 @@
     <string name="app_client">Klient</string>
     <string name="see_visitors">Zobacz zasięgi</string>
     <string name="date_info">Wybierz datę</string>
-    <string name="time_info">Godzina rozpoczęcia</string>
-    <string name="time_info_2">Godzina zakończenia</string>
+    <string name="time_info">Początek</string>
+    <string name="time_info_2">Koniec</string>
     <string name="add_visit">Zapisz się</string>
     <string name="delete_visit">Anuluj wizytę</string>
     <string name="ask_for_new">Poproś o zmianę terminu</string>
@@ -87,6 +88,8 @@
     <string name="delete">Usuń</string>
     <string name="hours">Godziny</string>
     <string name="edit">Edytuj</string>
+    <string name="consult_type">Typ konsultacji</string>
+    <string name="btn_back">Wróć</string>
     <string name="add_service">Dodaj usługę</string>
     <string name="add_service_type">typ</string>
     <string name="add_service_description">opis</string>
@@ -150,4 +153,6 @@
     <string name="cons_register_sign">Zarejestruj</string>
     <string name="your_services">Twoje usługi</string>
     <string name="search_fragment">search fragment</string>
+    <string name="work_hours">Godziny pracy</string>
+    <string name="occupied_hours">Niedostępne terminy</string>
 </resources>

@@ -15,8 +15,12 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
 import com.example.znanykonultant.appointments.CommonFunctions
+import com.example.znanykonultant.appointments.OccupiedTermsAdapter
 import com.example.znanykonultant.consultant.ConsultantMainPageActivity
 import com.example.znanykonultant.consultant.appointments.ConsultantAppointmentsFragment
 import com.example.znanykonultant.dao.AppointmentsDAO
@@ -36,6 +40,10 @@ import kotlin.collections.HashMap
 
 class UserAppointmentsSignInFragment : Fragment() {
 
+
+    private lateinit var listAdapter: OccupiedTermsAdapter // terms
+    private lateinit var listAdapter2: OccupiedTermsAdapter // work hours
+
     private lateinit var appointment : Appointments
     private var appointmentID : String = ""
     private val pattern : String = "dd.MM.yyyy HH:mm"
@@ -46,7 +54,6 @@ class UserAppointmentsSignInFragment : Fragment() {
     private lateinit var timeStop : EditText
     private lateinit var place : TextView
     private lateinit var confirmed : TextView
-    private lateinit var debug : TextView
 
     private val database = Firebase.database
     private val consultantRef = database.getReference("consultants")
@@ -65,6 +72,9 @@ class UserAppointmentsSignInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_user_appointments_sign_in, container, false)
+        listAdapter = OccupiedTermsAdapter(mutableListOf())
+        listAdapter2 = OccupiedTermsAdapter(mutableListOf())
+        initRecycler(view)
 
         val info = FormDialogs()
         val infoBuilder = info.createDialog(view, 0)
@@ -101,6 +111,18 @@ class UserAppointmentsSignInFragment : Fragment() {
         return view
     }
 
+    private fun initRecycler(view: View){
+        val recyclerView = view.findViewById<RecyclerView>(R.id.consultantDatesRecycler)
+        recyclerView.layoutManager = LinearLayoutManager(view.context)
+        recyclerView.adapter = listAdapter
+        recyclerView.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
+
+        val recyclerView2 = view.findViewById<RecyclerView>(R.id.workHoursRecycler)
+        recyclerView2.layoutManager = LinearLayoutManager(view.context)
+        recyclerView2.adapter = listAdapter2
+        recyclerView2.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
+    }
+
     private fun initDatabaseListener(view: View) {
         val consultantListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -123,25 +145,38 @@ class UserAppointmentsSignInFragment : Fragment() {
         val newStartTime = timeStart.text.toString()
         val newStopTime = timeStop.text.toString()
 
-        val timetable : Map<String, WorkDays> = consultant!!.worktime
-        val days = timetable.filter {it.value.day == dayOfWeek}
+        if(newDate.isNotEmpty() && newStartTime.isNotEmpty() && newStopTime.isNotEmpty()) {
+            val timetable: Map<String, WorkDays> = consultant!!.worktime
+            val days = timetable.filter { it.value.day == dayOfWeek }
 
-        if(days.isNotEmpty()) {
-            if(newStartTime <= newStopTime) {
-                if (f.checkIfPossible(newStartTime, newStopTime, newDate, terms, pickedDay)) {
-                    update["confirmed"] = false
-                    update["timestampStart"] = TimestampConverter("$newDate $newStartTime", pattern).convert()
-                    update["timestampStop"] = TimestampConverter("$newDate $newStopTime", pattern).convert()
-                    dao.modifyAppointment(update, appointmentID)
-                    (activity as UserMainPageActivity).setFragment(UserAppointmentsFragment())
-                    Toast.makeText(view.context, "Zapis udany!", Toast.LENGTH_SHORT).show()
+            if (days.isNotEmpty()) {
+                if (newStartTime <= newStopTime) {
+                    if (f.checkIfPossible(newStartTime, newStopTime, newDate, terms, pickedDay)) {
+                        update["confirmed"] = false
+                        update["timestampStart"] =
+                            TimestampConverter("$newDate $newStartTime", pattern).convert()
+                        update["timestampStop"] =
+                            TimestampConverter("$newDate $newStopTime", pattern).convert()
+                        dao.modifyAppointment(update, appointmentID)
+                        (activity as UserMainPageActivity).setFragment(UserAppointmentsFragment())
+                        Toast.makeText(view.context, "Zapis udany!", Toast.LENGTH_SHORT).show()
+                    } else
+                        Toast.makeText(
+                            view.context,
+                            "Poza dostępnymi terminami!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                 } else
-                    Toast.makeText(view.context, "Poza dostępnymi terminami!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(view.context, "Nieprawidłowe godziny!", Toast.LENGTH_SHORT)
+                        .show()
             } else
-                Toast.makeText(view.context, "Nieprawidłowe godziny!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(view.context, "W ten dzień nie pracujemy!", Toast.LENGTH_SHORT)
+                    .show()
         } else
-            Toast.makeText(view.context, "W ten dzień nie pracujemy!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(view.context, "Wypełnij pola!", Toast.LENGTH_SHORT)
+                .show()
     }
+
 
     private fun initFields(view: View) {
         name = view.findViewById(R.id.appointmentsUserName)
@@ -150,7 +185,6 @@ class UserAppointmentsSignInFragment : Fragment() {
         timeStop = view.findViewById(R.id.appointmentUserTimeStop)
         place = view.findViewById(R.id.appointmentsUserPlace)
         confirmed = view.findViewById(R.id.appointmentsUserConfirmed)
-        debug = view.findViewById(R.id.debugTextConsultantView)
     }
 
     private fun initDialog(view: View) {
@@ -172,6 +206,9 @@ class UserAppointmentsSignInFragment : Fragment() {
 
     fun checkDate(view: View) {
         val dateText = date.text.toString()
+        val noWork = view.findViewById<TextView>(R.id.workHoursUsr)
+        val noTerms = view.findViewById<TextView>(R.id.termsUser)
+
         if (dateText.isNotEmpty()) {
 
             val newDate = SimpleDateFormat("dd.MM.yyyy").parse(dateText).time
@@ -183,19 +220,22 @@ class UserAppointmentsSignInFragment : Fragment() {
             val timetable : Map<String, WorkDays> = consultant!!.worktime
             val days = timetable.filter {it.value.day == dayOfWeek}
 
+            noWork.text = getString(R.string.work_hours)
+            noTerms.text = getString(R.string.occupied_hours)
+
             if(days.isNotEmpty()) {
-                pickedDay= mutableListOf()
+                pickedDay = mutableListOf()
                 days.forEach {pickedDay.add(it.value)}
                 if (terms.containsKey(dateText)) {
-                    debug.text = " Godziny pracy: ${f.convertWorkHours(pickedDay)}\n" +
-                            "Zajęte terminy: ${f.printTermsHours(dateText, terms)}"
+                    listAdapter.updateData(f.printTermsHours(dateText, terms))
+                    listAdapter2.updateData(pickedDay)
                 } else {
-                    debug.text = " Godziny pracy: ${f.convertWorkHours(pickedDay)}\n" +
-                            "Dzień wolny!"
+                    listAdapter2.updateData(pickedDay)
+                    noTerms.text = ""
                 }
             }
             else {
-                debug.text = "Nie pracujemy w ten dzień :("
+                noWork.text = "Nie pracujemy w ten dzień :("
             }
         }
     }
@@ -208,6 +248,7 @@ class UserAppointmentsSignInFragment : Fragment() {
             bundle.getLong("dateStart", 0L),
             bundle.getLong("dateStop", 0L),
             bundle.getString("place", ""),
+            bundle.getString("type", ""),
             bundle.getBoolean("confirmed", false),
         )
         if(!appointment.confirmed) {
@@ -221,7 +262,7 @@ class UserAppointmentsSignInFragment : Fragment() {
 
     private fun setData() {
         name.text = appointment.consultant
-        place.text = appointment.place
+        place.text = appointment.type
 
         if(appointment.confirmed)
             confirmed.text = "Tak"

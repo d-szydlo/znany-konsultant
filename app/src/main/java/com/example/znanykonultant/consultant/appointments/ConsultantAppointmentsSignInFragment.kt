@@ -14,14 +14,19 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.setFragmentResultListener
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
 import com.example.znanykonultant.appointments.CommonFunctions
+import com.example.znanykonultant.appointments.OccupiedTermsAdapter
 import com.example.znanykonultant.consultant.ConsultantMainPageActivity
 import com.example.znanykonultant.dao.AppointmentsDAO
 import com.example.znanykonultant.entity.Appointments
 import com.example.znanykonultant.entity.Consultant
 import com.example.znanykonultant.entity.WorkDays
 import com.example.znanykonultant.tools.*
+import com.example.znanykonultant.user.appointments.AppointmentsAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -32,6 +37,9 @@ import java.util.*
 import kotlin.collections.HashMap
 
 class ConsultantAppointmentsSignInFragment : Fragment() {
+
+    private lateinit var listAdapter: OccupiedTermsAdapter
+    private lateinit var listAdapter2: OccupiedTermsAdapter
 
     private lateinit var appointment : Appointments
     private var appointmentID : String = ""
@@ -57,6 +65,9 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_consultant_appointments_sign_in, container, false)
+        listAdapter = OccupiedTermsAdapter(mutableListOf())
+        listAdapter2 = OccupiedTermsAdapter(mutableListOf())
+        initRecycler(view)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         val info = FormDialogs()
         val infoBuilder = info.createDialog(view, 0)
@@ -117,6 +128,18 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
         return view
     }
 
+    private fun initRecycler(view: View){
+        val recyclerView = view.findViewById<RecyclerView>(R.id.consultantDatesRecycler)
+        recyclerView.layoutManager = LinearLayoutManager(view.context)
+        recyclerView.adapter = listAdapter
+        recyclerView.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
+
+        val recyclerView2 = view.findViewById<RecyclerView>(R.id.workHoursRecycler)
+        recyclerView2.layoutManager = LinearLayoutManager(view.context)
+        recyclerView2.adapter = listAdapter2
+        recyclerView2.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
+    }
+
     private fun initDatabaseListener(view: View) {
         val consultantListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -165,6 +188,7 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
             bundle.getLong("dateStart", 0L),
             bundle.getLong("dateStop", 0L),
             bundle.getString("place", ""),
+            bundle.getString("type", ""),
             bundle.getBoolean("confirmed", false)
         )
         if(appointment.confirmed) {
@@ -177,7 +201,7 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
 
     private fun setData() {
         name.text = appointment.person
-        place.text = appointment.place
+        place.text = appointment.type
         if(appointment.confirmed)
             confirmed.text = "Tak"
         else
@@ -192,7 +216,9 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
     }
 
     fun checkDate(view: View) {
-        val debug = view.findViewById<TextView>(R.id.consultantDebug)
+        val noWork = view.findViewById<TextView>(R.id.workHoursCons)
+        val noTerms = view.findViewById<TextView>(R.id.termsConsultant)
+
         val f = CommonFunctions()
         val dateText = date.text.toString()
         if (dateText.isNotEmpty()) {
@@ -206,19 +232,21 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
             val timetable : Map<String, WorkDays> = consultant!!.worktime
             val days = timetable.filter {it.value.day == dayOfWeek}
 
+            noWork.text = getString(R.string.work_hours)
+            noTerms.text = getString(R.string.occupied_hours)
             if(days.isNotEmpty()) {
                 val pickedDay : MutableList<WorkDays> = mutableListOf()
                 days.forEach {pickedDay.add(it.value)}
                 if (terms.containsKey(dateText)) {
-                    debug.text = " Godziny pracy: ${f.convertWorkHours(pickedDay)}\n" +
-                            "Zajęte terminy: ${f.printTermsHours(dateText, terms)}"
+                    listAdapter.updateData(f.printTermsHours(dateText, terms))
+                    listAdapter2.updateData(pickedDay)
                 } else {
-                    debug.text = " Godziny pracy: ${f.convertWorkHours(pickedDay)}\n" +
-                            "Dzień wolny!"
+                    listAdapter2.updateData(pickedDay)
+                    noTerms.text = ""
                 }
             }
             else {
-                debug.text = "Nie pracujemy w ten dzień :("
+                noWork.text = "Nie pracujemy w ten dzień :("
             }
         }
     }

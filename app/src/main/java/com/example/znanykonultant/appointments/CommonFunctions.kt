@@ -1,5 +1,6 @@
 package com.example.znanykonultant.appointments
 
+import android.util.Log
 import com.example.znanykonultant.entity.Appointments
 import com.example.znanykonultant.entity.WorkDays
 import com.example.znanykonultant.tools.DateTimeConverter
@@ -9,15 +10,15 @@ class CommonFunctions {
      fun convertWorkHours(pickedDay : MutableList<WorkDays>) : String {
         var output = ""
         for( value in pickedDay) {
-            output +=  "${value.start} - ${value.stop} \n"
+            output +=  "\n${value.start} - ${value.stop} \n"
         }
         return output
     }
 
-     fun printTermsHours(date : String, terms : HashMap<String, MutableList<WorkDays>>) : String {
-        var output = ""
+     fun printTermsHours(date : String, terms : HashMap<String, MutableList<WorkDays>>) : MutableList<WorkDays>  {
+        val output : MutableList<WorkDays> = mutableListOf()
         for (value in terms[date]!!) {
-            output += "${value.start} - ${value.stop}\n"
+            output.add(WorkDays("", "", value.start, value.stop))
         }
         return output
     }
@@ -56,9 +57,9 @@ class CommonFunctions {
             val dateStop = DateTimeConverter(app.timestampStop).splitConverted()
 
             if(output.containsKey(dateStart[0]))
-                output[dateStart[0]]?.add(WorkDays("",dateStart[1], dateStop[1]))
+                output[dateStart[0]]?.add(WorkDays("0","",dateStart[1], dateStop[1]))
             else
-                output[dateStart[0]] = mutableListOf(WorkDays("", dateStart[1], dateStop[1]))
+                output[dateStart[0]] = mutableListOf(WorkDays("","", dateStart[1], dateStop[1]))
         }
 
         return output
