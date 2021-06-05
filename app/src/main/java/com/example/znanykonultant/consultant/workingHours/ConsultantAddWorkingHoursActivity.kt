@@ -7,12 +7,15 @@ import android.os.Bundle
 import android.view.View
 import com.example.znanykonultant.R
 import com.example.znanykonultant.databinding.ActivityConsultantAddWorkingHoursBinding
+import com.example.znanykonultant.entity.WorkDays
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 
 class ConsultantAddWorkingHoursActivity : AppCompatActivity() {
     private lateinit var binding : ActivityConsultantAddWorkingHoursBinding
 
-    private var startHour = "8:00"
+    private var startHour = "08:00"
     private var endHour = "16:00"
     private var dayPosition = 0
 
@@ -52,8 +55,10 @@ class ConsultantAddWorkingHoursActivity : AppCompatActivity() {
         val minute = startHour.substringAfter(":").toInt()
 
         TimePickerDialog(this, { _, newHour, newMinute ->
-            val newMinuteString = if (newMinute < 9)  "${newMinute}0" else "$newMinute"
-            startHour = "${newHour}:${newMinuteString}"
+            val newHourString = if (newHour < 10)  "0${newHour}" else "$newMinute"
+            val newMinuteString = if (newMinute < 10)  "0${newMinute}" else "$newMinute"
+
+            startHour = "${newHourString}:${newMinuteString}"
             showWorkingHourInfo()
         }, hour, minute, true).show()
     }
@@ -63,17 +68,25 @@ class ConsultantAddWorkingHoursActivity : AppCompatActivity() {
         val minute = endHour.substringAfter(":").toInt()
 
         TimePickerDialog(this, { _, newHour, newMinute ->
-            val newMinuteString = if (newMinute < 9)  "${newMinute}0" else "$newMinute"
-            endHour = "${newHour}:${newMinuteString}"
+            val newHourString = if (newHour < 10)  "0${newHour}" else "$newMinute"
+            val newMinuteString = if (newMinute < 10)  "0${newMinute}" else "$newMinute"
+
+            endHour = "${newHourString}:${newMinuteString}"
             showWorkingHourInfo()
         }, hour, minute, true).show()
     }
 
-    fun save(view: View) {}
+    fun save(view: View) {
+        val uid = FirebaseAuth.getInstance().uid
+        val reference = FirebaseDatabase.getInstance().getReference("/consultants/$uid/worktime").push()
+        val workDay = WorkDays(weekDays[dayPosition], startHour, endHour)
+        reference.setValue(workDay)
+        finish()
+    }
 
     companion object {
         val weekDays = arrayOf(
-            "Poniedzialek",
+            "Poniedziałek",
             "Wtorek",
             "Środa",
             "Czwartek",
