@@ -53,8 +53,8 @@ class FilterFragment : Fragment() {
 
     private fun recoverFilters(bundle: Bundle) {
         cityTextField.setText(bundle.getString("city", ""))
-        priceMinField.setText(bundle.getDouble("priceMin", 0.0).toString().replace('.', ','))
-        priceMaxField.setText(bundle.getDouble("priceMax", 1000.0).toString().replace('.', ','))
+        //priceMinField.setText(bundle.getDouble("priceMin", 0.0).toString().replace('.', ','))
+        //priceMaxField.setText(bundle.getDouble("priceMax", 1000.0).toString().replace('.', ','))
 
         catIT.isChecked = bundle.getBoolean("catIT", false)
         catBusiness.isChecked = bundle.getBoolean("catBusiness", false)
