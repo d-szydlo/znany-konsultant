@@ -5,7 +5,8 @@ import com.google.firebase.database.IgnoreExtraProperties
 import java.sql.Timestamp
 
 @IgnoreExtraProperties
-class Appointments(var person : String = "",
+class Appointments(var id : String = "",
+                   var person : String = "",
                    var consultant : String = "",
                    var personID : String =  "",
                    var consultantID : String =  "",

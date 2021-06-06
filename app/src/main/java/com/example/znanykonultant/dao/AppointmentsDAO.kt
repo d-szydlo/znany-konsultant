@@ -26,9 +26,15 @@ class AppointmentsDAO {
         // generated key
         val appointID = pushedRef.key.toString()
 
+
+        // add ref to user
+        userRef.child(user).child("appointments").child(appointID).setValue(true)
+        consultantRef.child(consultant).child("appointments").child(appointID).setValue(true)
+
         // push() generates auto id
         pushedRef.setValue(
             Appointments(
+                appointID,
                 username,
                 consultantname,
                 user,
@@ -40,9 +46,7 @@ class AppointmentsDAO {
             )
         )
 
-        // add ref to user
-        userRef.child(user).child("appointments").child(appointID).setValue(true)
-        consultantRef.child(consultant).child("appointments").child(appointID).setValue(true)
+
 
     }
 

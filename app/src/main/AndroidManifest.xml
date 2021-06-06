@@ -9,12 +9,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.ZnanyKonultant">
-        <activity android:name=".consultant.appointments.ConsultantAppointmentsVisitsActivity"></activity>
+        <activity android:name=".user.search.UserFilterActivity"></activity>
+        <activity android:name=".consultant.appointments.ConsultantAppointmentsVisitsActivity" />
         <activity android:name=".user.appointments.UserAppointmentsVisitsActivity" />
         <activity android:name=".WelcomeActivity">
             <intent-filter>

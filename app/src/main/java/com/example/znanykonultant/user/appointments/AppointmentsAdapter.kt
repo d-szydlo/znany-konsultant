@@ -19,14 +19,14 @@ import java.sql.Date
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AppointmentsAdapter(private var data: List<Appointments>, private var ids : List<String>,
+class AppointmentsAdapter(private var data: List<Appointments>,
                           private val listener : OnItemClickListener)
     : RecyclerView.Adapter<AppointmentsAdapter.ViewHolder>() {
 
     private lateinit var view: View
 
     interface OnItemClickListener {
-        fun onItemClick(appointment: Appointments, id : String)
+        fun onItemClick(appointment: Appointments)
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -46,7 +46,7 @@ class AppointmentsAdapter(private var data: List<Appointments>, private var ids 
             confirmed = view.findViewById(R.id.appointmentsConfirmedText)
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION)
-                    listener.onItemClick(data[adapterPosition], ids[adapterPosition])
+                    listener.onItemClick(data[adapterPosition])
             }
         }
     }
@@ -67,6 +67,9 @@ class AppointmentsAdapter(private var data: List<Appointments>, private var ids 
             viewHolder.confirmed.text = "Nie potwierdzono wizyty"
 
         } else {
+            view.findViewById<ConstraintLayout>(R.id.appointsLayout).setBackgroundColor(
+                // blue
+                Color.parseColor("#2196F3"))
             viewHolder.confirmed.text = "Wizyta potwierdzona"
         }
 
@@ -82,9 +85,8 @@ class AppointmentsAdapter(private var data: List<Appointments>, private var ids 
 
     override fun getItemCount() = data.size
 
-    fun updateData(data : List<Appointments>, appointmentIds : List<String>) {
-        this.data = data
-        ids = appointmentIds
+    fun updateData(newData : List<Appointments>) {
+        data = newData.sortedBy { it.timestampStart }
         notifyDataSetChanged()
     }
 

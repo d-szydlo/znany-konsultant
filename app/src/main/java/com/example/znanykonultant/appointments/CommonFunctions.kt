@@ -7,14 +7,6 @@ import com.example.znanykonultant.tools.DateTimeConverter
 
 class CommonFunctions {
 
-     fun convertWorkHours(pickedDay : MutableList<WorkDays>) : String {
-        var output = ""
-        for( value in pickedDay) {
-            output +=  "\n${value.start} - ${value.stop} \n"
-        }
-        return output
-    }
-
      fun printTermsHours(date : String, terms : HashMap<String, MutableList<WorkDays>>) : MutableList<WorkDays>  {
         val output : MutableList<WorkDays> = mutableListOf()
         for (value in terms[date]!!) {

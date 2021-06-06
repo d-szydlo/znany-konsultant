@@ -1,6 +1,8 @@
 package com.example.znanykonultant.user.search
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import com.example.znanykonultant.R
 import com.example.znanykonultant.user.UserMainPageActivity
+import kotlin.Double.Companion.MAX_VALUE
 
 class FilterFragment : Fragment() {
 
@@ -23,14 +26,6 @@ class FilterFragment : Fragment() {
     private lateinit var catBusiness : CheckBox
     private lateinit var catFinance : CheckBox
     private lateinit var catMarketing : CheckBox
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setFragmentResultListener("old_filters") { _, bundle ->
-            recoverFilters(bundle)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,13 +43,23 @@ class FilterFragment : Fragment() {
         catFinance = view.findViewById(R.id.categoryFinanceBox)
         catMarketing = view.findViewById(R.id.categoryMarketingBox)
 
+        if (activity?.intent != null){
+            val bundle = activity?.intent!!.getBundleExtra("filters")
+            if (bundle != null) {
+                recoverFilters(bundle)
+            }
+        }
+
         return view
     }
 
     private fun recoverFilters(bundle: Bundle) {
         cityTextField.setText(bundle.getString("city", ""))
-        //priceMinField.setText(bundle.getDouble("priceMin", 0.0).toString().replace('.', ','))
-        //priceMaxField.setText(bundle.getDouble("priceMax", 1000.0).toString().replace('.', ','))
+        priceMinField.setText(bundle.getDouble("priceMin", 0.0).toString().replace('.', ','))
+        val maxPrice = bundle.getDouble("priceMax", MAX_VALUE)
+        if (maxPrice != MAX_VALUE){
+            priceMaxField.setText(maxPrice.toString().replace('.', ','))
+        }
 
         catIT.isChecked = bundle.getBoolean("catIT", false)
         catBusiness.isChecked = bundle.getBoolean("catBusiness", false)
@@ -90,8 +95,9 @@ class FilterFragment : Fragment() {
             bundle.putBoolean("catMarketing", true)
         }
 
-        setFragmentResult("new_filters", bundle)
-        (activity as UserMainPageActivity).setFragment(SearchFragment())
+        val intent = Intent(activity, UserMainPageActivity::class.java)
+        intent.putExtra("filters", bundle)
+        startActivity(intent)
     }
 
 }
