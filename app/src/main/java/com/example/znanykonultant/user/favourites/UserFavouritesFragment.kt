@@ -7,17 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
-import com.example.znanykonultant.entity.Appointments
 import com.example.znanykonultant.entity.Consultant
 import com.example.znanykonultant.entity.Favourite
-import com.example.znanykonultant.user.UserMainPageActivity
-import com.example.znanykonultant.user.appointments.AppointmentsAdapter
-import com.example.znanykonultant.user.appointments.UserAppointmentsSignInFragment
 import com.example.znanykonultant.user.consultant.profile.UserConsultantProfileActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot

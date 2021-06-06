@@ -1,6 +1,7 @@
 package com.example.znanykonultant.tools
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.view.View
 
@@ -31,8 +32,8 @@ class FormDialogs {
      *         0 - confirm datetime fields
      *         1 - confirm appointment delete
      */
-    fun createDialog(view: View, type : Int): AlertDialog.Builder {
-        val builder = AlertDialog.Builder(view.context)
+    fun createDialog(context: Context, type : Int): AlertDialog.Builder {
+        val builder = AlertDialog.Builder(context)
 
         when(type){
             0 -> info()
@@ -49,8 +50,8 @@ class FormDialogs {
         return builder
     }
 
-    fun createYesNoDialog(view: View, type : Int, positiveButtonClick : (DialogInterface, Int) -> Unit) : AlertDialog.Builder {
-        val builder = AlertDialog.Builder(view.context)
+    fun createYesNoDialog(context: Context, type : Int, positiveButtonClick : (DialogInterface, Int) -> Unit) : AlertDialog.Builder {
+        val builder = AlertDialog.Builder(context)
 
         when(type){
             0 -> delete()
