@@ -15,6 +15,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import com.example.znanykonultant.R
 import com.example.znanykonultant.user.UserMainPageActivity
+import kotlin.Double.Companion.MAX_VALUE
 
 class FilterFragment : Fragment() {
 
@@ -54,8 +55,11 @@ class FilterFragment : Fragment() {
 
     private fun recoverFilters(bundle: Bundle) {
         cityTextField.setText(bundle.getString("city", ""))
-        //priceMinField.setText(bundle.getDouble("priceMin", 0.0).toString().replace('.', ','))
-        //priceMaxField.setText(bundle.getDouble("priceMax", 1000.0).toString().replace('.', ','))
+        priceMinField.setText(bundle.getDouble("priceMin", 0.0).toString().replace('.', ','))
+        val maxPrice = bundle.getDouble("priceMax", MAX_VALUE)
+        if (maxPrice != MAX_VALUE){
+            priceMaxField.setText(maxPrice.toString().replace('.', ','))
+        }
 
         catIT.isChecked = bundle.getBoolean("catIT", false)
         catBusiness.isChecked = bundle.getBoolean("catBusiness", false)
