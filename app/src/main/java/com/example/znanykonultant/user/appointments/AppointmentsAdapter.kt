@@ -36,6 +36,7 @@ class AppointmentsAdapter(private var data: List<Appointments>,
         val place: TextView
         val date : TextView
         val confirmed: TextView
+        val layout : ConstraintLayout
 
 
         init {
@@ -44,6 +45,7 @@ class AppointmentsAdapter(private var data: List<Appointments>,
             date = view.findViewById(R.id.appointmentsDate)
             client = view.findViewById(R.id.appointmentsClient)
             confirmed = view.findViewById(R.id.appointmentsConfirmedText)
+            layout = view.findViewById(R.id.appointsLayout)
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION)
                     listener.onItemClick(data[adapterPosition])
@@ -61,13 +63,13 @@ class AppointmentsAdapter(private var data: List<Appointments>,
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         if(!data[position].confirmed){
-            view.findViewById<ConstraintLayout>(R.id.appointsLayout).setBackgroundColor(
+            viewHolder.layout.setBackgroundColor(
                 // yellow
                 Color.parseColor("#FFEB3B"))
             viewHolder.confirmed.text = "Nie potwierdzono wizyty"
 
         } else {
-            view.findViewById<ConstraintLayout>(R.id.appointsLayout).setBackgroundColor(
+            viewHolder.layout.setBackgroundColor(
                 // blue
                 Color.parseColor("#2196F3"))
             viewHolder.confirmed.text = "Wizyta potwierdzona"
