@@ -45,14 +45,14 @@ class ChatsFragment : Fragment() {
             val intent = Intent(activity, SingleChatActivity::class.java)
             val row = item as LatestMessageRow
 
-            if (row.chatPartner is User) {
-                val user = row.chatPartner as User
-                intent.putExtra(NAME_KEY, "${user.name} ${user.surname}")
-                intent.putExtra(UID_KEY, user.uid)
-            } else if (row.chatPartner is Consultant) {
+            if (row.chatPartner is Consultant) {
                 val consultant = row.chatPartner as Consultant
                 intent.putExtra(NAME_KEY, "${consultant.name} ${consultant.surname}")
                 intent.putExtra(UID_KEY, consultant.uid)
+            } else if (row.chatPartner is User) {
+                val user = row.chatPartner as User
+                intent.putExtra(NAME_KEY, "${user.name} ${user.surname}")
+                intent.putExtra(UID_KEY, user.uid)
             }
 
             startActivity(intent)
