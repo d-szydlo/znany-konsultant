@@ -119,7 +119,7 @@ class SearchListAdapter(
             data.removeAll { !(it.name + " " + it.surname).contains(nameFilter) }
 
         if (cityFilter != "")
-            data.removeAll { it.city != cityFilter }
+            data.removeAll { !it.city.contains(cityFilter, ignoreCase = true) }
 
         if (catITFilter || catMarketingFilter || catFinanceFilter || catBusinessFilter)
             data.removeAll { !hasCategory(it) }

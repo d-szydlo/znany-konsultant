@@ -47,8 +47,7 @@ open class LatestMessageRow(private val message: Messages)
             message.fromId
 
         bindUserLogin(chatPartnerId, viewBinding)
-        if (isSenderLoginEmptyAfterBindingUser(viewBinding))
-            bindConsultantLogin(chatPartnerId, viewBinding)
+        bindConsultantLogin(chatPartnerId, viewBinding)
     }
 
     private fun bindUserLogin(
@@ -69,9 +68,6 @@ open class LatestMessageRow(private val message: Messages)
             }
         })
     }
-
-    private fun isSenderLoginEmptyAfterBindingUser(viewBinding: RecyclerLatestMessageItemBinding) =
-        viewBinding.lastMessageSenderLogin.text == ""
 
     private fun bindConsultantLogin(
         chatPartnerId: String,

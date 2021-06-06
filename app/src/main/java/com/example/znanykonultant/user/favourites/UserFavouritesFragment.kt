@@ -70,7 +70,7 @@ class UserFavouritesFragment : Fragment(), FavouritesConsultantAdapter.OnItemCli
 
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                userFavouritesConsultants = mutableListOf()
+                favoritesIds = mutableListOf()
 
                 dataSnapshot.child(userUid!!).child("favorites").children.mapNotNullTo(favoritesIds) {
                     it.key
