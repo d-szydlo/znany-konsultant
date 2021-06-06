@@ -85,13 +85,11 @@ class UserAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemClickList
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 data = mutableListOf()
                 for (key in appointmentIds) {
-                    Log.e("firebase", key)
                     val appointment = dataSnapshot.child(key).getValue(Appointments::class.java)
 
                     if (appointment != null) {
                         data.add(appointment)
                     }
-                    Log.e("firebase", appointment.toString())
                 }
 
                 listAdapter.updateData(data, appointmentIds)

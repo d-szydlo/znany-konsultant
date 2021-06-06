@@ -35,6 +35,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -175,6 +177,7 @@ class UserAppointmentsActivity : AppCompatActivity() {
         val noTerms = findViewById<TextView>(R.id.termsUser)
         val date = findViewById<EditText>(R.id.editTextDate).text.toString()
         if (date != "") {
+            terms = hashMapOf()
             terms = f.calculateTerms(appointments)
             val newDate = SimpleDateFormat("dd.MM.yyyy").parse(date).time
             val c = Calendar.getInstance()
@@ -189,7 +192,7 @@ class UserAppointmentsActivity : AppCompatActivity() {
             noTerms.text = getString(R.string.occupied_hours)
 
             if (days.isNotEmpty()) {
-                pickedDay= mutableListOf()
+                pickedDay = mutableListOf()
                 days.forEach {pickedDay.add(it.value)}
                 if (terms.containsKey(date)) {
                     listAdapter.updateData(f.printTermsHours(date, terms))
@@ -207,48 +210,58 @@ class UserAppointmentsActivity : AppCompatActivity() {
     fun signIn(view: View) {
         val dao =  AppointmentsDAO()
         val date = findViewById<EditText>(R.id.editTextDate).text.toString()
-
         val timeStart = findViewById<EditText>(R.id.appointmentTimeStart).text.toString()
-
-        val timeStartSplited = timeStart.split(":")
-        val timeStartMinusOneHour: Int
-        timeStartMinusOneHour = if (timeStartSplited[0] == "00"){
-            23
-        }
-        else{
-            timeStartSplited[0].toInt() - 1
-        }
-        val timeStartForAlarm = timeStartMinusOneHour.toString() + ":" + timeStartSplited[1]
-
         val timeStop = findViewById<EditText>(R.id.appointmentTimeStop).text.toString()
+        val currDate = LocalDateTime.now().format((DateTimeFormatter.ofPattern(pattern)))
+        if (timeStart.isNotEmpty() && timeStop.isNotEmpty() && date.isNotEmpty()) {
+            if (currDate < "$date $timeStart") {
+                val timeStartSplited = timeStart.split(":")
+                val timeStartMinusOneHour: Int
+                timeStartMinusOneHour = if (timeStartSplited[0] == "00") {
+                    23
+                } else {
+                    timeStartSplited[0].toInt() - 1
+                }
+                val timeStartForAlarm = timeStartMinusOneHour.toString() + ":" + timeStartSplited[1]
+                Log.i("czas", "Jestem tutaj?")
+                val timetable: Map<String, WorkDays> = consultant!!.worktime
+                val days = timetable.filter { it.value.day == dayOfWeek }
 
-        val timetable: Map<String, WorkDays> = consultant!!.worktime
-        val days = timetable.filter {it.value.day == dayOfWeek}
-
-        if(days.isNotEmpty()) {
-            if(timeStart <= timeStop) {
-                if (f.checkIfPossible(timeStart, timeStop, date, terms, pickedDay)) {
-                    dao.addAppointment(
-                        userUID!!,
-                        consultantUID,
-                        TimestampConverter("$date $timeStart", pattern).convert(),
-                        TimestampConverter("$date $timeStop", pattern).convert(),
-                        "",
-                        user!!.getFullName(),
-                        consultant!!.getFullName(),
-                        dropdown.selectedItem.toString()
-                    )
-                    finish()
-                    Toast.makeText(this, "Zapis udany!", Toast.LENGTH_SHORT).show()
+                if (days.isNotEmpty()) {
+                    if (timeStart <= timeStop) {
+                        if (f.checkIfPossible(timeStart, timeStop, date, terms, pickedDay)) {
+                            dao.addAppointment(
+                                userUID!!,
+                                consultantUID,
+                                TimestampConverter("$date $timeStart", pattern).convert(),
+                                TimestampConverter("$date $timeStop", pattern).convert(),
+                                "",
+                                user!!.getFullName(),
+                                consultant!!.getFullName(),
+                                dropdown.selectedItem.toString()
+                            )
+                            finish()
+                            Toast.makeText(this, "Zapis udany!", Toast.LENGTH_SHORT).show()
+                        } else
+                            Toast.makeText(this, "Poza dostępnymi terminami!", Toast.LENGTH_SHORT)
+                                .show()
+                    } else
+                        Toast.makeText(this, "Nieprawidłowe godziny!", Toast.LENGTH_SHORT).show()
                 } else
-                    Toast.makeText(this, "Poza dostępnymi terminami!", Toast.LENGTH_SHORT).show()
-            } else
-                Toast.makeText(this, "Nieprawidłowe godziny!", Toast.LENGTH_SHORT).show()
-        } else
-            Toast.makeText(this, "W ten dzień nie pracujemy!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "W ten dzień nie pracujemy!", Toast.LENGTH_SHORT).show()
 
-        val desc = "Konsultacja z " + name.text.toString() + " " + surname.text.toString()
-        setAlarm(TimestampConverter("$date $timeStartForAlarm", pattern).convert(), "Konsultacja", desc)
+                val desc = "Konsultacja z " + name.text.toString() + " " + surname.text.toString()
+                setAlarm(
+                    TimestampConverter("$date $timeStartForAlarm", pattern).convert(),
+                    "Konsultacja",
+                    desc
+                )
+            } else {
+                Toast.makeText(this, "Wydarzenie w przeszłości!", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Wypełnij pola!", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setAlarm(time: Long, name: String, description: String){
