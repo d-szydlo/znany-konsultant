@@ -1,5 +1,6 @@
 package com.example.znanykonultant.user.appointments
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -120,8 +121,11 @@ class UserAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemClickList
         sendData.putBoolean("confirmed", appointment.confirmed)
         sendData.putSerializable("terms", calculateTerms(appointment))
 
-        setFragmentResult("data", sendData)
-        (activity as UserMainPageActivity).setFragment(UserAppointmentsSignInFragment())
+
+        val myIntent = Intent(activity, UserAppointmentsVisitsActivity::class.java)
+        myIntent.putExtra("data", sendData)
+        startActivity(myIntent)
+
     }
 
     private fun calculateTerms(appointment: Appointments) : HashMap<String, MutableList<WorkDays>> {

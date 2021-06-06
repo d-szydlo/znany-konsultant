@@ -1,5 +1,6 @@
 package com.example.znanykonultant.consultant.appointments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -20,6 +21,7 @@ import com.example.znanykonultant.tools.DateTimeConverter
 import com.example.znanykonultant.user.UserMainPageActivity
 import com.example.znanykonultant.user.appointments.AppointmentsAdapter
 import com.example.znanykonultant.user.appointments.UserAppointmentsSignInFragment
+import com.example.znanykonultant.user.appointments.UserAppointmentsVisitsActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -114,8 +116,9 @@ class ConsultantAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemCli
         sendData.putBoolean("confirmed", appointment.confirmed)
         sendData.putSerializable("terms", f.calculateTerms(data))
 
-        setFragmentResult("data", sendData)
-        (activity as ConsultantMainPageActivity).setFragment(ConsultantAppointmentsSignInFragment())
+        val myIntent = Intent(activity, ConsultantAppointmentsVisitsActivity::class.java)
+        myIntent.putExtra("data", sendData)
+        startActivity(myIntent)
 
     }
 }

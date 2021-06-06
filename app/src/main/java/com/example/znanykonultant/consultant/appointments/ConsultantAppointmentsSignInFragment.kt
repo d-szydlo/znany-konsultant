@@ -83,8 +83,9 @@ class ConsultantAppointmentsSignInFragment : Fragment() {
         val delete = FormDialogs()
         val deleteBuilder = delete.createYesNoDialog(view, 0, positiveButtonClick)
 
-        setFragmentResultListener("data") { _, bundle ->
-            getData(bundle, view)
+        if(activity?.intent != null) {
+            val bundle = requireActivity().intent.getBundleExtra("data")
+            getData(bundle!!, view)
         }
 
         initDatabaseListener(view)

@@ -14,6 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ZnanyKonultant">
+        <activity android:name=".consultant.appointments.ConsultantAppointmentsVisitsActivity"></activity>
+        <activity android:name=".user.appointments.UserAppointmentsVisitsActivity" />
         <activity android:name=".WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,13 +35,12 @@
         <activity android:name=".login.ForgotPasswordActivity" />
         <activity android:name=".user.UserMainPageActivity" />
         <activity android:name=".registration.RegistrationActivity" />
-        <activity android:name=".login.LoginActivity"></activity>
+        <activity android:name=".login.LoginActivity" />
 
         <receiver
             android:name=".user.appointments.NotificationContent"
             android:enabled="true"
-            android:exported="false" >
-        </receiver>
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"
