@@ -45,7 +45,6 @@ class  ConsultantServiceEdit : AppCompatActivity() {
             new_data["description"] = new_desc
             new_data["cost"] = new_price
             if (consultantUid != null) {
-                Log.i("iddd", id)
                 consultantRef.child(id).updateChildren(new_data)
             }
 

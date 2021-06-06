@@ -57,15 +57,12 @@ class UserFavouritesFragment : Fragment(), FavouritesConsultantAdapter.OnItemCli
         val favoritesListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 userFavouritesConsultants = mutableListOf()
-                Log.i("favorites", favoritesIds.size.toString())
                 for (key in favoritesIds) {
                     val favorite = dataSnapshot.child(key).getValue(Consultant::class.java)
-                    Log.i("favorites", favorite.toString())
                     if (favorite != null) {
                         userFavouritesConsultants.add(favorite)
                     }
                 }
-                Log.i("update", userFavouritesConsultants.size.toString())
                 listAdapter.updateData(userFavouritesConsultants, favoritesIds)
             }
             override fun onCancelled(databaseError: DatabaseError) {}
@@ -78,7 +75,6 @@ class UserFavouritesFragment : Fragment(), FavouritesConsultantAdapter.OnItemCli
                 dataSnapshot.child(userUid!!).child("favorites").children.mapNotNullTo(favoritesIds) {
                     it.key
                 }
-                Log.i("favorites", favoritesIds.size.toString()+"halo")
                 consultantRef.addValueEventListener(favoritesListener)
             }
 

@@ -125,7 +125,6 @@ class UserAppointmentsActivity : AppCompatActivity() {
                     if (appointment != null) {
                         appointments.add(appointment)
                     }
-                    Log.e("firebase", appointment.toString())
                 }
             }
             override fun onCancelled(databaseError: DatabaseError) {}

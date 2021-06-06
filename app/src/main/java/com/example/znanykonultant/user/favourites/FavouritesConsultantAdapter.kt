@@ -76,7 +76,6 @@ class FavouritesConsultantAdapter(private var data: List<Consultant>, private va
     fun updateData(data : List<Consultant>, consultantsIds : List<String>) {
         this.data = data
         ids = consultantsIds
-        Log.i("update", data.size.toString())
         notifyDataSetChanged()
     }
 

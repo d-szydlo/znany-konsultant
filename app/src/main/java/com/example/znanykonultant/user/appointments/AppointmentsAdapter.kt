@@ -85,7 +85,6 @@ class AppointmentsAdapter(private var data: List<Appointments>, private var ids 
     fun updateData(data : List<Appointments>, appointmentIds : List<String>) {
         this.data = data
         ids = appointmentIds
-        Log.i("firebase", data.toString())
         notifyDataSetChanged()
     }
 

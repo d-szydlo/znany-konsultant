@@ -112,7 +112,6 @@ class ConsultantMainPageActivity : AppCompatActivity() {
                         appointments.add(appointment)
                     }
                 }
-                Log.i("nohalo", appointments.size.toString())
                 if (appointments.size > 0){
                     appointments.forEach {
                         if(!it.confirmed){

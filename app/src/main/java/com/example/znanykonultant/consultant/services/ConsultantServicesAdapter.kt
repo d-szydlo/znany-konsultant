@@ -3,6 +3,7 @@ package com.example.znanykonultant.consultant.services
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,10 +64,10 @@ class ConsultantServicesAdapter(var context: Context, var ServicesList: MutableL
 
         holder.itemView.setOnClickListener{
             val intent = Intent(holder.view.context, ConsultantServiceEdit::class.java)
-            intent.putExtra("key", currentService.id)
-            intent.putExtra("type", currentService.type)
-            intent.putExtra("desc", currentService.description)
-            intent.putExtra("price", currentService.cost)
+            intent.putExtra("key", ServicesList[position].id)
+            intent.putExtra("type", ServicesList[position].type)
+            intent.putExtra("desc", ServicesList[position].description)
+            intent.putExtra("price", ServicesList[position].cost)
             holder.view.context.startActivity(intent)
             true
         }
@@ -79,7 +80,7 @@ class ConsultantServicesAdapter(var context: Context, var ServicesList: MutableL
         }
     }
 
-    fun delete(){
+    private fun delete(){
         consultantRef.child(currentService.id).removeValue()
         notifyDataSetChanged()
     }
