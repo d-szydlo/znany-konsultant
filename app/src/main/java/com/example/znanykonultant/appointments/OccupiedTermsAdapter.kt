@@ -42,6 +42,7 @@ class OccupiedTermsAdapter (private var data: List<WorkDays>)
     override fun getItemCount() = data.size
 
     fun updateData(data : List<WorkDays>) {
+        this.data = mutableListOf()
         this.data = data
         notifyDataSetChanged()
     }
