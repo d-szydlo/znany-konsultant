@@ -1,7 +1,6 @@
 package com.example.znanykonultant.consultant.services
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity

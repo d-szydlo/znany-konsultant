@@ -3,8 +3,6 @@ package com.example.znanykonultant.dao
 import com.example.znanykonultant.entity.PageVisit
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import java.sql.Timestamp
-import java.util.*
 
 class PageVisitDAO {
 

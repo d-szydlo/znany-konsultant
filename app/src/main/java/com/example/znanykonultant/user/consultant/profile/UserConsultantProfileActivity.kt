@@ -1,15 +1,14 @@
 package com.example.znanykonultant.user.consultant.profile
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.CheckBox
+import androidx.appcompat.app.AppCompatActivity
 import com.example.znanykonultant.R
 import com.example.znanykonultant.chat.ChatsFragment
 import com.example.znanykonultant.chat.SingleChatActivity
-import com.example.znanykonultant.entity.Appointments
 import com.example.znanykonultant.entity.Consultant
 import com.example.znanykonultant.user.appointments.UserAppointmentsActivity
 import com.example.znanykonultant.user.consultant.profile.opinion.OpinionActivity
@@ -30,7 +29,7 @@ class UserConsultantProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_user_consultant_profile)
         consultantUid = this.intent.getStringExtra("consultant_uid").toString()
 
-        val newProfileFragment: UserConsultantProfileFragment = UserConsultantProfileFragment(consultantUid) // TODO przechowywanie uid przy obrocie, lub zablokowanie obrotu
+        val newProfileFragment: UserConsultantProfileFragment = UserConsultantProfileFragment(consultantUid)
         val newOpinionFragment: UserConsultantOpinionFragment = UserConsultantOpinionFragment(consultantUid)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragmentContainerProfil, newProfileFragment)

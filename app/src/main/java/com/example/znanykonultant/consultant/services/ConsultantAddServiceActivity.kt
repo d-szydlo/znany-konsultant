@@ -1,27 +1,20 @@
 package com.example.znanykonultant.consultant.services
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import com.example.znanykonultant.R
-import com.example.znanykonultant.consultant.ConsultantMainPageActivity
-import com.example.znanykonultant.entity.Consultant
 import com.example.znanykonultant.entity.ConsultantService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
-import java.security.Provider
 import kotlin.properties.Delegates
 
 class ConsultantAddServiceActivity : AppCompatActivity() {

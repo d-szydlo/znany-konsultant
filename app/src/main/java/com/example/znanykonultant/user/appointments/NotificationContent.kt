@@ -1,13 +1,11 @@
 package com.example.znanykonultant.user.appointments
 
-import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.znanykonultant.R
-import com.example.znanykonultant.main.MainActivity
 
 class NotificationContent: BroadcastReceiver() {
 

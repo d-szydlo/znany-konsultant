@@ -1,13 +1,12 @@
 package com.example.znanykonultant.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.znanykonultant.databinding.ActivityForgotPasswordBinding
-import com.example.znanykonultant.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class ForgotPasswordActivity : AppCompatActivity() {

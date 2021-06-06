@@ -1,10 +1,10 @@
 package com.example.znanykonultant.chat
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.znanykonultant.databinding.*
+import com.example.znanykonultant.databinding.ActivitySingleChatBinding
 import com.example.znanykonultant.entity.Messages
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener

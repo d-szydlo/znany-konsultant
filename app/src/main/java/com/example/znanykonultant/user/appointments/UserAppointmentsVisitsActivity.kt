@@ -1,16 +1,15 @@
 package com.example.znanykonultant.user.appointments
 
 import android.content.DialogInterface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +21,6 @@ import com.example.znanykonultant.entity.Appointments
 import com.example.znanykonultant.entity.Consultant
 import com.example.znanykonultant.entity.WorkDays
 import com.example.znanykonultant.tools.*
-import com.example.znanykonultant.user.UserMainPageActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -98,7 +96,6 @@ class UserAppointmentsVisitsActivity : AppCompatActivity() {
                 initFields()
                 initDialog()
                 setData()
-                Log.e("firebase", consultant.toString())
             }
             override fun onCancelled(databaseError: DatabaseError) {}
         }

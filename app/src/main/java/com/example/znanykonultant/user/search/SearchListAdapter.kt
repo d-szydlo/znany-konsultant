@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
 import com.example.znanykonultant.entity.Consultant
 import com.squareup.picasso.Picasso
-import java.util.*
 import kotlin.Double.Companion.MAX_VALUE
 
 class SearchListAdapter(

@@ -5,16 +5,15 @@ import android.os.Bundle
 import android.text.Editable
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.example.znanykonultant.chat.LatestMessageRow
-import com.example.znanykonultant.consultant.ConsultantMainPageActivity
 import com.example.znanykonultant.databinding.ActivityOpinionBinding
-import com.example.znanykonultant.entity.Messages
 import com.example.znanykonultant.entity.Opinion
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import java.lang.Math.round
 import kotlin.math.roundToInt
 
 
@@ -104,7 +103,6 @@ class OpinionActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                // TODO
             }
         })
     }

@@ -1,7 +1,6 @@
 package com.example.znanykonultant.entity
 
 import com.google.firebase.database.Exclude
-import java.sql.Timestamp
 
 class PageVisit(var visitor : String = "",
                 var consultant: String = "",

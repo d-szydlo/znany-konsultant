@@ -1,8 +1,8 @@
 package com.example.znanykonultant
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.znanykonultant.consultant.ConsultantMainPageActivity
 import com.example.znanykonultant.login.LoginActivity
 import com.example.znanykonultant.user.UserMainPageActivity

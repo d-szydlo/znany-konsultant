@@ -1,6 +1,5 @@
 package com.example.znanykonultant.appointments
 
-import android.util.Log
 import com.example.znanykonultant.entity.Appointments
 import com.example.znanykonultant.entity.WorkDays
 import com.example.znanykonultant.tools.DateTimeConverter

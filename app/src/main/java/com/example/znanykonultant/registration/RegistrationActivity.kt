@@ -1,10 +1,9 @@
 package com.example.znanykonultant.registration
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.example.znanykonultant.R
-import com.example.znanykonultant.databinding.ActivityRegistrationBinding
 
 class RegistrationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

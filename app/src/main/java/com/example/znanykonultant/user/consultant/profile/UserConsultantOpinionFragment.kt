@@ -1,11 +1,10 @@
 package com.example.znanykonultant.user.consultant.profile
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,13 +12,8 @@ import com.example.znanykonultant.R
 import com.example.znanykonultant.databinding.OpinionRowItemBinding
 import com.example.znanykonultant.entity.Opinion
 import com.example.znanykonultant.entity.User
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieAdapter
-import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.viewbinding.BindableItem
 
 class UserConsultantOpinionFragment(consultantUid: String) : Fragment() {
@@ -68,11 +62,9 @@ class UserConsultantOpinionFragment(consultantUid: String) : Fragment() {
             }
 
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                TODO("Not yet implemented")
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
             }
 
         })
@@ -103,7 +95,6 @@ class OpinionItem(val opinion: Opinion): BindableItem<OpinionRowItemBinding>(){
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
             }
 
         })

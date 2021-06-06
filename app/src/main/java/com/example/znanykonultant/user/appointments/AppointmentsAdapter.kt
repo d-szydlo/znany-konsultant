@@ -1,23 +1,15 @@
 package com.example.znanykonultant.user.appointments
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
 import com.example.znanykonultant.entity.Appointments
-import com.example.znanykonultant.entity.User
 import com.example.znanykonultant.tools.DateTimeConverter
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import java.sql.Date
-import java.text.SimpleDateFormat
-import java.util.*
 
 class AppointmentsAdapter(private var data: List<Appointments>,
                           private val listener : OnItemClickListener)
