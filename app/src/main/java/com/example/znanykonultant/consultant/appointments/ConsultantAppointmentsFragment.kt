@@ -39,7 +39,7 @@ class ConsultantAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemCli
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_user_appointments, container, false)
-        listAdapter = AppointmentsAdapter(data, appointmentIds, this)
+        listAdapter = AppointmentsAdapter(data,this)
         setDatabaseListener()
         initRecycler(view)
         return view
@@ -56,7 +56,7 @@ class ConsultantAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemCli
 
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                data = mutableListOf()
+                appointmentIds = mutableListOf()
                 dataSnapshot.child(userUID!!).child("appointments").children.mapNotNullTo(appointmentIds)
                 {
                     it.key
@@ -77,7 +77,7 @@ class ConsultantAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemCli
                     }
                 }
 
-                listAdapter.updateData(data, appointmentIds)
+                listAdapter.updateData(data)
             }
             override fun onCancelled(databaseError: DatabaseError) {}
         }
@@ -90,12 +90,12 @@ class ConsultantAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemCli
 
 
 
-    override fun onItemClick(appointment: Appointments, id : String) {
+    override fun onItemClick(appointment: Appointments) {
 
         val sendData = Bundle()
         val f = CommonFunctions()
 
-        sendData.putString("id", id)
+        sendData.putString("id", appointment.id)
         sendData.putString("client", appointment.person)
         sendData.putString("clientID", appointment.personID)
         sendData.putString("consultantID", appointment.consultantID)

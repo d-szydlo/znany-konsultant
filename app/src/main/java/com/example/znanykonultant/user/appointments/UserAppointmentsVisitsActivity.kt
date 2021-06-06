@@ -211,10 +211,14 @@ class UserAppointmentsVisitsActivity : AppCompatActivity() {
                 pickedDay = mutableListOf()
                 days.forEach {pickedDay.add(it.value)}
                 if (terms.containsKey(dateText)) {
+                    // print occupied hours
+
                     listAdapter.updateData(f.printTermsHours(dateText, terms))
+                    // print work hours
                     listAdapter2.updateData(pickedDay)
                 } else {
                     listAdapter2.updateData(pickedDay)
+                    listAdapter.updateData(mutableListOf())
                     noTerms.text = ""
                 }
             }
@@ -225,7 +229,8 @@ class UserAppointmentsVisitsActivity : AppCompatActivity() {
     }
 
     private fun getData(bundle: Bundle) {
-        appointment = Appointments("",
+        appointment = Appointments(bundle.getString("id",""),
+            "",
             bundle.getString("consultant", ""),
             bundle.getString("clientID", ""),
             bundle.getString("consultantID", ""),

@@ -134,6 +134,7 @@ class ConsultantAppointmentsVisitsActivity : AppCompatActivity() {
 
     private fun getData(bundle: Bundle) {
         appointment = Appointments(
+            bundle.getString("id", ""),
             bundle.getString("client", ""),
             "",
             bundle.getString("clientID", ""),
@@ -192,6 +193,7 @@ class ConsultantAppointmentsVisitsActivity : AppCompatActivity() {
                     listAdapter2.updateData(pickedDay)
                 } else {
                     listAdapter2.updateData(pickedDay)
+                    listAdapter.updateData(mutableListOf())
                     noTerms.text = ""
                 }
             }

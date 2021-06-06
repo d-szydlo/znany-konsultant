@@ -194,10 +194,12 @@ class UserAppointmentsActivity : AppCompatActivity() {
                 pickedDay = mutableListOf()
                 days.forEach {pickedDay.add(it.value)}
                 if (terms.containsKey(date)) {
-                    listAdapter.updateData(f.printTermsHours(date, terms))
+                    val newTerms = f.printTermsHours(date, terms)
+                    listAdapter.updateData(newTerms)
                     listAdapter2.updateData(pickedDay)
                 } else {
                     listAdapter2.updateData(pickedDay)
+                    listAdapter.updateData(mutableListOf())
                     noTerms.text = ""
                 }
             } else {
