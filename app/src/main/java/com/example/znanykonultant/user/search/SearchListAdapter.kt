@@ -1,7 +1,6 @@
 package com.example.znanykonultant.user.search
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import com.example.znanykonultant.entity.Consultant
 import com.squareup.picasso.Picasso
 import java.util.*
 import kotlin.Double.Companion.MAX_VALUE
-import kotlin.Double.Companion.MIN_VALUE
 
 class SearchListAdapter(
     private var data: MutableList<Consultant>,
@@ -45,7 +43,7 @@ class SearchListAdapter(
             consultantNameSurname = view.findViewById(R.id.consultantNameSurname)
             consultantCity = view.findViewById(R.id.consultantCity)
             consultantCategory = view.findViewById(R.id.consultantCategory)
-            consultantPhoto = view.findViewById(R.id.consultantPhoto)
+            consultantPhoto = view.findViewById(R.id.consultantCategoryButton)
             consultantRating = view.findViewById(R.id.consultantRating)
             consultantPrice = view.findViewById(R.id.consultantPrice)
             searchItem = view.findViewById(R.id.searchItem)

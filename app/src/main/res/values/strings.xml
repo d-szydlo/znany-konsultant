@@ -155,6 +155,7 @@
     <string name="search_fragment">search fragment</string>
     <string name="work_hours">Godziny pracy</string>
     <string name="occupied_hours">Niedostępne terminy</string>
+    <string name="service_category">Kategoria usług</string>
     <string name="your_visit">Twoja wizyta</string>
 
 </resources>
