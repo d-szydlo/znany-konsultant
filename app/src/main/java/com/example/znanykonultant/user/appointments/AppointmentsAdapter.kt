@@ -33,7 +33,6 @@ class AppointmentsAdapter(private var data: List<Appointments>,
 
         val consultant: TextView
         val client : TextView
-        val place: TextView
         val date : TextView
         val confirmed: TextView
         val layout : ConstraintLayout
@@ -41,7 +40,6 @@ class AppointmentsAdapter(private var data: List<Appointments>,
 
         init {
             consultant = view.findViewById(R.id.appointmentsConsultant)
-            place = view.findViewById(R.id.appointmentsPlace)
             date = view.findViewById(R.id.appointmentsDate)
             client = view.findViewById(R.id.appointmentsClient)
             confirmed = view.findViewById(R.id.appointmentsConfirmedText)
@@ -76,7 +74,6 @@ class AppointmentsAdapter(private var data: List<Appointments>,
         }
 
         viewHolder.consultant.text = data[position].consultant
-        viewHolder.place.text = data[position].place
         viewHolder.client.text = data[position].person
 
         val dateStart = DateTimeConverter(data[position].timestampStart).splitConverted()
