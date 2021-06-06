@@ -23,7 +23,6 @@ class UserDAO {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 data = dataSnapshot.child(personUid!!).getValue(User::class.java)
-                Log.i("firebase", data.toString())
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

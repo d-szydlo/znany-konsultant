@@ -106,8 +106,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:importantForAutofill="no"
-                    android:inputType="numberDecimal"
-                    android:text="@string/zero" />
+                    android:inputType="numberDecimal" />
 
                 <Space
                     android:layout_width="wrap_content"
@@ -155,8 +154,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:importantForAutofill="no"
-                    android:inputType="numberDecimal"
-                    android:text="@string/hundred" />
+                    android:inputType="numberDecimal" />
 
                 <Space
                     android:layout_width="wrap_content"

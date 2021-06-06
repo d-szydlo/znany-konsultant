@@ -59,7 +59,6 @@ class FavouritesConsultantAdapter(private var data: List<Consultant>, private va
 
     override fun onBindViewHolder(viewHolder: FavouritesConsultantAdapter.ViewHolder, position: Int) {
 
-        //viewHolder.price.text = "20"
         viewHolder.nameSurname.text = data[position].name + data[position].surname
         viewHolder.city.text = data[position].city
         viewHolder.category.text = prepareCategoriesToDisplay(data[position].category).toString()
@@ -76,11 +75,10 @@ class FavouritesConsultantAdapter(private var data: List<Consultant>, private va
     fun updateData(data : List<Consultant>, consultantsIds : List<String>) {
         this.data = data
         ids = consultantsIds
-        Log.i("update", data.size.toString())
         notifyDataSetChanged()
     }
 
-    fun prepareCategoriesToDisplay(categories: Map<String, Boolean>): String {
+    private fun prepareCategoriesToDisplay(categories: Map<String, Boolean>): String {
         var text: String = ""
         for ((c, b) in categories){
             text += c

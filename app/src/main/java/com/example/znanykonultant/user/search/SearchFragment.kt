@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.lang.Double.MAX_VALUE
 
 interface SearchResultClickListener {
     fun onSearchResultClick(position: Int)
@@ -146,7 +147,7 @@ class SearchFragment : Fragment(), SearchResultClickListener {
     }
 
     companion object {
-        const val PRICE_MAX_DEFAULT = 1000.0
+        const val PRICE_MAX_DEFAULT = MAX_VALUE
         const val PRICE_MIN_DEFAULT = 0.0
     }
 }

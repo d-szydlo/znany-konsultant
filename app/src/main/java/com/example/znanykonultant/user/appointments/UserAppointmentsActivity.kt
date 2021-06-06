@@ -125,7 +125,6 @@ class UserAppointmentsActivity : AppCompatActivity() {
                     if (appointment != null) {
                         appointments.add(appointment)
                     }
-                    Log.e("firebase", appointment.toString())
                 }
             }
             override fun onCancelled(databaseError: DatabaseError) {}
@@ -187,22 +186,25 @@ class UserAppointmentsActivity : AppCompatActivity() {
 
             val timetable: Map<String, WorkDays> = consultant!!.worktime
             val days = timetable.filter {it.value.day == dayOfWeek}
-
-            noWork.text = getString(R.string.work_hours)
-            noTerms.text = getString(R.string.occupied_hours)
+            noTerms.text = ""
 
             if (days.isNotEmpty()) {
+                noWork.text = getString(R.string.work_hours)
+
                 pickedDay = mutableListOf()
                 days.forEach {pickedDay.add(it.value)}
                 if (terms.containsKey(date)) {
                     listAdapter.updateData(f.printTermsHours(date, terms))
                     listAdapter2.updateData(pickedDay)
+                    noTerms.text = getString(R.string.occupied_hours)
                 } else {
                     listAdapter2.updateData(pickedDay)
                     noTerms.text = ""
                 }
             } else {
                 noWork.text = "Nie pracujemy w ten dzień :("
+                listAdapter.updateData(mutableListOf())
+                listAdapter2.updateData(mutableListOf())
             }
         }
     }
