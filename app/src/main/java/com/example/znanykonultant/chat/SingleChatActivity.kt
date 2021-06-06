@@ -54,6 +54,7 @@ class SingleChatActivity : AppCompatActivity() {
                 } else {
                     adapter.add(ChatToItem(message.text))
                 }
+                binding.singleChatRecyclerView.scrollToPosition(adapter.itemCount - 1)
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -73,9 +74,11 @@ class SingleChatActivity : AppCompatActivity() {
 
     fun sendMessage(view: View) {
         val text = binding.editText.text.toString()
-        val fromId = FirebaseAuth.getInstance().uid ?: return
-        saveMessageToDatabase(fromId, text)
-        binding.editText.text.clear()
+        if (text.isNotEmpty()) {
+            val fromId = FirebaseAuth.getInstance().uid ?: return
+            saveMessageToDatabase(fromId, text)
+            binding.editText.text.clear()
+        }
     }
 
     private fun saveMessageToDatabase(fromId: String, text: String) {
@@ -86,9 +89,7 @@ class SingleChatActivity : AppCompatActivity() {
 
         val message =
             Messages(reference.key!!, text, fromId, chatPartnerId!!, System.currentTimeMillis())
-        reference.setValue(message).addOnSuccessListener {
-            binding.singleChatRecyclerView.scrollToPosition(adapter.itemCount - 1)
-        }
+        reference.setValue(message)
         toReference.setValue(message)
 
         saveLatestMessageToDatabase(fromId, message)
