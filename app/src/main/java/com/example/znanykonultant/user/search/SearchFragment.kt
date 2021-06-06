@@ -39,8 +39,8 @@ class SearchFragment : Fragment(), SearchResultClickListener {
     private fun processFilters(bundle: Bundle) {
         adapter.cityFilter = bundle.getString("city", "")
 
-        adapter.priceMaxFilter = bundle.getDouble("priceMax", 1000.0)
-        adapter.priceMinFilter = bundle.getDouble("priceMin", 0.0)
+        adapter.priceMaxFilter = bundle.getDouble("priceMax", PRICE_MAX_DEFAULT)
+        adapter.priceMinFilter = bundle.getDouble("priceMin", PRICE_MIN_DEFAULT)
 
         adapter.catITFilter = bundle.getBoolean("catIT", false)
         adapter.catBusinessFilter = bundle.getBoolean("catBusiness", false)
