@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".consultant.profile.ConsultantProfileFragment">
 
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/userConsultantProfileLayout"
         android:layout_width="match_parent"
@@ -197,5 +203,6 @@
             app:layout_constraintTop_toBottomOf="@+id/inputLayoutFullDesc" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </FrameLayout>
