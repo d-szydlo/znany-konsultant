@@ -33,17 +33,17 @@ class AppointmentsAdapter(private var data: List<Appointments>,
 
         val consultant: TextView
         val client : TextView
-        val place: TextView
         val date : TextView
         val confirmed: TextView
+        val layout : ConstraintLayout
 
 
         init {
             consultant = view.findViewById(R.id.appointmentsConsultant)
-            place = view.findViewById(R.id.appointmentsPlace)
             date = view.findViewById(R.id.appointmentsDate)
             client = view.findViewById(R.id.appointmentsClient)
             confirmed = view.findViewById(R.id.appointmentsConfirmedText)
+            layout = view.findViewById(R.id.appointsLayout)
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION)
                     listener.onItemClick(data[adapterPosition])
@@ -61,20 +61,19 @@ class AppointmentsAdapter(private var data: List<Appointments>,
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         if(!data[position].confirmed){
-            view.findViewById<ConstraintLayout>(R.id.appointsLayout).setBackgroundColor(
+            viewHolder.layout.setBackgroundColor(
                 // yellow
                 Color.parseColor("#FFEB3B"))
             viewHolder.confirmed.text = "Nie potwierdzono wizyty"
 
         } else {
-            view.findViewById<ConstraintLayout>(R.id.appointsLayout).setBackgroundColor(
+            viewHolder.layout.setBackgroundColor(
                 // blue
                 Color.parseColor("#2196F3"))
             viewHolder.confirmed.text = "Wizyta potwierdzona"
         }
 
         viewHolder.consultant.text = data[position].consultant
-        viewHolder.place.text = data[position].place
         viewHolder.client.text = data[position].person
 
         val dateStart = DateTimeConverter(data[position].timestampStart).splitConverted()
