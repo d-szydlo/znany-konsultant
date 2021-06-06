@@ -56,7 +56,7 @@ class ConsultantVisitorsChartFragment : Fragment() {
 
     private fun loadChart(data : MutableList<PageVisit>){
         val entries = prepareData(data)
-        val barDataSet = BarDataSet(entries, "Liczba wyświetleń w ciągu ostatniego tygodnia")
+        val barDataSet = BarDataSet(entries, "Liczba wyświetleń profilu każdego dnia w ciągu ostatniego tygodnia")
         val barData = BarData(barDataSet)
         chart.data = barData
         val description = Description()

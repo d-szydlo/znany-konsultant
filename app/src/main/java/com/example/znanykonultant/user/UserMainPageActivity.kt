@@ -6,12 +6,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import com.example.znanykonultant.R
 import com.example.znanykonultant.chat.ChatsFragment
 import com.example.znanykonultant.login.LoginActivity
 import com.example.znanykonultant.user.appointments.UserAppointmentsFragment
 import com.example.znanykonultant.user.favourites.UserFavouritesFragment
+import com.example.znanykonultant.user.search.FilterFragment
 import com.example.znanykonultant.user.search.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth

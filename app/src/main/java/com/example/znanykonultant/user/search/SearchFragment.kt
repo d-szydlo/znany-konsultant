@@ -33,16 +33,7 @@ class SearchFragment : Fragment(), SearchResultClickListener {
     private val consultantRef = database.getReference("consultants")
     private var consultants : MutableList<Consultant> = mutableListOf()
     private var filterConsultants : MutableList<Consultant> = mutableListOf()
-    private var filters : Bundle = Bundle()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setFragmentResultListener("new_filters") { _, bundle ->
-            filters = bundle
-            processFilters(bundle)
-        }
-    }
+    var filters : Bundle = Bundle()
 
     private fun processFilters(bundle: Bundle) {
         adapter.cityFilter = bundle.getString("city", "")
@@ -66,13 +57,21 @@ class SearchFragment : Fragment(), SearchResultClickListener {
         prepareRecycler(view)
         setDatabaseListener()
 
+        if (activity?.intent != null){
+            val bundle = activity?.intent!!.getBundleExtra("filters")
+            if (bundle != null){
+                filters = bundle
+                processFilters(bundle)
+            }
+        }
+
         return view
     }
 
     private fun setButtonsOnClick(view: View) {
         view.findViewById<Button>(R.id.sortButton).setOnClickListener { showPopup(view) }
-        view.findViewById<Button>(R.id.filterButton).setOnClickListener { onFilter() }
         view.findViewById<ImageButton>(R.id.searchButton).setOnClickListener { onSearch(view) }
+        view.findViewById<Button>(R.id.filterButton).setOnClickListener { onFilter() }
     }
 
     private fun showPopup(v: View) {
@@ -100,8 +99,9 @@ class SearchFragment : Fragment(), SearchResultClickListener {
     }
 
     private fun onFilter() {
-        setFragmentResult("old_filters", filters)
-        (activity as UserMainPageActivity).setFragment(FilterFragment())
+        val intent = Intent(activity, UserFilterActivity::class.java)
+        intent.putExtra("filters", filters)
+        startActivity(intent)
     }
 
     private fun onSearch(v : View) {
