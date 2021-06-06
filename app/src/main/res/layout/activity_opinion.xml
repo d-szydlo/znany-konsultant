@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     tools:context=".user.consultant.profile.opinion.OpinionActivity">
 
     <LinearLayout
@@ -11,17 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:weightSum="10"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:weightSum="10">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0sp"
-            android:orientation="horizontal"
             android:layout_weight="1"
+            android:orientation="horizontal"
             android:weightSum="3">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -58,8 +59,8 @@
             android:id="@+id/descriptiveOpinion"
             android:layout_width="match_parent"
             android:layout_height="0sp"
-            android:layout_weight="8"
             android:layout_margin="10dp"
+            android:layout_weight="8"
             android:ems="10"
             android:gravity="start|top"
             android:hint="@string/Your_opinion"
@@ -68,9 +69,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0sp"
+            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_weight="1">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/deleteOpinionButton"

@@ -7,202 +7,202 @@
     tools:context=".consultant.profile.ConsultantProfileFragment">
 
     <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:background="@color/background_color"
         android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/userConsultantProfileLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".consultant.profile.ConsultantPage">
-
-        <Button
-            android:id="@+id/visitorsButton"
-            android:layout_width="174dp"
-            android:layout_height="39dp"
-            android:layout_marginStart="31dp"
-            android:layout_marginBottom="1dp"
-            android:text="@string/see_visitors"
-            app:layout_constraintBottom_toTopOf="@+id/inputLayoutFullUrl"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/photo" />
-
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="233dp"
-            android:layout_height="237dp"
-            android:layout_marginStart="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/inputLayoutFullUrl"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="?attr/actionBarItemBackground" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputLayoutFullName"
-            android:layout_width="160dp"
-            android:layout_height="66dp"
-            android:layout_marginTop="60dp"
-            app:layout_constraintBottom_toTopOf="@+id/inputLayoutFullSurname"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/photo"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <EditText
-                android:id="@+id/consultant_name"
-                android:layout_width="160dp"
-                android:layout_height="100dp"
-                android:background="@android:color/transparent"
-                android:ems="10"
-                android:fontFamily="cursive"
-                android:gravity="left"
-                android:hint="@string/cons_name"
-                android:inputType="textPersonName"
-                android:textSize="18sp"
-                app:layout_constraintStart_toEndOf="@+id/photo" />
-
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputLayoutFullSurname"
-            android:layout_width="160dp"
-            android:layout_height="66dp"
-            app:layout_constraintBottom_toTopOf="@+id/inputLayoutFullPhone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/photo"
-            app:layout_constraintTop_toBottomOf="@+id/inputLayoutFullName">
-
-            <EditText
-                android:id="@+id/consultant_surname"
-                android:layout_width="160dp"
-                android:layout_height="100dp"
-                android:background="@android:color/transparent"
-                android:ems="10"
-                android:fontFamily="cursive"
-                android:gravity="left"
-                android:hint="@string/cons_surname"
-                android:inputType="textPersonName"
-                android:textSize="18sp"
-                app:layout_constraintStart_toEndOf="@+id/photo" />
-
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputLayoutFullPhone"
-            android:layout_width="160dp"
-            android:layout_height="66dp"
-            android:layout_marginBottom="60dp"
-            app:layout_constraintBottom_toTopOf="@+id/inputLayoutFullUrl"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/photo"
-            app:layout_constraintTop_toBottomOf="@+id/inputLayoutFullSurname">
-
-            <EditText
-                android:id="@+id/consultant_phone"
-                android:layout_width="160dp"
-                android:layout_height="100dp"
-                android:background="@android:color/transparent"
-                android:ems="10"
-                android:fontFamily="cursive"
-                android:gravity="left"
-                android:hint="@string/cons_phone"
-                android:inputType="phone"
-                android:textSize="18sp"
-                app:layout_constraintStart_toEndOf="@+id/photo" />
-
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputLayoutFullUrl"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/userConsultantProfileLayout"
             android:layout_width="match_parent"
-            android:layout_height="66dp"
-            app:layout_constraintBottom_toTopOf="@+id/inputLayoutFullEmail"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/photo">
+            android:layout_height="match_parent"
+            tools:context=".consultant.profile.ConsultantPage">
+
+            <Button
+                android:id="@+id/visitorsButton"
+                android:layout_width="174dp"
+                android:layout_height="39dp"
+                android:layout_marginStart="31dp"
+                android:layout_marginBottom="1dp"
+                android:text="@string/see_visitors"
+                app:layout_constraintBottom_toTopOf="@+id/inputLayoutFullUrl"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/photo" />
+
+            <ImageView
+                android:id="@+id/photo"
+                android:layout_width="233dp"
+                android:layout_height="237dp"
+                android:layout_marginStart="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/inputLayoutFullUrl"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="?attr/actionBarItemBackground" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutFullName"
+                android:layout_width="160dp"
+                android:layout_height="66dp"
+                android:layout_marginTop="60dp"
+                app:layout_constraintBottom_toTopOf="@+id/inputLayoutFullSurname"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/photo"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/consultant_name"
+                    android:layout_width="160dp"
+                    android:layout_height="100dp"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:fontFamily="cursive"
+                    android:gravity="left"
+                    android:hint="@string/cons_name"
+                    android:inputType="textPersonName"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/photo" />
 
 
-            <EditText
-                android:id="@+id/consultant_url"
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutFullSurname"
+                android:layout_width="160dp"
+                android:layout_height="66dp"
+                app:layout_constraintBottom_toTopOf="@+id/inputLayoutFullPhone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/photo"
+                app:layout_constraintTop_toBottomOf="@+id/inputLayoutFullName">
+
+                <EditText
+                    android:id="@+id/consultant_surname"
+                    android:layout_width="160dp"
+                    android:layout_height="100dp"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:fontFamily="cursive"
+                    android:gravity="left"
+                    android:hint="@string/cons_surname"
+                    android:inputType="textPersonName"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/photo" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutFullPhone"
+                android:layout_width="160dp"
+                android:layout_height="66dp"
+                android:layout_marginBottom="60dp"
+                app:layout_constraintBottom_toTopOf="@+id/inputLayoutFullUrl"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/photo"
+                app:layout_constraintTop_toBottomOf="@+id/inputLayoutFullSurname">
+
+                <EditText
+                    android:id="@+id/consultant_phone"
+                    android:layout_width="160dp"
+                    android:layout_height="100dp"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:fontFamily="cursive"
+                    android:gravity="left"
+                    android:hint="@string/cons_phone"
+                    android:inputType="phone"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/photo" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutFullUrl"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/transparent"
-                android:ems="10"
-                android:fontFamily="cursive"
-                android:gravity="left"
-                android:hint="@string/cons_page"
-                android:inputType="textPersonName"
-                android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputLayoutFullEmail"
-            android:layout_width="match_parent"
-            android:layout_height="66dp"
-            app:layout_constraintBottom_toTopOf="@+id/inputLayoutFullDesc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputLayoutFullUrl">
+                android:layout_height="66dp"
+                app:layout_constraintBottom_toTopOf="@+id/inputLayoutFullEmail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/photo">
 
 
-            <EditText
-                android:id="@+id/consultant_email"
+                <EditText
+                    android:id="@+id/consultant_url"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:fontFamily="cursive"
+                    android:gravity="left"
+                    android:hint="@string/cons_page"
+                    android:inputType="textPersonName"
+                    android:textSize="18sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutFullEmail"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/transparent"
-                android:ems="10"
-                android:fontFamily="cursive"
-                android:gravity="left"
-                android:hint="@string/cons_email"
-                android:focusable="false"
-                android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputLayoutFullDesc"
-            android:layout_width="match_parent"
-            android:layout_height="86dp"
-            android:layout_marginBottom="80dp"
-            app:layout_constraintBottom_toTopOf="@+id/save"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputLayoutFullEmail">
+                android:layout_height="66dp"
+                app:layout_constraintBottom_toTopOf="@+id/inputLayoutFullDesc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputLayoutFullUrl">
 
 
-            <EditText
-                android:id="@+id/consultant_description"
+                <EditText
+                    android:id="@+id/consultant_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:fontFamily="cursive"
+                    android:gravity="left"
+                    android:hint="@string/cons_email"
+                    android:textSize="18sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutFullDesc"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:background="@android:color/transparent"
-                android:ems="10"
-                android:fontFamily="cursive"
-                android:gravity="left"
-                android:hint="@string/cons_desc"
-                android:inputType="textMultiLine"
-                android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="86dp"
+                android:layout_marginBottom="80dp"
+                app:layout_constraintBottom_toTopOf="@+id/save"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputLayoutFullEmail">
 
-        <Button
-            android:id="@+id/save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="@string/cons_save"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputLayoutFullDesc" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <EditText
+                    android:id="@+id/consultant_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:fontFamily="cursive"
+                    android:gravity="left"
+                    android:hint="@string/cons_desc"
+                    android:inputType="textMultiLine"
+                    android:textSize="18sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/cons_save"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.49"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputLayoutFullDesc" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
 </FrameLayout>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     tools:context=".user.consultant.profile.UserConsultantProfileActivity">
 
     <ScrollView
@@ -30,9 +31,9 @@
                 android:id="@+id/buttonsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="horizontal"
-                android:weightSum="3"
-                android:gravity="center">
+                android:weightSum="3">
 
                 <Button
                     android:id="@+id/setUpMeetingButton"
