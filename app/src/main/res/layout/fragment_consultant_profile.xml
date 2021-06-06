@@ -162,7 +162,7 @@
                 android:fontFamily="cursive"
                 android:gravity="left"
                 android:hint="@string/cons_email"
-                android:inputType="textEmailAddress"
+                android:focusable="false"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
