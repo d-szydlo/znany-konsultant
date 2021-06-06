@@ -1,5 +1,6 @@
 package com.example.znanykonultant.registration
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -19,6 +20,9 @@ class ConsultantRegisterFragment : Fragment() {
     lateinit var consultantDAO : ConsultantDAO
     lateinit var mAuth: FirebaseAuth
     lateinit var binding: FragmentConsultantRegisterBinding
+    private var categories : MutableList<String> = mutableListOf()
+    private var arrayChecked = booleanArrayOf(false, false, false, false)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,6 +31,7 @@ class ConsultantRegisterFragment : Fragment() {
         mAuth = FirebaseAuth.getInstance()
         binding = FragmentConsultantRegisterBinding.inflate(inflater, container, false)
         binding.registerConsultantButton.setOnClickListener { createNewAccount() }
+        binding.consultantCategoryButton.setOnClickListener { showDialog() }
         return binding.root
     }
 
@@ -41,12 +46,14 @@ class ConsultantRegisterFragment : Fragment() {
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(surname)
             && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(city)
             && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(pass1)
-            && !TextUtils.isEmpty(pass2) && TextUtils.equals(pass1, pass2)) {
+            && !TextUtils.isEmpty(pass2) && TextUtils.equals(pass1, pass2)
+            && categories.isNotEmpty()
+        ) {
             mAuth.createUserWithEmailAndPassword(email, pass1)
                 .addOnSuccessListener {
                     consultantDAO  = ConsultantDAO()
                     consultantDAO.addConsultant(
-                        mAuth.uid.toString(), name, surname, email, "", phone, city
+                        mAuth.uid.toString(), name, surname, email, "", phone, city, categories = categories
                     )
                     verifyEmail()
                     updateUserInfoAndUI()
@@ -83,4 +90,29 @@ class ConsultantRegisterFragment : Fragment() {
         startActivity(intent)
     }
 
+    private fun showDialog(){
+        lateinit var dialog : AlertDialog
+
+        val arrayCategories = arrayOf("IT", "finanse i rachunkowość", "marketing", "biznes")
+
+        val builder = AlertDialog.Builder(this.context)
+
+        builder.setTitle("Wybierz kategorie w zakresie których udzielasz konsultacji")
+
+        builder.setMultiChoiceItems(arrayCategories, arrayChecked) { dialog, which, isChecked ->
+            arrayChecked[which] = isChecked
+        }
+
+        builder.setPositiveButton("OK") { _, _ ->
+            categories = mutableListOf()
+            for (i in arrayCategories.indices) {
+                val checked = arrayChecked[i]
+                if (checked) {
+                   categories.add(arrayCategories[i])
+                }
+            }
+        }
+        dialog = builder.create()
+        dialog.show()
+    }
 }

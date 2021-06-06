@@ -36,7 +36,7 @@ class FavouritesConsultantAdapter(private var data: List<Consultant>, private va
             city = view.findViewById(R.id.consultantCity)
             category = view.findViewById(R.id.consultantCategory)
             rating = view.findViewById(R.id.consultantRating)
-            photo = view.findViewById(R.id.consultantPhoto)
+            photo = view.findViewById(R.id.consultantCategoryButton)
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION)
                     listener.onItemClick(data[adapterPosition], ids[adapterPosition])
