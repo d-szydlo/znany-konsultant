@@ -1,19 +1,13 @@
 package com.example.znanykonultant.user.favourites
 
-import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
-import com.example.znanykonultant.entity.Appointments
 import com.example.znanykonultant.entity.Consultant
-import com.example.znanykonultant.tools.DateTimeConverter
-import com.example.znanykonultant.user.appointments.AppointmentsAdapter
 import com.squareup.picasso.Picasso
 
 class FavouritesConsultantAdapter(private var data: List<Consultant>, private var ids: List<String>, private val listener : OnItemClickListener)

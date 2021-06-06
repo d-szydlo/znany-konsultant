@@ -1,7 +1,7 @@
 package com.example.znanykonultant.user.search
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.znanykonultant.R
 
 class UserFilterActivity : AppCompatActivity() {

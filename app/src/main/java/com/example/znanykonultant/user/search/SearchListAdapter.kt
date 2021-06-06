@@ -1,7 +1,6 @@
 package com.example.znanykonultant.user.search
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
 import com.example.znanykonultant.entity.Consultant
 import com.squareup.picasso.Picasso
-import java.util.*
 import kotlin.Double.Companion.MAX_VALUE
-import kotlin.Double.Companion.MIN_VALUE
 
 class SearchListAdapter(
     private var data: MutableList<Consultant>,

@@ -1,6 +1,5 @@
 package com.example.znanykonultant.entity
 
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties

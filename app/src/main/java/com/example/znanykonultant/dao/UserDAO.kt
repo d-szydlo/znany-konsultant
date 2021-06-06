@@ -34,7 +34,6 @@ class UserDAO {
         personRef.addValueEventListener(postListener)
     }
 
-    // TODO delete login if curr user will be available
     fun addPerson(
         uid : String,
         name : String,

@@ -3,9 +3,7 @@ package com.example.znanykonultant.tools
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
-import android.text.Editable
 import android.text.InputType
-import android.text.TextWatcher
 import android.widget.EditText
 import java.text.SimpleDateFormat
 import java.util.*

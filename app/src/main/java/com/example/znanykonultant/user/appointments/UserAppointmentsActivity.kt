@@ -1,18 +1,18 @@
 package com.example.znanykonultant.user.appointments
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import android.view.View
-import android.widget.*
 import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.view.View
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +24,6 @@ import com.example.znanykonultant.entity.Appointments
 import com.example.znanykonultant.entity.Consultant
 import com.example.znanykonultant.entity.User
 import com.example.znanykonultant.entity.WorkDays
-import com.example.znanykonultant.tools.DateTimeConverter
 import com.example.znanykonultant.tools.DateTimeWidgets
 import com.example.znanykonultant.tools.DayOfWeekConverter
 import com.example.znanykonultant.tools.TimestampConverter
@@ -38,7 +37,6 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.collections.HashMap
 
 class UserAppointmentsActivity : AppCompatActivity() {
 
@@ -227,7 +225,6 @@ class UserAppointmentsActivity : AppCompatActivity() {
                     timeStartSplited[0].toInt() - 1
                 }
                 val timeStartForAlarm = timeStartMinusOneHour.toString() + ":" + timeStartSplited[1]
-                Log.i("czas", "Jestem tutaj?")
                 val timetable: Map<String, WorkDays> = consultant!!.worktime
                 val days = timetable.filter { it.value.day == dayOfWeek }
 

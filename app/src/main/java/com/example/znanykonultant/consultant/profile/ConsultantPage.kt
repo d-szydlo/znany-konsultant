@@ -1,7 +1,7 @@
 package com.example.znanykonultant.consultant.profile
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.znanykonultant.R
 
 class ConsultantPage : AppCompatActivity() {

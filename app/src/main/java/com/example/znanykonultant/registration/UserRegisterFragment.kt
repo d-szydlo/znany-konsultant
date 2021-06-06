@@ -3,11 +3,11 @@ package com.example.znanykonultant.registration
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.znanykonultant.dao.UserDAO
 import com.example.znanykonultant.databinding.FragmentUserRegisterBinding
 import com.example.znanykonultant.user.UserMainPageActivity
@@ -37,14 +37,14 @@ class UserRegisterFragment : Fragment() {
         val pass2: String = binding.pass2.text.toString()
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(surname)
             && !TextUtils.isEmpty(email)
-            && !TextUtils.isEmpty(pass1)  && !TextUtils.isEmpty(pass2) && TextUtils.equals(pass1, pass2)) { //TODO separate info when passwords are not the same
+            && !TextUtils.isEmpty(pass1)  && !TextUtils.isEmpty(pass2) && TextUtils.equals(pass1, pass2)) {
             mAuth.createUserWithEmailAndPassword(email, pass1)
                 .addOnSuccessListener {
                     userDAO  = UserDAO()
                     userDAO.addPerson(
                         mAuth.uid.toString(), name, surname, email, phone
                     )
-                    verifyEmail() // TODO add user data to database
+                    verifyEmail()
                     updateUserInfoAndUI()
                 }.addOnFailureListener {  e ->
                     Toast.makeText(

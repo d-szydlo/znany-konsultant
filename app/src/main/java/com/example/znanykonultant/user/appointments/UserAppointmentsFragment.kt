@@ -1,33 +1,25 @@
 package com.example.znanykonultant.user.appointments
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.znanykonultant.R
 import com.example.znanykonultant.entity.Appointments
-import com.example.znanykonultant.entity.Consultant
-import com.example.znanykonultant.entity.User
 import com.example.znanykonultant.entity.WorkDays
 import com.example.znanykonultant.tools.DateTimeConverter
-import com.example.znanykonultant.user.UserMainPageActivity
-import com.example.znanykonultant.user.search.SearchFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import java.io.Serializable
 
 class UserAppointmentsFragment : Fragment(), AppointmentsAdapter.OnItemClickListener {
 
